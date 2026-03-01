@@ -1,0 +1,49 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import fs from "node:fs";
+import path from "node:path";
+import { md } from "../../lib/md";
+
+const slugs = ["custom-synthesis", "custom-manufacturing", "process-development", "contract-rd", "cgmp", "bulk-chemicals"];
+const titles: Record<string, string> = {
+  "custom-synthesis":      "Custom Synthesis",
+  "custom-manufacturing":  "Custom Manufacturing",
+  "process-development":   "Process Development",
+  "contract-rd":           "Contract R & D",
+  "cgmp":                  "cGMP Lab / Manufacturing",
+  "bulk-chemicals":        "Bulk Chemicals",
+};
+
+export function getStaticPaths() {
+  return ["custom-synthesis", "custom-manufacturing", "process-development", "contract-rd", "cgmp", "bulk-chemicals"]
+    .map(slug => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const title = titles[slug] || slug;
+
+let raw = "";
+try {
+  raw = fs.readFileSync(path.resolve(`../scrape/pages/${slug}.md`), "utf-8");
+} catch {
+  raw = `# ${title}\n\nContent coming soon.`;
+}
+const html = md(raw);
+---
+<Layout title={title} description={`${title} services from CHEM-IS-TRY, Inc.`}>
+
+  <div class="page-hero">
+    <h1>{title}</h1>
+    <p>CHEM-IS-TRY, Inc. – Chemistry Guaranteed</p>
+  </div>
+
+  <div class="container">
+    <div class="page-content" style="max-width:860px;" set:html={html} />
+
+    <div style="padding-bottom:3rem;">
+      <a href="/rfq/" class="btn btn-primary">Request a Quote</a>
+      &nbsp;
+      <a href="/services/" class="btn btn-outline" style="margin-left:.5rem">← All Services</a>
+    </div>
+  </div>
+</Layout>

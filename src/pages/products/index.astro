@@ -1,0 +1,144 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import productsData from "../../../data/products.json";
+
+const cats = [
+  { value: "",              label: "All Categories" },
+  { value: "organic",       label: "Organic" },
+  { value: "inorganic",     label: "Inorganic" },
+  { value: "reagent-usp",   label: "Reagent / USP" },
+  { value: "representative",label: "Representative Products" },
+  { value: "bulk",          label: "Bulk Chemicals" },
+];
+---
+<Layout title="Product Catalog" description="Browse 974+ chemical products — organic, inorganic, reagent/USP, and bulk chemicals.">
+
+  <div class="page-hero">
+    <h1>Product Catalog</h1>
+    <p>Organic, inorganic, reagent/USP, and bulk chemicals</p>
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <div class="search-filter-bar">
+        <input
+          type="search"
+          id="product-search"
+          placeholder="Search by name, CAS#, formula, or catalog number..."
+          autocomplete="off"
+        />
+        <select id="cat-filter" aria-label="Filter by category">
+          {cats.map(c => <option value={c.value}>{c.label}</option>)}
+        </select>
+      </div>
+
+      <p class="search-count" id="search-count"></p>
+      <div class="product-grid" id="product-grid"></div>
+      <div class="pagination" id="pagination"></div>
+
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ products: productsData }}>
+  const PAGE_SIZE = 50;
+
+  function formulaToHtml(f) {
+    return (f || "").replace(/([A-Za-z\)\]])(\d+)/g, "$1<sub>$2</sub>");
+  }
+
+  const grid      = document.getElementById("product-grid");
+  const countEl   = document.getElementById("search-count");
+  const pagEl     = document.getElementById("pagination");
+  const searchEl  = document.getElementById("product-search");
+  const catEl     = document.getElementById("cat-filter");
+
+  let current  = 1;
+  let filtered = products;
+
+  // Pre-fill from URL params
+  const params = new URLSearchParams(location.search);
+  const initQ   = params.get("q")   || "";
+  const initCat = params.get("cat") || "";
+  if (initQ)   searchEl.value = initQ;
+  if (initCat) catEl.value    = initCat;
+
+  function applyFilters() {
+    const q   = searchEl.value.toLowerCase().trim();
+    const cat = catEl.value;
+    filtered = products.filter(p => {
+      const matchCat = !cat || (p.category || "") === cat;
+      const matchQ   = !q ||
+        (p.name || "").toLowerCase().includes(q) ||
+        (p.cas  || "").includes(q) ||
+        (p.molecular_formula || "").toLowerCase().includes(q) ||
+        (p.catalog_number    || "").toLowerCase().includes(q);
+      return matchCat && matchQ;
+    });
+    current = 1;
+    render();
+  }
+
+  function render() {
+    const start = (current - 1) * PAGE_SIZE;
+    const slice = filtered.slice(start, start + PAGE_SIZE);
+
+    grid.innerHTML = slice.map(p => {
+      const slug  = (p.catalog_number || "").toLowerCase();
+      const img   = p.image_file
+        ? `<img src="/images/${p.image_file}" alt="${p.name || ""}" loading="lazy" />`
+        : `<span class="no-img">⚗️</span>`;
+      const badge = p.category
+        ? `<span class="product-cat-badge">${p.category.replace("-", " ")}</span>`
+        : "";
+      const formula = p.molecular_formula
+        ? `<p class="product-formula">${formulaToHtml(p.molecular_formula)}</p>`
+        : "";
+      return `
+        <div class="product-card">
+          <div class="product-image">${img}</div>
+          ${badge}
+          <h3><a href="/products/${slug}/">${p.name || "Unknown"}</a></h3>
+          ${p.catalog_number ? `<p class="product-meta">Cat# ${p.catalog_number}</p>` : ""}
+          ${p.cas ? `<p class="product-meta">CAS ${p.cas}</p>` : ""}
+          ${formula}
+        </div>`;
+    }).join("");
+
+    countEl.textContent = `Showing ${Math.min(start + 1, filtered.length)}–${Math.min(start + PAGE_SIZE, filtered.length)} of ${filtered.length.toLocaleString()} products`;
+
+    // Pagination
+    const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+    if (totalPages <= 1) { pagEl.innerHTML = ""; return; }
+    let html = "";
+    if (current > 1) html += `<a href="#" data-page="${current - 1}">‹</a>`;
+    const W = 5;
+    let lo = Math.max(1, current - Math.floor(W/2));
+    let hi = Math.min(totalPages, lo + W - 1);
+    if (hi - lo < W - 1) lo = Math.max(1, hi - W + 1);
+    if (lo > 1) html += `<a href="#" data-page="1">1</a>${lo > 2 ? "<span>…</span>" : ""}`;
+    for (let i = lo; i <= hi; i++)
+      html += i === current
+        ? `<span class="current">${i}</span>`
+        : `<a href="#" data-page="${i}">${i}</a>`;
+    if (hi < totalPages) html += `${hi < totalPages - 1 ? "<span>…</span>" : ""}<a href="#" data-page="${totalPages}">${totalPages}</a>`;
+    if (current < totalPages) html += `<a href="#" data-page="${current + 1}">›</a>`;
+    pagEl.innerHTML = html;
+  }
+
+  pagEl.addEventListener("click", e => {
+    const a = e.target.closest("a[data-page]");
+    if (!a) return;
+    e.preventDefault();
+    current = Number(a.dataset.page);
+    window.scrollTo(0, 0);
+    render();
+  });
+
+  let timer;
+  searchEl.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(applyFilters, 220); });
+  catEl.addEventListener("change", applyFilters);
+
+  applyFilters();
+</script>

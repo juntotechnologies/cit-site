@@ -1,0 +1,101 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+<Layout title="About Us" description="CHEM-IS-TRY, Inc. – specialty chemical company founded in 1999 in Metuchen, NJ.">
+
+  <div class="page-hero">
+    <h1>About Us</h1>
+    <p>~ 25 YEARS IN BUSINESS ~</p>
+  </div>
+
+  <!-- Image slideshow -->
+  <div class="about-slider" id="about-slider">
+    <div class="slides">
+      <div class="slide active"><img src="/assets/about1.jpg" alt="CHEM-IS-TRY laboratory" /></div>
+      <div class="slide"><img src="/assets/about2.jpg" alt="CHEM-IS-TRY facilities" /></div>
+      <div class="slide"><img src="/assets/about3.jpg" alt="CHEM-IS-TRY India operations" /></div>
+      <div class="slide"><img src="/assets/about4.jpg" alt="CHEM-IS-TRY lab work" /></div>
+      <div class="slide"><img src="/assets/about5.jpg" alt="CHEM-IS-TRY team" /></div>
+      <div class="slide"><img src="/assets/about6.jpg" alt="CHEM-IS-TRY cGMP facility" /></div>
+    </div>
+    <button class="slider-btn prev" id="about-prev">&#8249;</button>
+    <button class="slider-btn next" id="about-next">&#8250;</button>
+    <div class="slider-dots" id="about-dots">
+      {[0,1,2,3,4,5].map(i => (
+        <button class={`slider-dot${i===0?" active":""}`} data-idx={i} aria-label={`Slide ${i+1}`}></button>
+      ))}
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="page-content" style="max-width:900px;">
+
+      <h2>Who We Are</h2>
+      <p>
+        CHEM-IS-TRY, Inc. – a specialty chemical company – located in Liberty Corporate Park,
+        Metuchen, NJ, USA, focused on synthesizing wide varieties of aliphatic, aromatic, and
+        heterocyclic organic molecules in the gram to kilogram range. We are involved in process
+        development, scaling up the production of samples developed from custom synthesis to bulk
+        manufacturing, and manufacturing fine chemicals and advanced organic intermediates.
+      </p>
+      <p>
+        CHEM-IS-TRY, Inc. also has an extension of its facility overseas where we carry out custom
+        manufacturing of advanced organic intermediates. As part of our commitment to quality
+        control, CHEM-IS-TRY, Inc. has a state-of-the-art QC lab equipped with gas chromatography
+        (GC), high-performance liquid chromatography (HPLC), and infrared spectroscopy (IR)
+        instrumentation etc. In addition, we have a wet lab stocked with standard analytical
+        instruments to support our custom synthesis projects and catalog business.
+      </p>
+
+      <h2>~ HELPING RESEARCH &amp; DEVELOPMENT COMMUNITY ~</h2>
+      <p>
+        Our services include:
+      </p>
+      <ul>
+        <li>Development of new synthetic routes for organic molecules</li>
+        <li>Synthesis of novel organic molecules</li>
+        <li>Scale-up services (gram to kilogram range)</li>
+        <li>Custom manufacturing services</li>
+        <li>Process development</li>
+        <li>Contract R &amp; D</li>
+        <li>cGMP Lab and Manufacturing</li>
+      </ul>
+
+      <h2>Contact Information</h2>
+      <div class="info-box" style="margin-top:1rem;">
+        <div class="info-row"><span class="label">Address</span><span>160-4 Liberty Street, Liberty Corporate Park, Metuchen, NJ 08840, USA</span></div>
+        <div class="info-row"><span class="label">Tel</span><span>+1-732-372-7311</span></div>
+        <div class="info-row"><span class="label">Toll Free</span><span>+1-877-CHEM-123 (1-877-243-6123)</span></div>
+        <div class="info-row"><span class="label">Fax</span><span>+1-732-372-7312 / +1-732-603-1905</span></div>
+        <div class="info-row"><span class="label">Email</span><span><a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a> / <a href="mailto:PPorwal@chem-is-try.com">PPorwal@chem-is-try.com</a></span></div>
+      </div>
+
+      <div class="mt-3">
+        <a href="/rfq/" class="btn btn-primary">Request for Quotation</a>
+        &nbsp;
+        <a href="/products/" class="btn btn-outline" style="margin-left:.5rem">Browse Catalog</a>
+      </div>
+
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const slideEls = document.querySelectorAll("#about-slider .slide");
+  const dotEls   = document.querySelectorAll("#about-slider .slider-dot");
+  let cur = 0;
+  const n = slideEls.length;
+
+  function go(i: number) {
+    slideEls[cur].classList.remove("active");
+    dotEls[cur].classList.remove("active");
+    cur = (i + n) % n;
+    slideEls[cur].classList.add("active");
+    dotEls[cur].classList.add("active");
+  }
+
+  document.getElementById("about-prev")!.addEventListener("click", () => go(cur - 1));
+  document.getElementById("about-next")!.addEventListener("click", () => go(cur + 1));
+  dotEls.forEach(d => d.addEventListener("click", () => go(Number((d as HTMLElement).dataset.idx))));
+  setInterval(() => go(cur + 1), 4500);
+</script>

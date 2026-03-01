@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+const services = [
+  { href: "/services/custom-synthesis/",       title: "Custom Synthesis",         icon: "🧪", desc: "Novel molecules, rare compounds, and complex organic synthesis from grams to tons. Our PhD chemists design synthetic routes tailored to your specifications." },
+  { href: "/services/custom-manufacturing/",   title: "Custom Manufacturing",     icon: "🏭", desc: "Scale-up from lab to production. We manufacture advanced organic intermediates at our US and India facilities with rigorous quality control." },
+  { href: "/services/process-development/",    title: "Process Development",      icon: "⚗️", desc: "Optimizing existing synthetic routes or developing new pathways for commercial viability, cost efficiency, and reproducibility." },
+  { href: "/services/contract-rd/",            title: "Contract R & D",           icon: "🔬", desc: "Partner with our experienced scientific team for research and development projects, from early-stage discovery to late-stage development." },
+  { href: "/services/cgmp/",                   title: "cGMP Lab / Manufacturing", icon: "✅", desc: "Current Good Manufacturing Practice compliant production for pharmaceutical intermediates and active pharmaceutical ingredients (APIs)." },
+  { href: "/services/bulk-chemicals/",         title: "Bulk Chemicals",           icon: "📦", desc: "Large-quantity supply of catalog and custom compounds for industrial applications with competitive pricing and reliable delivery." },
+];
+---
+<Layout title="Services" description="CHEM-IS-TRY, Inc. offers custom synthesis, manufacturing, process development, contract R&D, and cGMP services.">
+
+  <div class="page-hero">
+    <h1>Our Services</h1>
+    <p>From custom synthesis to bulk manufacturing — chemistry guaranteed.</p>
+  </div>
+
+  <div class="container">
+    <div class="page-content">
+
+      <p style="font-size:1.05rem;margin-bottom:2rem;">
+        CHEM-IS-TRY, Inc. offers comprehensive chemical services to the research, pharmaceutical,
+        and industrial communities. Our in-house team of PhD and MS chemists bring decades of
+        expertise to every project.
+      </p>
+
+      <div class="services-grid">
+        {services.map(s => (
+          <div class="service-card">
+            <h3>{s.icon} {s.title}</h3>
+            <p>{s.desc}</p>
+            <a href={s.href} class="learn-more">Learn more →</a>
+          </div>
+        ))}
+      </div>
+
+      <div style="margin-top:3rem;background:var(--blue-pale);padding:2rem;border-radius:var(--radius);text-align:center;">
+        <h3 style="color:var(--blue);margin-bottom:.75rem;">Ready to Start a Project?</h3>
+        <p style="margin-bottom:1.25rem;color:var(--gray-600);">Submit a Request for Quotation and our team will evaluate your project within 2–3 business days.</p>
+        <a href="/rfq/" class="btn btn-primary">Request for Quotation</a>
+      </div>
+
+    </div>
+  </div>
+</Layout>

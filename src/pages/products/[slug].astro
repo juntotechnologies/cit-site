@@ -1,0 +1,91 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { formulaToHtml } from "../../lib/formula";
+import productsData from "../../../data/products.json";
+
+export function getStaticPaths() {
+  return productsData.map((p) => {
+    const slug = p.catalog_number
+      ? p.catalog_number.toLowerCase()
+      : p.name?.toLowerCase().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "") || "unknown";
+    return { params: { slug }, props: { product: p } };
+  });
+}
+
+const { product: p } = Astro.props;
+---
+<Layout
+  title={p.name || "Product"}
+  description={`${p.name} — CAS ${p.cas || "N/A"}, MW ${p.molecular_weight || "N/A"}. Chemical catalog product from Chem-is-try Inc.`}
+>
+  <div class="container">
+    <div class="product-detail">
+      <p class="breadcrumb">
+        <a href="/">Home</a> › <a href="/products/">Products</a> › {p.name}
+      </p>
+
+      <div class="product-layout">
+        <!-- Structure image -->
+        <div>
+          <div class="product-structure">
+            {p.image_file
+              ? <img src={`/images/${p.image_file}`} alt={`Structure of ${p.name}`} />
+              : <p style="color:var(--gray-400);padding:2rem">No structure image available</p>
+            }
+          </div>
+          <div class="rfq-cta mt-2">
+            <p>Interested in this product?</p>
+            <a href={`/rfq/?product=${encodeURIComponent(p.name || "")}&cat=${encodeURIComponent(p.catalog_number || "")}`} class="btn btn-primary">
+              Request a Quote
+            </a>
+          </div>
+        </div>
+
+        <!-- Product info -->
+        <div class="product-info">
+          <h1>{p.name}</h1>
+
+          <table class="product-table">
+            {p.catalog_number && (
+              <tr><th>Catalog #</th><td>{p.catalog_number}</td></tr>
+            )}
+            {p.cas && (
+              <tr><th>CAS Number</th><td>{p.cas}</td></tr>
+            )}
+            {p.molecular_formula && (
+              <tr>
+                <th>Molecular Formula</th>
+                <td set:html={formulaToHtml(p.molecular_formula)} />
+              </tr>
+            )}
+            {p.molecular_weight && (
+              <tr><th>Molecular Weight</th><td>{p.molecular_weight} g/mol</td></tr>
+            )}
+            {p.purity && (
+              <tr><th>Purity</th><td>{p.purity}</td></tr>
+            )}
+            {p.grade && (
+              <tr><th>Grade</th><td>{p.grade}</td></tr>
+            )}
+            {p.synonyms && (
+              <tr><th>Synonyms</th><td>{p.synonyms}</td></tr>
+            )}
+            {p.url && (
+              <tr>
+                <th>Original Listing</th>
+                <td><a href={p.url} target="_blank" rel="noopener noreferrer">View on original site ↗</a></td>
+              </tr>
+            )}
+          </table>
+
+          {p.description && (
+            <div>
+              <h2 style="font-size:1rem;color:var(--gray-600);margin-bottom:.5rem">Description</h2>
+              <p style="color:var(--gray-600);font-size:.9rem">{p.description}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

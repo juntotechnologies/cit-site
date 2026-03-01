@@ -1,0 +1,173 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "CHEM-IS-TRY, Inc. – a specialty chemical company serving the Research and Development community since 1999." } = Astro.props;
+const p = Astro.url.pathname;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title} | CHEM-IS-TRY, Inc.</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <span><span class="free-ship">Free Shipping</span> on qualifying orders</span>
+      <span>
+        <span class="toll-free">TOLL FREE: 1-877-CHEM-123</span>
+        &nbsp;|&nbsp;
+        <a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a>
+      </span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <a href="/">
+        <img src="/assets/logo.png" alt="CHEM-IS-TRY Inc." class="logo-img" />
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="main-nav">
+        <div class="nav-item">
+          <a href="/" class={p === "/" ? "active" : ""}>Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="/about/" class={p.startsWith("/about") ? "active" : ""}>About Us</a>
+        </div>
+        <div class="nav-item">
+          <a href="/products/" class={p.startsWith("/products") ? "active" : ""}>Products</a>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="/services/" class={p.startsWith("/services") ? "active" : ""}>Services ▾</a>
+          <div class="dropdown">
+            <a href="/services/custom-synthesis/">Custom Synthesis</a>
+            <a href="/services/custom-manufacturing/">Custom Manufacturing</a>
+            <a href="/services/process-development/">Process Development</a>
+            <a href="/services/contract-rd/">Contract R &amp; D</a>
+            <a href="/services/cgmp/">cGMP Lab / Manufacturing</a>
+            <a href="/services/bulk-chemicals/">Bulk Chemicals</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="/faq/" class={p.startsWith("/faq") ? "active" : ""}>FAQs</a>
+        </div>
+        <div class="nav-item">
+          <a href="/contact/" class={p.startsWith("/contact") ? "active" : ""}>Contact Us</a>
+        </div>
+        <div class="nav-item">
+          <a href="/rfq/" class="nav-rfq">Request a Quote</a>
+        </div>
+      </nav>
+
+      <!-- Hamburger (mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile nav drawer -->
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+      <a href="/">Home</a>
+      <a href="/about/">About Us</a>
+      <a href="/products/">Products</a>
+      <span class="mobile-section-label">Services</span>
+      <a href="/services/custom-synthesis/" style="padding-left:2.25rem">Custom Synthesis</a>
+      <a href="/services/custom-manufacturing/" style="padding-left:2.25rem">Custom Manufacturing</a>
+      <a href="/services/process-development/" style="padding-left:2.25rem">Process Development</a>
+      <a href="/services/contract-rd/" style="padding-left:2.25rem">Contract R &amp; D</a>
+      <a href="/services/cgmp/" style="padding-left:2.25rem">cGMP Lab / Manufacturing</a>
+      <a href="/services/bulk-chemicals/" style="padding-left:2.25rem">Bulk Chemicals</a>
+      <a href="/faq/">FAQs</a>
+      <a href="/contact/">Contact Us</a>
+      <a href="/rfq/" class="mobile-rfq">Request a Quote</a>
+    </nav>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-col">
+        <img src="/assets/footer-logo.png" alt="CHEM-IS-TRY Inc." class="footer-logo" />
+        <p>A Specialty Chemical Company</p>
+        <p style="margin-top:.75rem;font-size:.82rem;">Serving the Research &amp; Development community since 1999.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="/about/">About Us</a>
+        <a href="/products/">Product Catalogue</a>
+        <a href="/services/">Services</a>
+        <a href="/services/bulk-chemicals/">Bulk Chemicals</a>
+        <a href="/contact/">Contact Us</a>
+        <a href="/rfq/">Request for Quotation</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms/">Terms &amp; Conditions</a>
+      </div>
+      <div class="footer-col">
+        <h4>Product Categories</h4>
+        <a href="/products/?cat=organic">Organic</a>
+        <a href="/products/?cat=inorganic">Inorganic</a>
+        <a href="/products/?cat=reagent-usp">Reagent / USP</a>
+        <a href="/products/?cat=representative">Representative Products</a>
+        <a href="/products/?cat=bulk">Bulk Chemicals</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="contact-line"><span>Address</span><span>160-4 Liberty Street, Liberty Corporate Park, Metuchen, NJ 08840, USA</span></div>
+        <div class="contact-line"><span>Tel</span><span>+1-732-372-7311</span></div>
+        <div class="contact-line"><span>Toll Free</span><span>+1-877-CHEM-123 (877-243-6123)</span></div>
+        <div class="contact-line"><span>Fax</span><span>+1-732-372-7312</span></div>
+        <div class="contact-line"><span>Email</span><a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a></div>
+        <div class="contact-line"><span></span><a href="mailto:PPorwal@chem-is-try.com">PPorwal@chem-is-try.com</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <span>Copyright &copy; {new Date().getFullYear()} CHEM-IS-TRY, Inc. All rights reserved.</span>
+      <span style="font-size:.78rem;color:#666">
+        <a href="/privacy-policy/" style="color:#666">Privacy Policy</a>
+        &nbsp;|&nbsp;
+        <a href="/terms/" style="color:#666">Terms &amp; Conditions</a>
+      </span>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+<style is:global>
+  @import "../styles/global.css";
+</style>
+
+<script>
+  const btn = document.getElementById("hamburger")!;
+  const nav = document.getElementById("mobile-nav")!;
+  btn.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    btn.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", String(open));
+  });
+  // Close drawer when a link is tapped
+  nav.querySelectorAll("a").forEach(a =>
+    a.addEventListener("click", () => {
+      nav.classList.remove("open");
+      btn.classList.remove("open");
+      btn.setAttribute("aria-expanded", "false");
+    })
+  );
+</script>

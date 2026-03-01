@@ -1,0 +1,111 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const faqs = {
+  "Account / Ordering": [
+    {
+      q: "How can I pay?",
+      a: "You can pay by Credit Card (VISA, MasterCard, or American Express), by check, or by wire transfer."
+    },
+    {
+      q: "How can I get the price for a compound?",
+      a: "To get price quotations, please send your Request for Quotation to sales@chem-is-try.com or use the RFQ form on our website."
+    },
+    {
+      q: "How long does it take to get a quote?",
+      a: "We always try to respond with a quote within 2–3 business days after receiving your inquiry."
+    },
+    {
+      q: "How much is the shipping charge?",
+      a: "Shipping charges depend on the type of service you prefer and the quantity of the product. Please include your preferred carrier (e.g., FedEx account) in your order."
+    },
+    {
+      q: "How can I order?",
+      a: "Orders require written submission via fax or email. Please include: shipping and billing address, contact person name, PO number, FedEx account number (if applicable), product name and catalog number, quantity required, and authorized signature."
+    },
+  ],
+  "Shipping & Delivery": [
+    {
+      q: "How long does it take to receive my order?",
+      a: "If the material is in stock, orders placed before 3:00 PM will be shipped the same day. Delivery time depends on your location and selected shipping method."
+    },
+    {
+      q: "What will be included with my order?",
+      a: "Each shipment includes the product, a Certificate of Analysis (CoA), and relevant safety data. Please contact us if you need additional documentation."
+    },
+    {
+      q: "Do you ship internationally?",
+      a: "Yes, we ship internationally. Please contact us for international shipping rates and any applicable import/export requirements for hazardous or controlled materials."
+    },
+  ],
+  "Products & Technical": [
+    {
+      q: "Do you offer custom synthesis?",
+      a: "Yes. We specialize in custom synthesis of novel organic molecules, scale-up from gram to kilogram quantities, and contract manufacturing. Please see our Services page or contact us directly."
+    },
+    {
+      q: "What quality control measures are in place?",
+      a: "Our state-of-the-art QC lab is equipped with GC, HPLC, and IR spectroscopy. All products ship with a Certificate of Analysis."
+    },
+    {
+      q: "Can you source a compound not listed in your catalog?",
+      a: "Absolutely. Please submit an RFQ with the compound name, CAS number (if known), and required quantity. We will assess feasibility and respond within 2–3 business days."
+    },
+    {
+      q: "What payment terms do you offer for large orders?",
+      a: "Payment terms for large or repeat orders can be discussed on a case-by-case basis. Please contact us to discuss your requirements."
+    },
+  ],
+};
+---
+<Layout title="FAQs" description="Frequently asked questions about ordering, shipping, and products from CHEM-IS-TRY, Inc.">
+
+  <div class="page-hero">
+    <h1>How Can We Help?</h1>
+    <p>Frequently asked questions about ordering, shipping, and our products.</p>
+  </div>
+
+  <div class="container">
+    <div class="page-content" style="max-width:860px;">
+
+      {Object.entries(faqs).map(([section, items]) => (
+        <div class="faq-section">
+          <h2>{section}</h2>
+          {items.map((item, i) => (
+            <div class="faq-item">
+              <button class="faq-q" data-id={`${section}-${i}`}>
+                {item.q}
+                <span class="icon">+</span>
+              </button>
+              <div class="faq-a" id={`${section}-${i}`}>{item.a}</div>
+            </div>
+          ))}
+        </div>
+      ))}
+
+      <div style="margin-top:2rem;background:var(--blue-pale);padding:1.5rem;border-radius:var(--radius);">
+        <h3 style="color:var(--blue);margin-bottom:.5rem;">Still have a question?</h3>
+        <p>Contact us at <a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a> or
+        call <strong>+1-877-CHEM-123</strong>. You can also <a href="/rfq/">submit an RFQ</a> directly.</p>
+      </div>
+
+    </div>
+  </div>
+</Layout>
+
+<script>
+  document.querySelectorAll(".faq-q").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id  = (btn as HTMLElement).dataset.id!;
+      const ans = document.getElementById(id)!;
+      const open = ans.classList.contains("open");
+      // Close all
+      document.querySelectorAll(".faq-a").forEach(a => a.classList.remove("open"));
+      document.querySelectorAll(".faq-q").forEach(b => b.classList.remove("open"));
+      if (!open) {
+        ans.classList.add("open");
+        btn.classList.add("open");
+      }
+    });
+  });
+</script>

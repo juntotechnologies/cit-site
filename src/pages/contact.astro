@@ -1,0 +1,96 @@
+---
+import Layout from "../layouts/Layout.astro";
+const team = [
+  { name: "Praful Porwal, PhD",         title: "President",                           email: "PPorwal@chem-is-try.com" },
+  { name: "Prem Jain, PhD",             title: "Director, Business Development",       email: "PJain@chem-is-try.com" },
+  { name: "Romi Singh, PhD",            title: "Director, Marketing",                  email: "romi@chem-is-try.com" },
+  { name: "Dr. Chris Angeletakis",      title: "Technical & Business Dev. Advisor",    email: "info@chem-is-try.com" },
+  { name: "Shaun Porwal",               title: "Business Development Officer",         email: "Shaun.Porwal@chem-is-try.com" },
+  { name: "Kartik Patel",               title: "Operations Manager",                   email: "Kartik@chem-is-try.com" },
+  { name: "Olukemi Oyem",               title: "QC-In-Charge",                         email: "Kemi@chem-is-try.com" },
+  { name: "Ushma Srivastava",           title: "Office Manager",                       email: "Ushma@chem-is-try.com" },
+];
+---
+<Layout title="Contact Us" description="Contact CHEM-IS-TRY, Inc. – our team is ready to assist with product inquiries and quotation requests.">
+
+  <div class="page-hero">
+    <h1>Contact Us</h1>
+    <p>Our team is here to help with product inquiries, quotes, and technical support.</p>
+  </div>
+
+  <div class="container">
+    <div class="page-content">
+
+      <!-- Team directory -->
+      <h2>Our Team</h2>
+      <div class="team-grid">
+        {team.map(m => (
+          <div class="team-card">
+            <h3>{m.name}</h3>
+            <p class="title">{m.title}</p>
+            <a href={`mailto:${m.email}`}>{m.email}</a>
+          </div>
+        ))}
+      </div>
+
+      <!-- Contact info + form -->
+      <div class="contact-info-grid">
+        <div class="info-box">
+          <h3>Contact Information</h3>
+          <div class="info-row"><span class="label">General</span><a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a></div>
+          <div class="info-row"><span class="label">Address</span><span>160-4 Liberty Street, Liberty Corporate Park, Metuchen, NJ 08840, USA</span></div>
+          <div class="info-row"><span class="label">Phone</span><span>732-372-7311</span></div>
+          <div class="info-row"><span class="label">Toll Free</span><span>1-877-CHEM-123</span></div>
+          <div class="info-row"><span class="label">Fax</span><span>732-372-7312</span></div>
+          <div class="info-row"><span class="label">E-fax</span><span>734-448-5284</span></div>
+          <div class="info-row"><span class="label">ChemTrec</span><span>1-800-424-9300</span></div>
+        </div>
+
+        <div>
+          <h3 style="color:var(--blue);margin-bottom:1rem;">Send a Message</h3>
+          <form
+            id="contact-form"
+            action="https://formspree.io/f/YOUR_FORM_ID"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="c-name">Name *</label>
+              <input type="text" id="c-name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="c-company">Company</label>
+              <input type="text" id="c-company" name="company" />
+            </div>
+            <div class="form-group">
+              <label for="c-email">Email *</label>
+              <input type="email" id="c-email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="c-phone">Phone</label>
+              <input type="tel" id="c-phone" name="phone" />
+            </div>
+            <div class="form-group">
+              <label for="c-message">Comments *</label>
+              <textarea id="c-message" name="message" required></textarea>
+            </div>
+            <input type="hidden" name="_subject" value="Contact form submission – chem-is-try.com" />
+            <input type="text" name="_gotcha" style="display:none" />
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <div class="form-success" id="c-success">Thank you! We'll be in touch shortly.</div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const succ = document.getElementById("c-success") as HTMLDivElement;
+  form?.addEventListener("submit", async e => {
+    e.preventDefault();
+    const r = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" }});
+    if (r.ok) { form.reset(); succ.style.display = "block"; }
+  });
+</script>
