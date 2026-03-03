@@ -455,7 +455,7 @@ footer { background: #1a1a2e; color: var(--gray-400); font-size: 0.85rem; margin
 .page-hero h1 { font-size: clamp(1.6rem, 3vw, 2.4rem); margin-bottom: 0.5rem; }
 .page-hero p { opacity: 0.8; font-size: 1rem; }
 
-.page-content { padding: 3rem 0; }
+.page-content { padding: 3rem 0; margin-left: auto; margin-right: auto; }
 .page-content h1 { font-size: 1.9rem; color: var(--blue); margin-bottom: 1.25rem; }
 .page-content h2 { font-size: 1.35rem; color: var(--blue); margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--gray-200); }
 .page-content h3 { font-size: 1.05rem; margin: 1.5rem 0 0.5rem; color: var(--gray-900); }
