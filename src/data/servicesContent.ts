@@ -3,7 +3,7 @@
 export const servicesContent: Record<string, string> = {
 
   "custom-synthesis": `
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:2rem;">
+<div class="svc-img-3col">
   <img src="/assets/services/customsynthesis2.jpg" alt="Custom Synthesis Lab" style="width:100%;height:190px;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:block;" />
   <img src="/assets/services/customsynthesis3.jpg" alt="Custom Synthesis Process" style="width:100%;height:190px;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:block;" />
   <img src="/assets/services/customsynthesis4.png" alt="Custom Synthesis Facility" style="width:100%;height:190px;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:block;" />
@@ -46,7 +46,7 @@ export const servicesContent: Record<string, string> = {
 `,
 
   "custom-manufacturing": `
-<div style="margin-bottom:2rem;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12);line-height:0;">
+<div class="svc-img-banner">
   <img src="/assets/services/customsynthesis-mfg.jpg" alt="Custom Manufacturing Facility" style="width:100%;height:280px;object-fit:cover;display:block;" />
 </div>
 
@@ -72,7 +72,7 @@ export const servicesContent: Record<string, string> = {
 `,
 
   "process-development": `
-<div style="margin-bottom:2rem;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12);line-height:0;">
+<div class="svc-img-banner">
   <img src="/assets/services/processdev.jpg" alt="Process Development Lab" style="width:100%;height:280px;object-fit:cover;display:block;" />
 </div>
 
@@ -86,7 +86,7 @@ export const servicesContent: Record<string, string> = {
 `,
 
   "contract-rd": `
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:2rem;">
+<div class="svc-img-2col">
   <img src="/assets/services/contractrd-banner.jpg" alt="Contract R&D" style="width:100%;height:220px;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:block;" />
   <img src="/assets/services/contractrd-lab.jpg" alt="Contract R&D Laboratory" style="width:100%;height:220px;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:block;" />
 </div>

@@ -73,7 +73,7 @@ const faqs = {
           <h2>{section}</h2>
           {items.map((item, i) => (
             <div class="faq-item">
-              <button class="faq-q" data-id={`${section}-${i}`}>
+              <button class="faq-q" data-id={`${section}-${i}`} aria-expanded="false">
                 {item.q}
                 <span class="icon">+</span>
               </button>
@@ -101,10 +101,11 @@ const faqs = {
       const open = ans.classList.contains("open");
       // Close all
       document.querySelectorAll(".faq-a").forEach(a => a.classList.remove("open"));
-      document.querySelectorAll(".faq-q").forEach(b => b.classList.remove("open"));
+      document.querySelectorAll(".faq-q").forEach(b => { b.classList.remove("open"); b.setAttribute("aria-expanded", "false"); });
       if (!open) {
         ans.classList.add("open");
         btn.classList.add("open");
+        btn.setAttribute("aria-expanded", "true");
       }
     });
   });

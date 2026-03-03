@@ -18,8 +18,8 @@ import Layout from "../layouts/Layout.astro";
       <div class="slide"><img src="/assets/about5.jpg" alt="CHEM-IS-TRY team" /></div>
       <div class="slide"><img src="/assets/about6.jpg" alt="CHEM-IS-TRY cGMP facility" /></div>
     </div>
-    <button class="slider-btn prev" id="about-prev">&#8249;</button>
-    <button class="slider-btn next" id="about-next">&#8250;</button>
+    <button class="slider-btn prev" id="about-prev" aria-label="Previous slide">&#8249;</button>
+    <button class="slider-btn next" id="about-next" aria-label="Next slide">&#8250;</button>
     <div class="slider-dots" id="about-dots">
       {[0,1,2,3,4,5].map(i => (
         <button class={`slider-dot${i===0?" active":""}`} data-idx={i} aria-label={`Slide ${i+1}`}></button>
