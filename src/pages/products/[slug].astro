@@ -13,11 +13,44 @@ export function getStaticPaths() {
 }
 
 const { product: p } = Astro.props;
+
+const productDesc = `${p.name} — CAS ${p.cas || "N/A"}, MW ${p.molecular_weight || "N/A"}. Chemical catalog product from CHEM-IS-TRY, Inc.`;
+const ogImage = p.image_file
+  ? `https://chem-is-try.com/images/${p.image_file}`
+  : "https://chem-is-try.com/assets/banner-01.jpg";
+
+const productSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": p.name,
+  "description": p.description || productDesc,
+  "image": ogImage,
+  "brand": {
+    "@type": "Organization",
+    "name": "CHEM-IS-TRY, Inc."
+  },
+  ...(p.cas && { "identifier": p.cas }),
+  "additionalProperty": [
+    ...(p.cas ? [{ "@type": "PropertyValue", "name": "CAS Number", "value": p.cas }] : []),
+    ...(p.molecular_formula ? [{ "@type": "PropertyValue", "name": "Molecular Formula", "value": p.molecular_formula }] : []),
+    ...(p.molecular_weight ? [{ "@type": "PropertyValue", "name": "Molecular Weight", "value": `${p.molecular_weight} g/mol` }] : []),
+    ...(p.purity ? [{ "@type": "PropertyValue", "name": "Purity", "value": p.purity }] : []),
+    ...(p.catalog_number ? [{ "@type": "PropertyValue", "name": "Catalog Number", "value": p.catalog_number }] : []),
+  ].filter(Boolean),
+  "offers": {
+    "@type": "Offer",
+    "url": `https://chem-is-try.com/rfq/?product=${encodeURIComponent(p.name || "")}`,
+    "seller": { "@type": "Organization", "name": "CHEM-IS-TRY, Inc." }
+  }
+});
 ---
 <Layout
   title={p.name || "Product"}
-  description={`${p.name} — CAS ${p.cas || "N/A"}, MW ${p.molecular_weight || "N/A"}. Chemical catalog product from Chem-is-try Inc.`}
+  description={productDesc}
+  ogImage={ogImage}
+  ogType="product"
 >
+  <script type="application/ld+json" set:html={productSchema} slot="head" />
   <div class="container">
     <div class="product-detail">
       <p class="breadcrumb">

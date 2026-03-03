@@ -2,9 +2,42 @@
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
 }
-const { title, description = "CHEM-IS-TRY, Inc. – a specialty chemical company serving the Research and Development community since 1999." } = Astro.props;
+const {
+  title,
+  description = "CHEM-IS-TRY, Inc. – a specialty chemical company serving the Research and Development community since 1999.",
+  ogImage = "https://chem-is-try.com/assets/banner-01.jpg",
+  ogType = "website",
+} = Astro.props;
 const p = Astro.url.pathname;
+const canonicalURL = new URL(p, "https://chem-is-try.com").href;
+const fullTitle = `${title} | CHEM-IS-TRY, Inc.`;
+
+const orgSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "CHEM-IS-TRY, Inc.",
+  "url": "https://chem-is-try.com",
+  "logo": "https://chem-is-try.com/assets/logo.png",
+  "foundingDate": "1999",
+  "description": "A specialty chemical company serving the Research and Development community since 1999.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "160-4 Liberty Street, Liberty Corporate Park",
+    "addressLocality": "Metuchen",
+    "addressRegion": "NJ",
+    "postalCode": "08840",
+    "addressCountry": "US"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+1-732-372-7311",
+    "contactType": "sales",
+    "email": "info@chem-is-try.com"
+  }
+});
 ---
 <!doctype html>
 <html lang="en">
@@ -12,7 +45,24 @@ const p = Astro.url.pathname;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
-  <title>{title} | CHEM-IS-TRY, Inc.</title>
+  <title>{fullTitle}</title>
+  <link rel="canonical" href={canonicalURL} />
+  <!-- Open Graph -->
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:site_name" content="CHEM-IS-TRY, Inc." />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+  <!-- JSON-LD: Organization -->
+  <script type="application/ld+json" set:html={orgSchema} />
+  <!-- Slot for page-level JSON-LD or extra head tags -->
+  <slot name="head" />
   <link rel="icon" type="image/png" href="/favicon-cit.png?v=4" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=4" />
   <link rel="apple-touch-icon" href="/favicon-cit.png?v=4" />

@@ -1,0 +1,23 @@
+{
+  "project": "2949029971135298916",
+  "forms": {
+    "contactForm": {
+      "name": "Contact Us",
+      "notifications": [
+        {
+          "type": "email",
+          "address": "info@chem-is-try.com"
+        }
+      ]
+    },
+    "rfqForm": {
+      "name": "Request for Quote",
+      "notifications": [
+        {
+          "type": "email",
+          "address": "info@chem-is-try.com"
+        }
+      ]
+    }
+  }
+}
