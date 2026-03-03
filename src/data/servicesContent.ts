@@ -3,10 +3,10 @@
 export const servicesContent: Record<string, string> = {
 
   "custom-synthesis": `
-<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
-  <img src="/assets/services/customsynthesis2.jpg" alt="Custom Synthesis Lab" style="max-width:100%;height:auto;border-radius:6px;" />
-  <img src="/assets/services/customsynthesis3.jpg" alt="Custom Synthesis Process" style="max-width:100%;height:auto;border-radius:6px;" />
-  <img src="/assets/services/customsynthesis4.png" alt="Custom Synthesis Facility" style="max-width:100%;height:auto;border-radius:6px;" />
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:2rem;">
+  <img src="/assets/services/customsynthesis2.jpg" alt="Custom Synthesis Lab" style="width:100%;height:190px;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:block;" />
+  <img src="/assets/services/customsynthesis3.jpg" alt="Custom Synthesis Process" style="width:100%;height:190px;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:block;" />
+  <img src="/assets/services/customsynthesis4.png" alt="Custom Synthesis Facility" style="width:100%;height:190px;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:block;" />
 </div>
 
 <p>We offer our customers all types of chemicals ranging from bulk products to rare, complex and difficult to source chemicals in grams to tons quantities.</p>
@@ -46,7 +46,9 @@ export const servicesContent: Record<string, string> = {
 `,
 
   "custom-manufacturing": `
-<img src="/assets/services/customsynthesis-mfg.jpg" alt="Custom Manufacturing Facility" style="max-width:100%;height:auto;border-radius:6px;margin-bottom:1.5rem;" />
+<div style="margin-bottom:2rem;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12);line-height:0;">
+  <img src="/assets/services/customsynthesis-mfg.jpg" alt="Custom Manufacturing Facility" style="width:100%;height:280px;object-fit:cover;display:block;" />
+</div>
 
 <p>We can develop and scale-up new processes or can follow your process under a confidentiality agreement. We usually refine processes given by you to suit large-scale productions with high yield and low costs.</p>
 
@@ -70,7 +72,9 @@ export const servicesContent: Record<string, string> = {
 `,
 
   "process-development": `
-<img src="/assets/services/processdev.jpg" alt="Process Development Lab" style="max-width:100%;height:auto;border-radius:6px;margin-bottom:1.5rem;" />
+<div style="margin-bottom:2rem;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12);line-height:0;">
+  <img src="/assets/services/processdev.jpg" alt="Process Development Lab" style="width:100%;height:280px;object-fit:cover;display:block;" />
+</div>
 
 <p>CHEM-IS-TRY, Inc. offers services for the process development of organic molecules from milligrams to kilograms scale.</p>
 
@@ -82,8 +86,10 @@ export const servicesContent: Record<string, string> = {
 `,
 
   "contract-rd": `
-<img src="/assets/services/contractrd-banner.jpg" alt="Contract R&D" style="max-width:100%;height:auto;border-radius:6px;margin-bottom:1rem;" />
-<img src="/assets/services/contractrd-lab.jpg" alt="Contract R&D Laboratory" style="max-width:100%;height:auto;border-radius:6px;margin-bottom:1.5rem;" />
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:2rem;">
+  <img src="/assets/services/contractrd-banner.jpg" alt="Contract R&D" style="width:100%;height:220px;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:block;" />
+  <img src="/assets/services/contractrd-lab.jpg" alt="Contract R&D Laboratory" style="width:100%;height:220px;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:block;" />
+</div>
 
 <p>CHEM-IS-TRY, Inc. supports contract research and development for many different industries. Our team provides organic synthesis of compounds at the milligram to kilogram scale.</p>
 
