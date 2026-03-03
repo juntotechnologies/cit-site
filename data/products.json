@@ -107,7 +107,7 @@
     "molecular_formula": "C5H5FN2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_A010.png",
     "image_file": "CIT_A010.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "A011",
@@ -184,7 +184,7 @@
     "molecular_formula": "C3H5N3O",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_A017.png",
     "image_file": "CIT_A017.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "A018",
@@ -723,7 +723,7 @@
     "molecular_formula": "C3H5NO",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_A066.png",
     "image_file": "CIT_A066.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "A067",
@@ -1162,7 +1162,10 @@
     "molecular_formula": "C6H14N2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/06/CIT_A106.png",
     "image_file": "CIT_A106.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "A107",
@@ -1206,7 +1209,7 @@
     "molecular_formula": "C14H20O5",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_B003.png",
     "image_file": "CIT_B003.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "B004",
@@ -1558,7 +1561,7 @@
     "molecular_formula": "C18H11BrNO",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_B035.png",
     "image_file": "CIT_B035.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "B036",
@@ -1822,7 +1825,10 @@
     "molecular_formula": "C10H7Br",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_B059.png",
     "image_file": "CIT_B059.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "B060",
@@ -1833,7 +1839,7 @@
     "molecular_formula": "C10H23BCl3N",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_B060.png",
     "image_file": "CIT_B060.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "B061",
@@ -2119,7 +2125,7 @@
     "molecular_formula": "C13H10O",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_B086.png",
     "image_file": "CIT_B086.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "B087",
@@ -3032,7 +3038,7 @@
     "molecular_formula": "C10H20O5",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_C079.png",
     "image_file": "CIT_C079.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "C080",
@@ -3065,7 +3071,7 @@
     "molecular_formula": "C8H14O4",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_C082.png",
     "image_file": "CIT_C082.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "C083",
@@ -3581,7 +3587,10 @@
     "molecular_formula": "C7H8O",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_C131.png",
     "image_file": "CIT_C131.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "C132",
@@ -3680,7 +3689,7 @@
     "molecular_formula": "C5H9CHO",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_C140.png",
     "image_file": "CIT_C140.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "C141",
@@ -3691,7 +3700,10 @@
     "molecular_formula": "C6H10N2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/06/CIT_C141.png",
     "image_file": "CIT_C141.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "C142",
@@ -3702,7 +3714,7 @@
     "molecular_formula": "C6H12N2O",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/06/CIT_C142.png",
     "image_file": "CIT_C142.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "C143",
@@ -3845,7 +3857,10 @@
     "molecular_formula": "C4H6Cl2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_D010.png",
     "image_file": "CIT_D010.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "D011",
@@ -4010,7 +4025,10 @@
     "molecular_formula": "C6H15NS HCl",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_D025.png",
     "image_file": "CIT_D025.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "D026",
@@ -4317,7 +4335,10 @@
     "molecular_formula": "C4H12N2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_D054.png",
     "image_file": "CIT_D054.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "D055",
@@ -4625,7 +4646,7 @@
     "molecular_formula": "C12H12ClNO2S",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_D082.png",
     "image_file": "CIT_D082.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "D083",
@@ -4790,7 +4811,7 @@
     "molecular_formula": "C7H12O4",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_D097.png",
     "image_file": "CIT_D097.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "D098",
@@ -5120,7 +5141,7 @@
     "molecular_formula": "C8H13N2Cl",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_D127.png",
     "image_file": "CIT_D127.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "D128",
@@ -5538,7 +5559,7 @@
     "molecular_formula": "C5H4O2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_F009.png",
     "image_file": "CIT_F009.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "F010",
@@ -5560,7 +5581,7 @@
     "molecular_formula": "C2H2FN",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_F011.png",
     "image_file": "CIT_F011.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "F012",
@@ -5637,7 +5658,7 @@
     "molecular_formula": "C7H3F4NO2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_F018.png",
     "image_file": "CIT_F018.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "F019",
@@ -5659,7 +5680,7 @@
     "molecular_formula": "C4H2N2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_F020.png",
     "image_file": "CIT_F020.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "F021",
@@ -5932,7 +5953,10 @@
     "molecular_formula": "C7H8O2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_H004.png",
     "image_file": "CIT_H004.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "H005",
@@ -6163,7 +6187,7 @@
     "molecular_formula": "C16H34S2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_H025.png",
     "image_file": "CIT_H025.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "H026",
@@ -6185,7 +6209,7 @@
     "molecular_formula": "C16H32O3",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_H027.png",
     "image_file": "CIT_H027.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "H028",
@@ -6426,7 +6450,10 @@
     "molecular_formula": "C6H6O2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_H050.png",
     "image_file": "CIT_H050.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "H052",
@@ -6678,7 +6705,10 @@
     "molecular_formula": "C10H7I",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_I021.png",
     "image_file": "CIT_I021.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "I022",
@@ -6920,7 +6950,10 @@
     "molecular_formula": "C3H5N3S",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_M017.png",
     "image_file": "CIT_M017.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "M018",
@@ -7129,7 +7162,7 @@
     "molecular_formula": "C4H8O",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_M036.png",
     "image_file": "CIT_M036.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "M037",
@@ -7304,7 +7337,7 @@
     "molecular_formula": "C9H9NO3",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_M052.png",
     "image_file": "CIT_M052.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "M053",
@@ -7678,7 +7711,7 @@
     "molecular_formula": "C4H8O2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_M086.png",
     "image_file": "CIT_M086.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "M087",
@@ -7755,7 +7788,7 @@
     "molecular_formula": "C5H10O3",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_M093.png",
     "image_file": "CIT_M093.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "M094",
@@ -7810,7 +7843,7 @@
     "molecular_formula": "C20H36N.Cl",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_M098.png",
     "image_file": "CIT_M098.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "M099",
@@ -8129,7 +8162,7 @@
     "molecular_formula": "C7H5N3O2S",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_N021.png",
     "image_file": "CIT_N021.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "N022",
@@ -8250,7 +8283,10 @@
     "molecular_formula": "BrC6H4NO2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_N032.png",
     "image_file": "CIT_N032.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "N033",
@@ -8448,7 +8484,7 @@
     "molecular_formula": "C5H4N2O2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_P010.png",
     "image_file": "CIT_P010.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "P011",
@@ -8788,7 +8824,10 @@
     "molecular_formula": "C6H10N4",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_P042.png",
     "image_file": "CIT_P042.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "P043",
@@ -8863,7 +8902,10 @@
     "molecular_formula": "C6H5OH",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_P050.png",
     "image_file": "CIT_P050.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "P051",
@@ -8904,7 +8946,10 @@
     "molecular_formula": "C6H5OC6H4NH2",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_P058.png",
     "image_file": "CIT_P058.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "P060",
@@ -8937,7 +8982,7 @@
     "molecular_formula": "C11H16O",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_P062.png",
     "image_file": "CIT_P062.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "P063",
@@ -9158,7 +9203,10 @@
     "molecular_formula": "C6H5COOH",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_RB004.png",
     "image_file": "CIT_RB004.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "RB011",
@@ -9246,7 +9294,7 @@
     "molecular_formula": "MgO",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_RM002.png",
     "image_file": "CIT_RM002.png",
-    "category": "reagent-usp"
+    "category": "representative"
   },
   {
     "catalog_number": "RM007",
@@ -9683,7 +9731,7 @@
     "molecular_formula": "C7H7NaO3S",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/04/CIT_S013.png",
     "image_file": "CIT_S013.png",
-    "category": "organic"
+    "category": "representative"
   },
   {
     "catalog_number": "S014",
@@ -10645,7 +10693,10 @@
     "molecular_formula": "C16H36O4P2S4Zn",
     "image_url": "https://chem-is-try.com/wp-content/uploads/2020/05/CIT_Z002_Rev.png",
     "image_file": "CIT_Z002.png",
-    "category": "bulk"
+    "category": "bulk",
+    "tags": [
+      "representative"
+    ]
   },
   {
     "catalog_number": "Z003",

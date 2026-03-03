@@ -68,7 +68,7 @@ const cats = [
     const q   = searchEl.value.toLowerCase().trim();
     const cat = catEl.value;
     filtered = products.filter(p => {
-      const matchCat = !cat || (p.category || "") === cat;
+      const matchCat = !cat || (p.category || "") === cat || (p.tags || []).includes(cat);
       const matchQ   = !q ||
         (p.name || "").toLowerCase().includes(q) ||
         (p.cas  || "").includes(q) ||
