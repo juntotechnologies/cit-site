@@ -68,7 +68,7 @@ const productSchema = JSON.stringify({
           </div>
           <div class="rfq-cta mt-2">
             <p>Interested in this product?</p>
-            <a href={`/rfq/?product=${encodeURIComponent(p.name || "")}&cat=${encodeURIComponent(p.catalog_number || "")}`} class="btn btn-primary">
+            <a href={`/rfq/?product=${encodeURIComponent(p.name || "")}&cat=${encodeURIComponent(p.catalog_number || "")}&cas=${encodeURIComponent(p.cas || "")}`} class="btn btn-primary">
               Request a Quote
             </a>
           </div>
@@ -102,12 +102,6 @@ const productSchema = JSON.stringify({
             )}
             {p.synonyms && (
               <tr><th>Synonyms</th><td>{p.synonyms}</td></tr>
-            )}
-            {p.url && (
-              <tr>
-                <th>Original Listing</th>
-                <td><a href={p.url} target="_blank" rel="noopener noreferrer">View on original site ↗</a></td>
-              </tr>
             )}
           </table>
 

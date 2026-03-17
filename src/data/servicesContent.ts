@@ -145,7 +145,7 @@ export const servicesContent: Record<string, string> = {
 </ul>
 
 <h2>Requesting a Bulk Quote</h2>
-<p>To request pricing for bulk quantities, please use our <a href="/rfq/">Request for Quotation</a> form or contact us directly at <a href="mailto:sales@chem-is-try.com">sales@chem-is-try.com</a>. Include the chemical name, CAS number, required quantity, and any purity or grade specifications.</p>
+<p>To request pricing for bulk quantities, please use our <a href="/rfq/">Request for Quotation</a> form or contact us directly at <a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a>. Include the chemical name, CAS number, required quantity, and any purity or grade specifications.</p>
 
 <p>You can browse our full bulk chemicals listing in the <a href="/products/?cat=bulk">Products catalog → Bulk Chemicals</a>.</p>
 `,

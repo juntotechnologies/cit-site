@@ -1,7 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-const productName = Astro.url.searchParams.get("product") || "";
-const catNum      = Astro.url.searchParams.get("cat")     || "";
 ---
 <Layout title="Request for Quotation" description="Submit a Request for Quotation for any CHEM-IS-TRY product. We respond within 2–3 business days.">
 
@@ -16,7 +14,7 @@ const catNum      = Astro.url.searchParams.get("cat")     || "";
       <form
         class="rfq-form"
         id="rfq-form"
-        action="https://formspree.io/f/rfqForm"
+        action="https://formspree.io/f/xyknboky"
         method="POST"
       >
 
@@ -24,16 +22,22 @@ const catNum      = Astro.url.searchParams.get("cat")     || "";
         <div class="form-row">
           <div class="form-group">
             <label for="chem-name">Chemical Name *</label>
-            <input type="text" id="chem-name" name="chemical_name" required value={productName} />
+            <input type="text" id="chem-name" name="chemical_name" required />
           </div>
           <div class="form-group">
             <label for="cit-num">CIT # (Catalog Number)</label>
-            <input type="text" id="cit-num" name="catalog_number" value={catNum} />
+            <input type="text" id="cit-num" name="catalog_number" />
           </div>
         </div>
-        <div class="form-group" style="max-width:300px;">
-          <label for="quantity">Quantity Required</label>
-          <input type="text" id="quantity" name="quantity" placeholder="e.g. 100g, 1kg" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cas-num">CAS #</label>
+            <input type="text" id="cas-num" name="cas_number" />
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity Required</label>
+            <input type="text" id="quantity" name="quantity" placeholder="e.g. 100g, 1kg" />
+          </div>
         </div>
 
         <p class="form-section-title">Contact Details</p>
@@ -79,18 +83,26 @@ const catNum      = Astro.url.searchParams.get("cat")     || "";
         </div>
       </form>
 
-      <div style="margin-top:2.5rem;padding:1.25rem;background:var(--gray-100);border-radius:var(--radius);font-size:.88rem;color:var(--gray-600);">
-        <strong>Alternatively, contact us directly:</strong><br />
-        Email: <a href="mailto:sales@chem-is-try.com">sales@chem-is-try.com</a> &nbsp;|&nbsp;
-        Fax: 732-372-7312 &nbsp;|&nbsp;
-        Toll Free: 1-877-CHEM-123
-      </div>
 
     </div>
   </div>
 </Layout>
 
 <script>
+  // Pre-fill from URL params (must run client-side on a static site)
+  const params = new URLSearchParams(location.search);
+  const prefill: Record<string, string> = {
+    "chem-name": params.get("product") || "",
+    "cit-num":   params.get("cat")     || "",
+    "cas-num":   params.get("cas")     || "",
+  };
+  for (const [id, val] of Object.entries(prefill)) {
+    if (val) {
+      const el = document.getElementById(id) as HTMLInputElement | null;
+      if (el) el.value = val;
+    }
+  }
+
   const form = document.getElementById("rfq-form") as HTMLFormElement;
   const succ = document.getElementById("rfq-success") as HTMLDivElement;
   form?.addEventListener("submit", async e => {

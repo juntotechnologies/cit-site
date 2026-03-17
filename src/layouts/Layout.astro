@@ -80,7 +80,6 @@ const orgSchema = JSON.stringify({
   <!-- Top bar -->
   <div class="top-bar">
     <div class="top-bar-inner">
-      <span><span class="free-ship">Free Shipping</span> on qualifying orders</span>
       <span>
         <span class="toll-free">TOLL FREE: 1-877-CHEM-123</span>
         &nbsp;|&nbsp;
@@ -95,6 +94,14 @@ const orgSchema = JSON.stringify({
       <a href="/">
         <img src="/assets/logo.png" alt="CHEM-IS-TRY Inc." class="logo-img" />
       </a>
+
+      <!-- Site search (hidden on home page) -->
+      {p !== "/" && (
+        <form class="header-search" method="GET" action="/products/" role="search">
+          <input type="search" name="q" placeholder="Search products…" aria-label="Search products" />
+          <button type="submit" aria-label="Search">&#128269;</button>
+        </form>
+      )}
 
       <!-- Desktop nav -->
       <nav class="main-nav">
@@ -114,7 +121,6 @@ const orgSchema = JSON.stringify({
             <a href="/services/custom-manufacturing/">Custom Manufacturing</a>
             <a href="/services/process-development/">Process Development</a>
             <a href="/services/contract-rd/">Contract R &amp; D</a>
-            <a href="/services/cgmp/">cGMP Lab / Manufacturing</a>
             <a href="/services/bulk-chemicals/">Bulk Chemicals</a>
           </div>
         </div>
@@ -147,7 +153,6 @@ const orgSchema = JSON.stringify({
       <a href="/services/custom-manufacturing/" style="padding-left:2.25rem">Custom Manufacturing</a>
       <a href="/services/process-development/" style="padding-left:2.25rem">Process Development</a>
       <a href="/services/contract-rd/" style="padding-left:2.25rem">Contract R &amp; D</a>
-      <a href="/services/cgmp/" style="padding-left:2.25rem">cGMP Lab / Manufacturing</a>
       <a href="/services/bulk-chemicals/" style="padding-left:2.25rem">Bulk Chemicals</a>
       <a href="/faq/">FAQs</a>
       <a href="/contact/">Contact Us</a>
@@ -193,7 +198,6 @@ const orgSchema = JSON.stringify({
         <div class="contact-line"><span>Toll Free</span><span>+1-877-CHEM-123 (877-243-6123)</span></div>
         <div class="contact-line"><span>Fax</span><span>+1-732-372-7312</span></div>
         <div class="contact-line"><span>Email</span><a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a></div>
-        <div class="contact-line"><span></span><a href="mailto:PPorwal@chem-is-try.com">PPorwal@chem-is-try.com</a></div>
       </div>
     </div>
     <div class="footer-bottom container">
