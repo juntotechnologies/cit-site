@@ -18,3 +18,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Email archive credentials and output
+accounts.csv
+email_archive/
