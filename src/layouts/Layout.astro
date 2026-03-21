@@ -63,14 +63,14 @@ const orgSchema = JSON.stringify({
   <script type="application/ld+json" set:html={orgSchema} />
   <!-- Slot for page-level JSON-LD or extra head tags -->
   <slot name="head" />
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CKSYRGJ1VC"></script>
+  <!-- Google tag (gtag.js) — replace REPLACE_WITH_GA4_MEASUREMENT_ID with your GA4 Measurement ID -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=REPLACE_WITH_GA4_MEASUREMENT_ID"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-CKSYRGJ1VC');
-  </script>
+    gtag('config', 'REPLACE_WITH_GA4_MEASUREMENT_ID');
+  </script> -->
   <link rel="icon" type="image/png" href="/favicon-cit.png?v=4" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=4" />
   <link rel="apple-touch-icon" href="/favicon-cit.png?v=4" />
