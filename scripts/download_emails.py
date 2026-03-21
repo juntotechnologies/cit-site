@@ -66,7 +66,7 @@ def archive_account(imap_server: str, email_addr: str, password: str) -> None:
 
 
 def main() -> None:
-    csv_path = sys.argv[1] if len(sys.argv) > 1 else "accounts.csv"
+    csv_path = sys.argv[1] if len(sys.argv) > 1 else "scripts/accounts.csv"
     if not os.path.exists(csv_path):
         print(f"CSV file not found: {csv_path}")
         print("Usage: python3 download_emails.py accounts.csv")

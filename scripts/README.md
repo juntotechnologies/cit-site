@@ -4,14 +4,14 @@
 
 Downloads all mail from IMAP accounts into local `.mbox` files organized by user.
 
-Requires an `accounts.csv` in the repo root:
+Requires a `scripts/accounts.csv`:
 ```
 email,password,imap_server
 beth@chem-is-try.com,password123,imap.chem-is-try.com
 ```
 
 ```bash
-uv run scripts/download_emails.py accounts.csv
+uv run scripts/download_emails.py scripts/accounts.csv
 ```
 
 Output is saved to `email_archive/<email>/`.

@@ -20,5 +20,5 @@ Thumbs.db
 *.swp
 
 # Email archive credentials and output
-accounts.csv
+scripts/accounts.csv
 email_archive/
