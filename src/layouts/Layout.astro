@@ -1,4 +1,6 @@
 ---
+import { COMPANY } from "../config/company";
+
 interface Props {
   title: string;
   description?: string;
@@ -8,35 +10,35 @@ interface Props {
 const {
   title,
   description = "CHEM-IS-TRY, Inc. – a specialty chemical company serving the Research and Development community since 1999.",
-  ogImage = "https://chem-is-try.com/assets/banner-01.jpg",
+  ogImage = COMPANY.defaultOgImage,
   ogType = "website",
 } = Astro.props;
 const p = Astro.url.pathname;
-const canonicalURL = new URL(p, "https://chem-is-try.com").href;
-const fullTitle = `${title} | CHEM-IS-TRY, Inc.`;
+const canonicalURL = new URL(p, COMPANY.siteUrl).href;
+const fullTitle = `${title} | ${COMPANY.name}`;
 
 const orgSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "CHEM-IS-TRY, Inc.",
-  "url": "https://chem-is-try.com",
-  "logo": "https://chem-is-try.com/assets/logo.png",
-  "foundingDate": "1999",
+  "name": COMPANY.name,
+  "url": COMPANY.siteUrl,
+  "logo": COMPANY.logo,
+  "foundingDate": COMPANY.foundingYear,
   "description": "A specialty chemical company serving the Research and Development community since 1999.",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "160-4 Liberty Street, Liberty Corporate Park",
-    "addressLocality": "Metuchen",
-    "addressRegion": "NJ",
-    "postalCode": "08840",
-    "addressCountry": "US"
+    "streetAddress": COMPANY.address.street,
+    "addressLocality": COMPANY.address.city,
+    "addressRegion": COMPANY.address.state,
+    "postalCode": COMPANY.address.zip,
+    "addressCountry": COMPANY.address.countryCode,
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+1-732-372-7311",
+    "telephone": COMPANY.phone,
     "contactType": "sales",
-    "email": "info@chem-is-try.com"
-  }
+    "email": COMPANY.email,
+  },
 });
 ---
 <!doctype html>
@@ -81,9 +83,9 @@ const orgSchema = JSON.stringify({
   <div class="top-bar">
     <div class="top-bar-inner">
       <span>
-        <span class="toll-free">TOLL FREE: 1-877-CHEM-123</span>
+        <span class="toll-free">TOLL FREE: {COMPANY.tollFreeDisplay}</span>
         &nbsp;|&nbsp;
-        <a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a>
+        <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
       </span>
     </div>
   </div>
@@ -191,11 +193,11 @@ const orgSchema = JSON.stringify({
       </div>
       <div class="footer-col">
         <h4>Contact Us</h4>
-        <div class="contact-line"><span>Address</span><span>160-4 Liberty Street, Liberty Corporate Park, Metuchen, NJ 08840, USA</span></div>
-        <div class="contact-line"><span>Tel</span><span>+1-732-372-7311</span></div>
-        <div class="contact-line"><span>Toll Free</span><span>+1-877-CHEM-123 (877-243-6123)</span></div>
-        <div class="contact-line"><span>Fax</span><span>+1-732-372-7312</span></div>
-        <div class="contact-line"><span>Email</span><a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a></div>
+        <div class="contact-line"><span>Address</span><span>{COMPANY.address.full}</span></div>
+        <div class="contact-line"><span>Tel</span><span>{COMPANY.phone}</span></div>
+        <div class="contact-line"><span>Toll Free</span><span>{COMPANY.tollFreeDisplay} ({COMPANY.tollFreeNumeric})</span></div>
+        <div class="contact-line"><span>Fax</span><span>{COMPANY.fax}</span></div>
+        <div class="contact-line"><span>Email</span><a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a></div>
       </div>
     </div>
     <div class="footer-bottom container">

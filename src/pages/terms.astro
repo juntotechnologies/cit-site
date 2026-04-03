@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { COMPANY } from "../config/company";
 ---
 <Layout title="Terms & Conditions" description="Terms and Conditions for purchasing from and using CHEM-IS-TRY, Inc.">
 
@@ -40,7 +41,7 @@ import Layout from "../layouts/Layout.astro";
       </ul>
 
       <h2>Returns and Refunds</h2>
-      <p>Due to the nature of chemical products, returns are accepted only for products that arrive damaged or do not match the stated specifications. All return requests must be made within 7 days of receipt. Please contact <a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a> before returning any product.</p>
+      <p>Due to the nature of chemical products, returns are accepted only for products that arrive damaged or do not match the stated specifications. All return requests must be made within 7 days of receipt. Please contact <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> before returning any product.</p>
 
       <h2>Confidentiality and Intellectual Property</h2>
       <p>Custom synthesis projects, proprietary processes, and customer-specific information are treated as strictly confidential. Non-disclosure agreements are available upon request. All intellectual property developed by CHEM-IS-TRY, Inc. remains our property unless otherwise agreed in a separate written agreement.</p>
@@ -56,10 +57,10 @@ import Layout from "../layouts/Layout.astro";
 
       <h2>Contact</h2>
       <p>
-        CHEM-IS-TRY, Inc.<br />
-        160-4 Liberty Street, Liberty Corporate Park<br />
-        Metuchen, NJ 08840, USA<br />
-        <a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a>
+        {COMPANY.name}<br />
+        {COMPANY.address.street}<br />
+        {COMPANY.address.city}, {COMPANY.address.state} {COMPANY.address.zip}, {COMPANY.address.country}<br />
+        <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
       </p>
 
     </div>

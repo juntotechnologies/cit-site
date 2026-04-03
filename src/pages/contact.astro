@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { COMPANY } from "../config/company";
 const team = [
   { name: "Praful Porwal, PhD",         title: "President",                           email: "PPorwal@chem-is-try.com" },
   { name: "Prem Jain, PhD",             title: "Director, Business Development",       email: "PJain@chem-is-try.com" },
@@ -37,12 +38,12 @@ const team = [
       <div class="contact-info-grid">
         <div class="info-box">
           <h3>Contact Information</h3>
-          <div class="info-row"><span class="label">General</span><a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a></div>
-          <div class="info-row"><span class="label">Address</span><span>160-4 Liberty Street, Liberty Corporate Park, Metuchen, NJ 08840, USA</span></div>
-          <div class="info-row"><span class="label">Phone</span><span>732-372-7311</span></div>
-          <div class="info-row"><span class="label">Toll Free</span><span>1-877-CHEM-123</span></div>
-          <div class="info-row"><span class="label">Fax</span><span>732-372-7312</span></div>
-          <div class="info-row"><span class="label">ChemTrec</span><span>1-800-424-9300</span></div>
+          <div class="info-row"><span class="label">General</span><a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a></div>
+          <div class="info-row"><span class="label">Address</span><span>{COMPANY.address.full}</span></div>
+          <div class="info-row"><span class="label">Phone</span><span>{COMPANY.phoneDisplay}</span></div>
+          <div class="info-row"><span class="label">Toll Free</span><span>{COMPANY.tollFreeDisplay}</span></div>
+          <div class="info-row"><span class="label">Fax</span><span>{COMPANY.faxDisplay}</span></div>
+          <div class="info-row"><span class="label">ChemTrec</span><span>{COMPANY.chemtrec}</span></div>
         </div>
 
         <div>
@@ -84,7 +85,7 @@ const team = [
       <div style="margin-top:2.5rem;">
         <h3 style="color:var(--blue);margin-bottom:1rem;">Our Location</h3>
         <iframe
-          src="https://maps.google.com/maps?q=160-4+Liberty+Street+Liberty+Corporate+Park+Metuchen+NJ+08840&output=embed"
+          src={COMPANY.mapEmbedUrl}
           width="100%"
           height="350"
           style="border:0;border-radius:var(--radius);display:block;"
