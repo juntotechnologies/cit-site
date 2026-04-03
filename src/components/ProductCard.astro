@@ -1,0 +1,39 @@
+---
+import type { Product } from "../types/product";
+import { CIT_LABEL } from "../types/product";
+import { formulaToHtml } from "../lib/formula";
+
+interface Props {
+  product: Product;
+  /** Show category badge — useful on mixed-catalog views, redundant on grouped homepage sections. */
+  showCategory?: boolean;
+}
+
+const { product: p, showCategory = false } = Astro.props;
+
+const slug =
+  p.catalog_number?.toLowerCase() ??
+  p.name
+    ?.toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "") ??
+  "unknown";
+---
+
+<div class="product-card">
+  <div class="product-image">
+    {p.image_file
+      ? <img src={`/images/${p.image_file}`} alt={p.name} loading="lazy" />
+      : <span class="no-img">⚗️</span>}
+  </div>
+  {showCategory && p.category && (
+    <span class="product-cat-badge">{p.category.replace("-", " ")}</span>
+  )}
+  <h3><a href={`/products/${slug}/`}>{p.name}</a></h3>
+  {p.catalog_number && <p class="product-meta">{CIT_LABEL} {p.catalog_number}</p>}
+  {p.cas && <p class="product-meta">CAS {p.cas}</p>}
+  {p.molecular_formula && (
+    <p class="product-formula" set:html={formulaToHtml(p.molecular_formula)} />
+  )}
+</div>

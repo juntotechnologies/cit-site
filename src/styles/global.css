@@ -95,7 +95,7 @@ header {
   border-radius: var(--radius) 0 0 var(--radius);
   padding: 0.35rem 0.75rem;
   font-size: 0.85rem;
-  width: 200px;
+  width: 160px;
   outline: none;
   background: #fff;
 }

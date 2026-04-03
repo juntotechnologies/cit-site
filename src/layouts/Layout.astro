@@ -95,13 +95,11 @@ const orgSchema = JSON.stringify({
         <img src="/assets/logo.png" alt="CHEM-IS-TRY Inc." class="logo-img" />
       </a>
 
-      <!-- Site search (hidden on home page) -->
-      {p !== "/" && (
-        <form class="header-search" method="GET" action="/products/" role="search">
-          <input type="search" name="q" placeholder="Search products…" aria-label="Search products" />
-          <button type="submit" aria-label="Search">&#128269;</button>
-        </form>
-      )}
+      <!-- Site search -->
+      <form class="header-search" method="GET" action="/products/" role="search">
+        <input type="search" name="q" placeholder="Search products…" aria-label="Search products" />
+        <button type="submit" aria-label="Search">&#128269;</button>
+      </form>
 
       <!-- Desktop nav -->
       <nav class="main-nav">

@@ -1,6 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import productsData from "../../../data/products.json";
+import { parseProducts, CIT_LABEL } from "../../types/product";
+import rawProducts from "../../../data/products.json";
+
+const productsData = parseProducts(rawProducts as unknown[]);
 
 const cats = [
   { value: "",              label: "All Categories" },
@@ -41,7 +44,7 @@ const cats = [
   </div>
 </Layout>
 
-<script define:vars={{ products: productsData }}>
+<script define:vars={{ products: productsData, CIT_LABEL }}>
   const PAGE_SIZE = 50;
 
   function formulaToHtml(f) {
@@ -100,7 +103,7 @@ const cats = [
           <div class="product-image">${img}</div>
           ${badge}
           <h3><a href="/products/${slug}/">${p.name || "Unknown"}</a></h3>
-          ${p.catalog_number ? `<p class="product-meta">Cat# ${p.catalog_number}</p>` : ""}
+          ${p.catalog_number ? `<p class="product-meta">${CIT_LABEL} ${p.catalog_number}</p>` : ""}
           ${p.cas ? `<p class="product-meta">CAS ${p.cas}</p>` : ""}
           ${formula}
         </div>`;

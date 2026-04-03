@@ -1,10 +1,12 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { formulaToHtml } from "../../lib/formula";
-import productsData from "../../../data/products.json";
+import { parseProducts, type Product } from "../../types/product";
+import rawProducts from "../../../data/products.json";
 
 export function getStaticPaths() {
-  return productsData.map((p) => {
+  const products = parseProducts(rawProducts as unknown[]);
+  return products.map((p) => {
     const slug = p.catalog_number
       ? p.catalog_number.toLowerCase()
       : p.name?.toLowerCase().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "") || "unknown";
@@ -12,6 +14,7 @@ export function getStaticPaths() {
   });
 }
 
+interface Props { product: Product; }
 const { product: p } = Astro.props;
 
 const productDesc = `${p.name} — CAS ${p.cas || "N/A"}, MW ${p.molecular_weight || "N/A"}. Chemical catalog product from CHEM-IS-TRY, Inc.`;

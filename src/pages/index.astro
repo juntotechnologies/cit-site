@@ -1,17 +1,20 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { formulaToHtml } from "../lib/formula";
-import productsData from "../../data/products.json";
+import ProductCard from "../components/ProductCard.astro";
+import { parseProducts } from "../types/product";
+import rawProducts from "../../data/products.json";
 
-// Pick 4 products per category — even number means 2×2 at medium widths, no orphan
+const productsData = parseProducts(rawProducts as unknown[]);
+const total = productsData.length;
+
 function featured(cat: string) {
-  return productsData.filter((p: any) => p.category === cat).slice(0, 4);
+  return productsData.filter((p) => p.category === cat).slice(0, 4);
 }
-const organic     = featured("organic");
-const inorganic   = featured("inorganic");
-const reagent     = featured("reagent-usp");
-const bulk        = featured("bulk");
-const total       = productsData.length;
+
+const organic   = featured("organic");
+const inorganic = featured("inorganic");
+const reagent   = featured("reagent-usp");
+const bulk      = featured("bulk");
 ---
 <Layout title="Quality Chemical Products" description="CHEM-IS-TRY, Inc. – specialty chemical company offering 1,000+ compounds for research, pharma, and industrial applications.">
 
@@ -70,19 +73,7 @@ const total       = productsData.length;
       <section class="section cat-section">
         <h3>Organic Products</h3>
         <div class="product-grid">
-          {organic.map((p: any) => (
-            <div class="product-card">
-              <div class="product-image">
-                {p.image_file
-                  ? <img src={`/images/${p.image_file}`} alt={p.name} loading="lazy" />
-                  : <span class="no-img">⚗️</span>}
-              </div>
-              <h3><a href={`/products/${p.catalog_number?.toLowerCase()}/`}>{p.name}</a></h3>
-              {p.catalog_number && <p class="product-meta">Cat# {p.catalog_number}</p>}
-              {p.cas && <p class="product-meta">CAS {p.cas}</p>}
-              {p.molecular_formula && <p class="product-formula" set:html={formulaToHtml(p.molecular_formula)} />}
-            </div>
-          ))}
+          {organic.map((p) => <ProductCard product={p} />)}
         </div>
         <div style="margin-top:1.25rem;">
           <a href="/products/?cat=organic" class="btn btn-outline">View All Organic →</a>
@@ -94,19 +85,7 @@ const total       = productsData.length;
       <section class="section cat-section" style="padding-top:0">
         <h3>Inorganic Products</h3>
         <div class="product-grid">
-          {inorganic.map((p: any) => (
-            <div class="product-card">
-              <div class="product-image">
-                {p.image_file
-                  ? <img src={`/images/${p.image_file}`} alt={p.name} loading="lazy" />
-                  : <span class="no-img">⚗️</span>}
-              </div>
-              <h3><a href={`/products/${p.catalog_number?.toLowerCase()}/`}>{p.name}</a></h3>
-              {p.catalog_number && <p class="product-meta">Cat# {p.catalog_number}</p>}
-              {p.cas && <p class="product-meta">CAS {p.cas}</p>}
-              {p.molecular_formula && <p class="product-formula" set:html={formulaToHtml(p.molecular_formula)} />}
-            </div>
-          ))}
+          {inorganic.map((p) => <ProductCard product={p} />)}
         </div>
         <div style="margin-top:1.25rem;">
           <a href="/products/?cat=inorganic" class="btn btn-outline">View All Inorganic →</a>
@@ -118,19 +97,7 @@ const total       = productsData.length;
       <section class="section cat-section" style="padding-top:0">
         <h3>Reagent / USP Products</h3>
         <div class="product-grid">
-          {reagent.map((p: any) => (
-            <div class="product-card">
-              <div class="product-image">
-                {p.image_file
-                  ? <img src={`/images/${p.image_file}`} alt={p.name} loading="lazy" />
-                  : <span class="no-img">⚗️</span>}
-              </div>
-              <h3><a href={`/products/${p.catalog_number?.toLowerCase()}/`}>{p.name}</a></h3>
-              {p.catalog_number && <p class="product-meta">Cat# {p.catalog_number}</p>}
-              {p.cas && <p class="product-meta">CAS {p.cas}</p>}
-              {p.molecular_formula && <p class="product-formula" set:html={formulaToHtml(p.molecular_formula)} />}
-            </div>
-          ))}
+          {reagent.map((p) => <ProductCard product={p} />)}
         </div>
         <div style="margin-top:1.25rem;">
           <a href="/products/?cat=reagent-usp" class="btn btn-outline">View All Reagent / USP →</a>
@@ -142,19 +109,7 @@ const total       = productsData.length;
       <section class="section cat-section" style="padding-top:0">
         <h3>Bulk Chemicals</h3>
         <div class="product-grid">
-          {bulk.map((p: any) => (
-            <div class="product-card">
-              <div class="product-image">
-                {p.image_file
-                  ? <img src={`/images/${p.image_file}`} alt={p.name} loading="lazy" />
-                  : <span class="no-img">⚗️</span>}
-              </div>
-              <h3><a href={`/products/${p.catalog_number?.toLowerCase()}/`}>{p.name}</a></h3>
-              {p.catalog_number && <p class="product-meta">Cat# {p.catalog_number}</p>}
-              {p.cas && <p class="product-meta">CAS {p.cas}</p>}
-              {p.molecular_formula && <p class="product-formula" set:html={formulaToHtml(p.molecular_formula)} />}
-            </div>
-          ))}
+          {bulk.map((p) => <ProductCard product={p} />)}
         </div>
         <div style="margin-top:1.25rem;">
           <a href="/products/?cat=bulk" class="btn btn-outline">View All Bulk Chemicals →</a>
@@ -162,25 +117,13 @@ const total       = productsData.length;
       </section>
     )}
 
-    <!-- If no categories scraped yet, show all products -->
+    <!-- Fallback: no categories scraped yet -->
     {organic.length === 0 && inorganic.length === 0 && (
       <section class="section">
         <h2 class="section-title">Our Product Catalog</h2>
         <p class="section-sub">{total.toLocaleString()} compounds</p>
         <div class="product-grid">
-          {productsData.slice(0, 6).map((p: any) => (
-            <div class="product-card">
-              <div class="product-image">
-                {p.image_file
-                  ? <img src={`/images/${p.image_file}`} alt={p.name} loading="lazy" />
-                  : <span class="no-img">⚗️</span>}
-              </div>
-              <h3><a href={`/products/${p.catalog_number?.toLowerCase()}/`}>{p.name}</a></h3>
-              {p.catalog_number && <p class="product-meta">Cat# {p.catalog_number}</p>}
-              {p.cas && <p class="product-meta">CAS {p.cas}</p>}
-              {p.molecular_formula && <p class="product-formula" set:html={formulaToHtml(p.molecular_formula)} />}
-            </div>
-          ))}
+          {productsData.slice(0, 6).map((p) => <ProductCard product={p} />)}
         </div>
       </section>
     )}
