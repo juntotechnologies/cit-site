@@ -244,9 +244,7 @@ nav.main-nav {
 /* ===== Hero Slider (fade) ===== */
 .hero-slider {
   position: relative;
-  /* clamp scales with viewport width (27.2vw matches 1536:418 ratio), capped at 420px */
-  /* width is always 100% — no aspect-ratio to constrain it */
-  height: clamp(180px, 27.2vw, 420px);
+  height: clamp(260px, 55vw, calc(100vh - 130px));
   background: #0d2d54;
   overflow: hidden;
 }
@@ -259,7 +257,7 @@ nav.main-nav {
   pointer-events: none;
 }
 .hero-slider .slide.active { opacity: 1; pointer-events: auto; }
-.hero-slider .slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.hero-slider .slide img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .slider-btn {
   position: absolute;
   top: 50%;
