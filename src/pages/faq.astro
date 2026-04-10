@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { COMPANY } from "../config/company";
 
 const faqs = {
   "Account / Ordering": [
@@ -85,8 +86,8 @@ const faqs = {
 
       <div style="margin-top:2rem;background:var(--blue-pale);padding:1.5rem;border-radius:var(--radius);">
         <h3 style="color:var(--blue);margin-bottom:.5rem;">Still have a question?</h3>
-        <p>Contact us at <a href="mailto:info@chem-is-try.com">info@chem-is-try.com</a> or
-        call <strong>+1-877-CHEM-123</strong>. You can also <a href="/rfq/">submit an RFQ</a> directly.</p>
+        <p>Contact us at <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> or
+        call <strong>{COMPANY.tollFreeDisplay}</strong>. You can also <a href="/rfq/">submit an RFQ</a> directly.</p>
       </div>
 
     </div>

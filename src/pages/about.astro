@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { COMPANY } from "../config/company";
+import { COMPANY, TEAM } from "../config/company";
+
+const president = TEAM.find((member) => member.title === "President");
 ---
 <Layout title="About Us" description="CHEM-IS-TRY, Inc. – specialty chemical company founded in 1999 in Metuchen, NJ.">
 
@@ -61,9 +63,9 @@ import { COMPANY } from "../config/company";
       <div class="info-box" style="margin-top:1rem;">
         <div class="info-row"><span class="label">Address</span><span>{COMPANY.address.full}</span></div>
         <div class="info-row"><span class="label">Tel</span><span>{COMPANY.phone}</span></div>
-        <div class="info-row"><span class="label">Toll Free</span><span>{COMPANY.tollFreeDisplay} (1-{COMPANY.tollFreeNumeric})</span></div>
+        <div class="info-row"><span class="label">Toll Free</span><span>{COMPANY.tollFreeDisplay} ({COMPANY.tollFreeNumeric})</span></div>
         <div class="info-row"><span class="label">Fax</span><span>{COMPANY.fax} / {COMPANY.faxAlt}</span></div>
-        <div class="info-row"><span class="label">Email</span><span><a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> / <a href="mailto:PPorwal@chem-is-try.com">PPorwal@chem-is-try.com</a></span></div>
+        <div class="info-row"><span class="label">Email</span><span><a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>{president && <> / <a href={`mailto:${president.email}`}>{president.email}</a></>}</span></div>
       </div>
 
       <div class="mt-3">

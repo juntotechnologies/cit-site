@@ -1,0 +1,71 @@
+{
+  "company": {
+    "name": "CHEM-IS-TRY, Inc.",
+    "siteUrl": "https://chem-is-try.com",
+    "foundingYear": "1999",
+    "address": {
+      "street": "160-4 & 160-5 A Liberty Street, Liberty Corporate Park",
+      "city": "Metuchen",
+      "state": "NJ",
+      "zip": "08840",
+      "country": "USA",
+      "countryCode": "US",
+      "full": "160-4 & 160-5 A Liberty Street, Liberty Corporate Park, Metuchen, NJ 08840, USA"
+    },
+    "phone": "+1-732-372-7311",
+    "phoneDisplay": "+1-732-372-7311",
+    "tollFree": "+1-877-CHEM-123",
+    "tollFreeDisplay": "+1-877-CHEM-123",
+    "tollFreeNumeric": "+1-877-243-6123",
+    "fax": "+1-732-372-7312",
+    "faxDisplay": "+1-732-372-7312",
+    "faxAlt": "+1-732-603-1905",
+    "chemtrec": "+1-800-424-9300",
+    "email": "info@chem-is-try.com",
+    "mapEmbedUrl": "https://maps.google.com/maps?q=160-4+%26+160-5+A+Liberty+Street+Liberty+Corporate+Park+Metuchen+NJ+08840&output=embed",
+    "defaultOgImage": "https://chem-is-try.com/assets/banner-01.jpg",
+    "logo": "https://chem-is-try.com/assets/logo.png"
+  },
+  "team": [
+    {
+      "name": "Praful Porwal, PhD",
+      "title": "President",
+      "email": "PPorwal@chem-is-try.com"
+    },
+    {
+      "name": "Prem Jain, PhD",
+      "title": "Director, Business Development",
+      "email": "PJain@chem-is-try.com"
+    },
+    {
+      "name": "Romi Singh, PhD",
+      "title": "Director, Marketing",
+      "email": "romi@chem-is-try.com"
+    },
+    {
+      "name": "Chris Angeletakis, PhD",
+      "title": "Technical & Business Dev. Advisor",
+      "email": "info@chem-is-try.com"
+    },
+    {
+      "name": "Shaun Porwal",
+      "title": "Business Development Officer",
+      "email": "Shaun.Porwal@chem-is-try.com"
+    },
+    {
+      "name": "Kartik Patel",
+      "title": "Operations Manager",
+      "email": "Kartik@chem-is-try.com"
+    },
+    {
+      "name": "Olukemi Oyem",
+      "title": "QC-In-Charge",
+      "email": "Kemi@chem-is-try.com"
+    },
+    {
+      "name": "Ushma Srivastava",
+      "title": "Office Manager",
+      "email": "Ushma@chem-is-try.com"
+    }
+  ]
+}
