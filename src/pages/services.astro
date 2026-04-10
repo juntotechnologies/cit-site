@@ -1,12 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
-const services = [
-  { href: "/services/custom-synthesis/",       title: "Custom Synthesis",         icon: "🧪", desc: "Novel molecules, rare compounds, and complex organic synthesis from grams to tons. Our PhD chemists design synthetic routes tailored to your specifications." },
-  { href: "/services/custom-manufacturing/",   title: "Custom Manufacturing",     icon: "🏭", desc: "Scale-up from lab to production. We manufacture advanced organic intermediates at our US and India facilities with rigorous quality control." },
-  { href: "/services/process-development/",    title: "Process Development",      icon: "⚗️", desc: "Optimizing existing synthetic routes or developing new pathways for commercial viability, cost efficiency, and reproducibility." },
-  { href: "/services/contract-rd/",            title: "Contract R & D",           icon: "🔬", desc: "Partner with our experienced scientific team for research and development projects, from early-stage discovery to late-stage development." },
-  { href: "/services/bulk-chemicals/",         title: "Bulk Chemicals",           icon: "📦", desc: "Large-quantity supply of catalog and custom compounds for industrial applications with competitive pricing and reliable delivery." },
-];
+import { publicServices } from "../data/services";
+
+const serviceIcons: Record<string, string> = {
+  "custom-synthesis": "🧪",
+  "custom-manufacturing": "🏭",
+  "process-development": "⚗️",
+  "contract-rd": "🔬",
+  "bulk-chemicals": "📦",
+};
 ---
 <Layout title="Services" description="CHEM-IS-TRY, Inc. offers custom synthesis, manufacturing, process development, contract R&D, and cGMP services.">
 
@@ -25,11 +27,11 @@ const services = [
       </p>
 
       <div class="services-grid">
-        {services.map(s => (
+        {publicServices.map((service) => (
           <div class="service-card">
-            <h3>{s.icon} {s.title}</h3>
-            <p>{s.desc}</p>
-            <a href={s.href} class="learn-more">Learn more →</a>
+            <h3>{serviceIcons[service.slug]} {service.title}</h3>
+            <p>{service.shortDescription}</p>
+            <a href={`/services/${service.slug}/`} class="learn-more">Learn more →</a>
           </div>
         ))}
       </div>

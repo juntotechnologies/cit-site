@@ -1,24 +1,22 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { servicesContent } from "../../data/servicesContent";
-
-const slugs = ["custom-synthesis", "custom-manufacturing", "process-development", "contract-rd", "bulk-chemicals"];
-const titles: Record<string, string> = {
-  "custom-synthesis":      "Custom Synthesis",
-  "custom-manufacturing":  "Custom Manufacturing",
-  "process-development":   "Process Development",
-  "contract-rd":           "Contract R & D",
-  "bulk-chemicals":        "Bulk Chemicals",
-};
+import { publicServiceSlugs, servicesBySlug } from "../../data/services";
 
 export function getStaticPaths() {
-  return ["custom-synthesis", "custom-manufacturing", "process-development", "contract-rd", "bulk-chemicals"]
-    .map(slug => ({ params: { slug } }));
+  return publicServiceSlugs.map((slug) => ({ params: { slug } }));
 }
 
 const { slug } = Astro.params;
-const title = titles[slug] || slug;
-const html = servicesContent[slug] || `<p>Content coming soon.</p>`;
+const service = slug ? servicesBySlug[slug] : undefined;
+const title = service?.title || slug || "Service";
+
+const imageLayoutClass = service?.images
+  ? {
+      banner: "svc-img-banner",
+      "two-col": "svc-img-2col",
+      "three-col": "svc-img-3col",
+    }[service.images.layout]
+  : "";
 ---
 <Layout title={title} description={`${title} services from CHEM-IS-TRY, Inc.`}>
 
@@ -28,7 +26,49 @@ const html = servicesContent[slug] || `<p>Content coming soon.</p>`;
   </div>
 
   <div class="container">
-    <div class="page-content" style="max-width:860px;" set:html={html} />
+    <div class="page-content" style="max-width:860px;">
+      {service?.images && (
+        <div class={imageLayoutClass}>
+          {service.images.items.map((image) => (
+            <img src={image.src} alt={image.alt} class="svc-media-img" />
+          ))}
+        </div>
+      )}
+
+      {service ? (
+        service.sections.map((section) => (
+          <>
+            {section.heading && <h2>{section.heading}</h2>}
+            {section.paragraphs?.map((paragraph) => {
+              const parts = paragraph.split(/(Request for Quotation|Products catalog → Bulk Chemicals|info@chem-is-try\.com)/g);
+              return (
+                <p>
+                  {parts.map((part) => {
+                    if (part === "Request for Quotation") {
+                      return <a href="/rfq/">{part}</a>;
+                    }
+                    if (part === "Products catalog → Bulk Chemicals") {
+                      return <a href="/products/?cat=bulk">{part}</a>;
+                    }
+                    if (part === "info@chem-is-try.com") {
+                      return <a href="mailto:info@chem-is-try.com">{part}</a>;
+                    }
+                    return part;
+                  })}
+                </p>
+              );
+            })}
+            {section.listItems && (
+              <ul>
+                {section.listItems.map((item) => <li>{item}</li>)}
+              </ul>
+            )}
+          </>
+        ))
+      ) : (
+        <p>Content coming soon.</p>
+      )}
+    </div>
 
     <div style="padding-bottom:3rem;">
       <a href="/rfq/" class="btn btn-primary">Request a Quote</a>

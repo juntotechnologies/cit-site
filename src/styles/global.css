@@ -621,6 +621,24 @@ footer { background: #1a1a2e; color: var(--gray-400); font-size: 0.85rem; margin
   box-shadow: 0 4px 16px rgba(0,0,0,.12);
   line-height: 0;
 }
+.svc-media-img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+}
+.svc-img-banner .svc-media-img {
+  height: 280px;
+  border-radius: 0;
+  box-shadow: none;
+}
+.svc-img-2col .svc-media-img {
+  height: 220px;
+}
+.svc-img-3col .svc-media-img {
+  height: 190px;
+}
 @media (max-width: 600px) {
   .svc-img-3col, .svc-img-2col { grid-template-columns: 1fr; }
 }
