@@ -1,7 +1,9 @@
 ---
 import type { Product } from "../types/product";
-import { CIT_LABEL } from "../types/product";
-import { formulaToHtml } from "../lib/formula";
+import { CIT_LABEL, parseProducts } from "../types/product";
+import { formulaToHtml } from "../lib/formula.js";
+import { getProductPath } from "../lib/product-url.js";
+import rawProducts from "../../data/products.json";
 
 interface Props {
   product: Product;
@@ -10,15 +12,8 @@ interface Props {
 }
 
 const { product: p, showCategory = false } = Astro.props;
-
-const slug =
-  p.catalog_number?.toLowerCase() ??
-  p.name
-    ?.toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "") ??
-  "unknown";
+const products = parseProducts(rawProducts as unknown[]);
+const productPath = getProductPath(p, products);
 ---
 
 <div class="product-card">
@@ -30,7 +25,7 @@ const slug =
   {showCategory && p.category && (
     <span class="product-cat-badge">{p.category.replace("-", " ")}</span>
   )}
-  <h3><a href={`/products/${slug}/`}>{p.name}</a></h3>
+  <h3><a href={productPath}>{p.name}</a></h3>
   {p.catalog_number && <p class="product-meta">{CIT_LABEL} {p.catalog_number}</p>}
   {p.cas && <p class="product-meta">CAS {p.cas}</p>}
   {p.molecular_formula && (

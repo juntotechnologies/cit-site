@@ -1,15 +1,14 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { formulaToHtml } from "../../lib/formula";
+import { formulaToHtml } from "../../lib/formula.js";
+import { getProductPath, getProductSlug } from "../../lib/product-url.js";
 import { parseProducts, type Product } from "../../types/product";
 import rawProducts from "../../../data/products.json";
 
 export function getStaticPaths() {
   const products = parseProducts(rawProducts as unknown[]);
   return products.map((p) => {
-    const slug = p.catalog_number
-      ? p.catalog_number.toLowerCase()
-      : p.name?.toLowerCase().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "") || "unknown";
+    const slug = getProductSlug(p, products);
     return { params: { slug }, props: { product: p } };
   });
 }
@@ -21,11 +20,13 @@ const productDesc = `${p.name} — CAS ${p.cas || "N/A"}, MW ${p.molecular_weigh
 const ogImage = p.image_file
   ? `https://chem-is-try.com/images/${p.image_file}`
   : "https://chem-is-try.com/assets/banner-01.jpg";
+const productUrl = new URL(getProductPath(p, parseProducts(rawProducts as unknown[])), "https://chem-is-try.com").href;
 
 const productSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Product",
   "name": p.name,
+  "url": productUrl,
   "description": p.description || productDesc,
   "image": ogImage,
   "brand": {
