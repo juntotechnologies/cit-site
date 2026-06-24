@@ -167,13 +167,19 @@ nav.main-nav {
 .dropdown a:last-child { border-bottom: none; }
 .dropdown a:hover { background: var(--blue-pale); color: var(--blue); text-decoration: none; }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: 0.75rem;
+}
+
 .nav-book-call {
   background: var(--color-surface) !important;
   color: var(--color-brand-primary) !important;
   border-radius: var(--radius) !important;
   font-weight: 700 !important;
   padding: 0.45rem 0.9rem !important;
-  margin-right: 0.5rem;
   white-space: nowrap;
 }
 .nav-book-call:hover { background: var(--color-surface-brand) !important; }
