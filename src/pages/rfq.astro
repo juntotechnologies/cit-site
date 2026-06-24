@@ -89,29 +89,33 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 
 <script>
-  // Pre-fill from URL params (must run client-side on a static site)
-  const params = new URLSearchParams(location.search);
-  const prefill: Record<string, string> = {
-    "chem-name": params.get("product") || "",
-    "cit-num":   params.get("cat")     || "",
-    "cas-num":   params.get("cas")     || "",
-  };
-  for (const [id, val] of Object.entries(prefill)) {
-    if (val) {
-      const el = document.getElementById(id) as HTMLInputElement | null;
-      if (el) el.value = val;
-    }
-  }
+  document.addEventListener("astro:page-load", () => {
+    const form = document.getElementById("rfq-form") as HTMLFormElement | null;
+    if (!form) return;
 
-  const form = document.getElementById("rfq-form") as HTMLFormElement;
-  const succ = document.getElementById("rfq-success") as HTMLDivElement;
-  form?.addEventListener("submit", async e => {
-    e.preventDefault();
-    const r = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" }});
-    if (r.ok) {
-      form.reset();
-      succ.style.display = "block";
-      form.querySelector("button")!.style.display = "none";
+    // Pre-fill from URL params (must run client-side on a static site)
+    const params = new URLSearchParams(location.search);
+    const prefill: Record<string, string> = {
+      "chem-name": params.get("product") || "",
+      "cit-num":   params.get("cat")     || "",
+      "cas-num":   params.get("cas")     || "",
+    };
+    for (const [id, val] of Object.entries(prefill)) {
+      if (val) {
+        const el = document.getElementById(id) as HTMLInputElement | null;
+        if (el) el.value = val;
+      }
     }
+
+    const succ = document.getElementById("rfq-success") as HTMLDivElement | null;
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      const r = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" }});
+      if (r.ok) {
+        form.reset();
+        if (succ) succ.style.display = "block";
+        form.querySelector<HTMLButtonElement>("button")!.style.display = "none";
+      }
+    });
   });
 </script>

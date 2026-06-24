@@ -79,21 +79,30 @@ const president = TEAM.find((member) => member.title === "President");
 </Layout>
 
 <script>
-  const slideEls = document.querySelectorAll("#about-slider .slide");
-  const dotEls   = document.querySelectorAll("#about-slider .slider-dot");
-  let cur = 0;
-  const n = slideEls.length;
+  let aboutInterval: ReturnType<typeof setInterval> | undefined;
 
-  function go(i: number) {
-    slideEls[cur].classList.remove("active");
-    dotEls[cur].classList.remove("active");
-    cur = (i + n) % n;
-    slideEls[cur].classList.add("active");
-    dotEls[cur].classList.add("active");
-  }
+  document.addEventListener("astro:page-load", () => {
+    if (aboutInterval) clearInterval(aboutInterval);
 
-  document.getElementById("about-prev")!.addEventListener("click", () => go(cur - 1));
-  document.getElementById("about-next")!.addEventListener("click", () => go(cur + 1));
-  dotEls.forEach(d => d.addEventListener("click", () => go(Number((d as HTMLElement).dataset.idx))));
-  setInterval(() => go(cur + 1), 4500);
+    const slider = document.getElementById("about-slider");
+    if (!slider) return;
+
+    const slideEls = slider.querySelectorAll(".slide");
+    const dotEls   = slider.querySelectorAll(".slider-dot");
+    let cur = 0;
+    const n = slideEls.length;
+
+    function go(i: number) {
+      slideEls[cur].classList.remove("active");
+      dotEls[cur].classList.remove("active");
+      cur = (i + n) % n;
+      slideEls[cur].classList.add("active");
+      dotEls[cur].classList.add("active");
+    }
+
+    document.getElementById("about-prev")?.addEventListener("click", () => go(cur - 1));
+    document.getElementById("about-next")?.addEventListener("click", () => go(cur + 1));
+    dotEls.forEach(d => d.addEventListener("click", () => go(Number((d as HTMLElement).dataset.idx))));
+    aboutInterval = setInterval(() => go(cur + 1), 4500);
+  });
 </script>

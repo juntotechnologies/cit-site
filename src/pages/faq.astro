@@ -95,19 +95,21 @@ const faqs = {
 </Layout>
 
 <script>
-  document.querySelectorAll(".faq-q").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id  = (btn as HTMLElement).dataset.id!;
-      const ans = document.getElementById(id)!;
-      const open = ans.classList.contains("open");
-      // Close all
-      document.querySelectorAll(".faq-a").forEach(a => a.classList.remove("open"));
-      document.querySelectorAll(".faq-q").forEach(b => { b.classList.remove("open"); b.setAttribute("aria-expanded", "false"); });
-      if (!open) {
-        ans.classList.add("open");
-        btn.classList.add("open");
-        btn.setAttribute("aria-expanded", "true");
-      }
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll(".faq-q").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id  = (btn as HTMLElement).dataset.id!;
+        const ans = document.getElementById(id)!;
+        const open = ans.classList.contains("open");
+        // Close all
+        document.querySelectorAll(".faq-a").forEach(a => a.classList.remove("open"));
+        document.querySelectorAll(".faq-q").forEach(b => { b.classList.remove("open"); b.setAttribute("aria-expanded", "false"); });
+        if (!open) {
+          ans.classList.add("open");
+          btn.classList.add("open");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
     });
   });
 </script>
