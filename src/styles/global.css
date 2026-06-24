@@ -173,6 +173,7 @@ nav.main-nav {
   border-radius: var(--radius) !important;
   font-weight: 700 !important;
   padding: 0.45rem 0.9rem !important;
+  margin-right: 0.5rem;
   white-space: nowrap;
 }
 .nav-book-call:hover { background: var(--color-surface-brand) !important; }
