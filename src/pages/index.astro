@@ -209,31 +209,40 @@ const bulk      = featured("bulk");
 </Layout>
 
 <script>
-  const slideEls = document.querySelectorAll("#hero-slider .slide");
-  const dotEls   = document.querySelectorAll("#hero-slider .slider-dot");
-  let cur = 0;
-  const n = slideEls.length;
+  let heroInterval: ReturnType<typeof setInterval> | undefined;
 
-  function hydrateSlideImage(index: number) {
-    const img = slideEls[index]?.querySelector("img[data-src]") as HTMLImageElement | null;
-    if (!img || img.src) return;
-    img.src = img.dataset.src || "";
-  }
+  document.addEventListener("astro:page-load", () => {
+    if (heroInterval) clearInterval(heroInterval);
 
-  function goTo(i: number) {
-    hydrateSlideImage((i + n) % n);
-    slideEls[cur].classList.remove("active");
-    dotEls[cur].classList.remove("active");
-    cur = (i + n) % n;
-    slideEls[cur].classList.add("active");
-    dotEls[cur].classList.add("active");
-    hydrateSlideImage((cur + 1) % n);
-  }
+    const slider = document.getElementById("hero-slider");
+    if (!slider) return;
 
-  hydrateSlideImage(1);
+    const slideEls = slider.querySelectorAll(".slide");
+    const dotEls   = slider.querySelectorAll(".slider-dot");
+    let cur = 0;
+    const n = slideEls.length;
 
-  document.getElementById("hero-prev")!.addEventListener("click", () => goTo(cur - 1));
-  document.getElementById("hero-next")!.addEventListener("click", () => goTo(cur + 1));
-  dotEls.forEach(d => d.addEventListener("click", () => goTo(Number((d as HTMLElement).dataset.idx))));
-  setInterval(() => goTo(cur + 1), 5000);
+    function hydrateSlideImage(index: number) {
+      const img = slideEls[index]?.querySelector("img[data-src]") as HTMLImageElement | null;
+      if (!img || img.src) return;
+      img.src = img.dataset.src || "";
+    }
+
+    function goTo(i: number) {
+      hydrateSlideImage((i + n) % n);
+      slideEls[cur].classList.remove("active");
+      dotEls[cur].classList.remove("active");
+      cur = (i + n) % n;
+      slideEls[cur].classList.add("active");
+      dotEls[cur].classList.add("active");
+      hydrateSlideImage((cur + 1) % n);
+    }
+
+    hydrateSlideImage(1);
+
+    document.getElementById("hero-prev")?.addEventListener("click", () => goTo(cur - 1));
+    document.getElementById("hero-next")?.addEventListener("click", () => goTo(cur + 1));
+    dotEls.forEach(d => d.addEventListener("click", () => goTo(Number((d as HTMLElement).dataset.idx))));
+    heroInterval = setInterval(() => goTo(cur + 1), 5000);
+  });
 </script>

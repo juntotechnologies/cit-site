@@ -91,11 +91,13 @@ import { COMPANY, TEAM } from "../config/company";
 </Layout>
 
 <script>
-  const form = document.getElementById("contact-form") as HTMLFormElement;
-  const succ = document.getElementById("c-success") as HTMLDivElement;
-  form?.addEventListener("submit", async e => {
-    e.preventDefault();
-    const r = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" }});
-    if (r.ok) { form.reset(); succ.style.display = "block"; }
+  document.addEventListener("astro:page-load", () => {
+    const form = document.getElementById("contact-form") as HTMLFormElement | null;
+    const succ = document.getElementById("c-success") as HTMLDivElement | null;
+    form?.addEventListener("submit", async e => {
+      e.preventDefault();
+      const r = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" }});
+      if (r.ok) { form.reset(); if (succ) succ.style.display = "block"; }
+    });
   });
 </script>
