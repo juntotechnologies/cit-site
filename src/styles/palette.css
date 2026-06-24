@@ -1,0 +1,78 @@
+/*
+ * CHEM-IS-TRY color palette
+ *
+ * Keep raw brand colors and semantic color roles here. Components should use
+ * semantic tokens so the site can be rethemed without hunting for hex values.
+ */
+:root {
+  /* Brand */
+  --color-brand-primary: #1a4f8a;
+  --color-brand-primary-hover: #2d6cc0;
+  --color-brand-primary-deep: #163a6e;
+  --color-brand-navy: #0d2d54;
+  --color-brand-accent: #f39c12;
+  --color-brand-accent-hover: #e67e22;
+
+  /* Neutrals */
+  --color-white: #ffffff;
+  --color-neutral-50: #f5f7fa;
+  --color-neutral-100: #e9ecef;
+  --color-neutral-300: #adb5bd;
+  --color-neutral-500: #6c757d;
+  --color-neutral-900: #212529;
+
+  /* Semantic roles */
+  --color-text: var(--color-neutral-900);
+  --color-text-muted: var(--color-neutral-500);
+  --color-text-on-dark: var(--color-white);
+  --color-link: var(--color-brand-primary-hover);
+  --color-heading: var(--color-brand-primary);
+  --color-page: var(--color-white);
+  --color-surface: var(--color-white);
+  --color-surface-subtle: var(--color-neutral-50);
+  --color-surface-brand: #e8f0fb;
+  --color-border: var(--color-neutral-100);
+  --color-border-strong: #9aaabd;
+  --color-focus: var(--color-brand-primary-hover);
+  --color-focus-ring: rgba(45, 108, 192, 0.18);
+  --color-header: var(--color-brand-primary);
+  --color-footer: #1a1a2e;
+  --color-footer-border: #2d2d4a;
+  --color-footer-label: #8a8a9a;
+  --color-footer-muted: #666666;
+  --color-media-backdrop: #111111;
+  --color-overlay: rgba(0, 0, 0, 0.4);
+  --color-overlay-strong: rgba(0, 0, 0, 0.65);
+  --color-shadow-soft: rgba(0, 0, 0, 0.08);
+  --color-shadow-card-hover: rgba(0, 0, 0, 0.11);
+  --color-shadow-medium: rgba(0, 0, 0, 0.12);
+  --color-shadow-header: rgba(0, 0, 0, 0.25);
+  --color-success-surface: #d4edda;
+  --color-success-text: #155724;
+  --color-success-border: #c3e6cb;
+
+  /* Shared translucent colors */
+  --color-on-dark-07: rgba(255, 255, 255, 0.07);
+  --color-on-dark-08: rgba(255, 255, 255, 0.08);
+  --color-on-dark-10: rgba(255, 255, 255, 0.10);
+  --color-on-dark-12: rgba(255, 255, 255, 0.12);
+  --color-on-dark-15: rgba(255, 255, 255, 0.15);
+  --color-on-dark-25: rgba(255, 255, 255, 0.25);
+  --color-on-dark-40: rgba(255, 255, 255, 0.40);
+  --color-on-dark-50: rgba(255, 255, 255, 0.50);
+  --color-on-dark-70: rgba(255, 255, 255, 0.70);
+  --color-on-dark-88: rgba(255, 255, 255, 0.88);
+
+  /* Compatibility aliases used throughout the existing site */
+  --blue: var(--color-brand-primary);
+  --blue-light: var(--color-brand-primary-hover);
+  --blue-pale: var(--color-surface-brand);
+  --gray-100: var(--color-neutral-50);
+  --gray-200: var(--color-neutral-100);
+  --gray-400: var(--color-neutral-300);
+  --gray-600: var(--color-neutral-500);
+  --gray-900: var(--color-neutral-900);
+  --white: var(--color-white);
+  --gold: var(--color-brand-accent);
+  --gold-dark: var(--color-brand-accent-hover);
+}
