@@ -1,5 +1,31 @@
 @import "./palette.css";
 
+/* Smooth same-origin page navigation while keeping shared chrome stable. */
+@view-transition {
+  navigation: auto;
+}
+
+@keyframes page-fade-out {
+  to { opacity: 0; transform: translateY(-2px); }
+}
+
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(2px); }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(page-content) {
+  animation: 90ms ease-out both page-fade-out;
+}
+
+::view-transition-new(page-content) {
+  animation: 180ms ease-out both page-fade-in;
+}
+
 /* ===== Reset & Base ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -23,7 +49,10 @@ body {
   display: flex;
   flex-direction: column;
 }
-main { flex: 1; }
+main {
+  flex: 1;
+  view-transition-name: page-content;
+}
 a { color: var(--blue-light); text-decoration: none; }
 a:hover { text-decoration: underline; }
 img { max-width: 100%; height: auto; display: block; }
