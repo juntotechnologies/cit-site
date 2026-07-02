@@ -6,10 +6,11 @@ Branch: `feature/product-catalogue-upload-jul2026`
 
 ## Goal
 
-Add the ~102 new products from `260702-products-to-be-uploaded.docx` (dropped
-in the repo root) to `data/products.json`, with their structure images copied
-into `public/images/`, so they show up correctly in `/products` search and
-get their own canonical product pages.
+Add the ~102 new products from
+`docs/vendor-reviews/2026-07-products-to-be-uploaded.docx` to
+`data/products.json`, with their structure images copied into
+`public/images/`, so they show up correctly in `/products` search and get
+their own canonical product pages.
 
 ## Context
 
@@ -136,9 +137,10 @@ The source is a Word doc, not a clean data file. Inspecting its internals
   blank-looking row, the 6 products with no structure image, and the 3
   truncated-looking formulas (`D159`, `D153`, `T075`). These will merge in
   a follow-up once the vendor responds — not blocking what's already live.
-- [ ] Remove `260702-products-to-be-uploaded.docx` from the repo root once
-  the remaining review items are resolved and merged too (keep the repo
-  root clean; the source doc isn't meant to live there long-term).
+- [x] Moved the source doc from the repo root into
+  `docs/vendor-reviews/2026-07-products-to-be-uploaded.docx`, alongside the
+  plain-text vendor confirmation doc it corresponds to, rather than leaving
+  it loose at the root.
 
 ## Smoke Tests
 

@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 import { buildReviewReport, findDuplicateCatalogNumbers, parseProductRows, parseRelsMap, partitionByCollision } from "../src/lib/docx-product-parser.js";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
-const docxPath = process.argv[2] || join(root, "260702-products-to-be-uploaded.docx");
+const docxPath = process.argv[2] || join(root, "docs", "vendor-reviews", "2026-07-products-to-be-uploaded.docx");
 const outDir = join(root, "scripts", "out");
 
 function extractFromZip(zipPath, entryPath) {

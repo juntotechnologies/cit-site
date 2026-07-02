@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url";
 import { inferCategory } from "../src/lib/docx-product-parser.js";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
-const docxPath = process.argv[2] || join(root, "260702-products-to-be-uploaded.docx");
+const docxPath = process.argv[2] || join(root, "docs", "vendor-reviews", "2026-07-products-to-be-uploaded.docx");
 const cleanPath = join(root, "scripts", "out", "docx-parsed-clean.json");
 const productsPath = join(root, "data", "products.json");
 const imagesDir = join(root, "public", "images");
