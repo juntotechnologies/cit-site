@@ -95,7 +95,9 @@ const faqs = {
 </Layout>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  import { onPageLoad } from "../lib/page-lifecycle.js";
+
+  onPageLoad(() => {
     document.querySelectorAll(".faq-q").forEach(btn => {
       btn.addEventListener("click", () => {
         const id  = (btn as HTMLElement).dataset.id!;

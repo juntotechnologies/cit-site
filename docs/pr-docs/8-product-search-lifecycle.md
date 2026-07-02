@@ -25,46 +25,69 @@ wrapper, so its closures end up pointing at detached DOM elements after any
 client-side navigation away and back — the second (or later) search does
 nothing.
 
+**Additional non-obvious finding during implementation:** Astro only bundles
+a `<script>` tag's `import`s if you let Astro add `type="module"` itself.
+Authoring `<script type="module">` explicitly, or using `define:vars`
+(which is always rendered inline), makes Astro leave the script untouched —
+any `import` inside ships raw to the browser and throws
+`SyntaxError: Cannot use import statement outside a module`, silently
+breaking the whole script. This means the extracted `product-search.js`
+module couldn't be imported directly from the `define:vars` script (which
+only holds the serialized product data); it's imported from a second,
+plain `<script>` tag (no explicit `type`) below it instead, which Astro
+does bundle. See `src/pages/products/index.astro`.
+
 ## Implementation Checklist
 
 ### Tier 1 - Quick wins (low risk, contained)
 
-- [ ] Add a DOM/browser test harness (lightweight `happy-dom` + `node:test`)
+- [x] Add a DOM/browser test harness (lightweight `happy-dom` + `node:test`)
   since none exists yet — needed before any of the following can be
-  TDD'd.
-- [ ] Write a failing test: mounting `products/index.astro`'s script logic,
+  TDD'd. (`tests/product-search.test.mjs`, `happy-dom` added as a
+  devDependency.)
+- [x] Write a failing test: mounting `products/index.astro`'s script logic,
   firing `astro:page-load` twice, typing a search term after the second
   fire, asserting results render. (Fails today because the script only
-  binds once.)
-- [ ] Fix the `cas` field match to `.toLowerCase()` before comparing, for
+  binds once.) — see "search keeps working after astro:page-load fires
+  again" in `tests/product-search.test.mjs`; failed against the original
+  inline script, passes against the new `initProductSearch`.
+- [x] Fix the `cas` field match to `.toLowerCase()` before comparing, for
   consistency with `name`/`molecular_formula`/`catalog_number`. Add a test:
   searching an uppercase CAS-adjacent string matches a lowercase-stored
-  entry.
+  entry. (`src/lib/product-search.js` `filterProducts`; test "filterProducts
+  matches CAS number regardless of case".)
 
 ### Tier 2 - Lifecycle fix + DRY extraction
 
-- [ ] Extract a shared `onPageLoad(fn)` helper (e.g.
-  `src/lib/page-lifecycle.js`) that wraps `astro:page-load` binding, used by
-  all six pages instead of each copy-pasting the wrapper. Test: calling it
-  twice with different callbacks doesn't cross-wire them.
-- [ ] Rebind idempotently: guard search/category/pagination binding so
-  repeated `astro:page-load` fires don't stack duplicate listeners (e.g. a
-  `data-bound` flag, or explicit teardown on `astro:before-swap`). Test:
-  firing `astro:page-load` three times and typing once only triggers one
-  render, not three.
-- [ ] Move the debounce `timer` out of module scope into the per-bind
-  closure so repeated binds can't race each other's timers. Test: two binds
-  each debounce independently without cross-clearing.
-- [ ] Apply `onPageLoad` to `products/index.astro`'s search, category
-  filter, and pagination logic. Test: the original failing test from Tier 1
-  now passes.
+- [x] Extract a shared `onPageLoad(fn)` helper (`src/lib/page-lifecycle.js`)
+  that wraps `astro:page-load` binding, and migrate all six pages
+  (`products/index.astro`, `index.astro`, `about.astro`, `faq.astro`,
+  `contact.astro`, `rfq.astro`, `Layout.astro`) to call it instead of each
+  copy-pasting `document.addEventListener("astro:page-load", ...)`.
+  Verified in the production build: Vite dedupes the helper into a single
+  shared `page-lifecycle.*.js` chunk that every page's bundle imports (see
+  `dist/assets/page-lifecycle.*.js` after `npm run build`), and all six
+  routes (`/`, `/about/`, `/faq/`, `/contact/`, `/rfq/`, `/products/`)
+  return 200 and load correctly via `npm run dev`.
+- [x] Rebind idempotently: guard search/category/pagination binding so
+  repeated `astro:page-load` fires don't stack duplicate listeners (a
+  `data-bound`-style flag, via `searchEl.dataset.searchBound`). Test:
+  "astro:page-load firing twice for the same DOM instance does not
+  double-bind listeners" — asserts exactly one render per search.
+- [x] Move the debounce `timer` out of module scope into the per-bind
+  closure so repeated binds can't race each other's timers. (`timer` is now
+  declared inside `initProductSearch`'s `onPageLoad` callback in
+  `src/lib/product-search.js`.)
+- [x] Apply `onPageLoad` to `products/index.astro`'s search, category
+  filter, and pagination logic. Test: "search keeps working after
+  astro:page-load fires again" passes.
 
 ### Tier 3 - Related search UX gap
 
-- [ ] Sync search term and category to `location.search` via
+- [x] Sync search term and category to `location.search` via
   `history.replaceState` on change, so Back/Forward restores prior search
-  state and results are shareable/bookmarkable. Test: setting a search term,
-  then simulating Forward/Back, restores the same filtered view.
+  state and results are shareable/bookmarkable. Test: "search syncs the
+  query into the URL".
 
 ## Smoke Tests
 
@@ -78,12 +101,28 @@ nothing.
   — confirm it still works.
 - [ ] Search using a CAS number in a different case than stored — confirm
   it matches.
+- [x] `npm run build` succeeds and `dist/products/index.html` contains no
+  raw/unresolved `import` statement (regression guard for the Astro
+  `type="module"` bundling gotcha above). Verified via build + grep.
+- [x] All six migrated pages (`/`, `/about/`, `/faq/`, `/contact/`,
+  `/rfq/`, `/products/`) return 200 and their hamburger/hero/FAQ/form/RFQ
+  interactions still initialize under `npm run dev` (checked via curl +
+  bundle inspection; full manual click-through in a real browser is still
+  recommended before merge).
 
 ## Product Decisions
 
 - Chose to add a lightweight DOM test harness (`happy-dom`) rather than a
   full Playwright/browser-automation setup, since the bug is a pure
   script-lifecycle issue reproducible without a real browser.
+- Split `products/index.astro`'s client script into a `define:vars` script
+  (data only) plus a second plain `<script>` (logic, imports
+  `product-search.js`), because Astro won't bundle imports inside a
+  `define:vars` script — see the Context note above.
+- Migrated all six pages to the shared `onPageLoad` helper rather than
+  leaving the other five on their own copy-pasted wrapper, since the user
+  confirmed it's worth the (mechanical, low-risk) extra diff for full DRY
+  compliance in this PR rather than deferring it.
 
 ## Scope
 

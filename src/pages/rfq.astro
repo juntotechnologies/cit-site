@@ -89,7 +89,9 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  import { onPageLoad } from "../lib/page-lifecycle.js";
+
+  onPageLoad(() => {
     const form = document.getElementById("rfq-form") as HTMLFormElement | null;
     if (!form) return;
 

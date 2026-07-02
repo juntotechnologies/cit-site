@@ -91,7 +91,9 @@ import { COMPANY, TEAM } from "../config/company";
 </Layout>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  import { onPageLoad } from "../lib/page-lifecycle.js";
+
+  onPageLoad(() => {
     const form = document.getElementById("contact-form") as HTMLFormElement | null;
     const succ = document.getElementById("c-success") as HTMLDivElement | null;
     form?.addEventListener("submit", async e => {
