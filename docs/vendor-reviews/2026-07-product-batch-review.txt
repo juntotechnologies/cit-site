@@ -1,0 +1,65 @@
+PRODUCT BATCH REVIEW - ITEMS NEEDING YOUR CONFIRMATION
+========================================================
+
+We added the new product batch you sent (260702-products-to-be-uploaded.docx)
+to the catalogue. 92 products went live cleanly. 8 items below need your
+input before we can finish the rest.
+
+
+1. DUPLICATE CATALOG NUMBER
+----------------------------
+C147 was listed twice with two different chemical formulas and two
+different structure images:
+
+    Catalog #      Name               Formula listed   Structure image
+    C147 (entry 1) CALCIUM SILICATE   CASIO            image31.png
+    C147 (entry 2) CALCIUM SILICATE   CAH3SI           image33.png
+
+QUESTION: Which formula/image is correct for C147? Or are these actually
+two different products that should each get their own catalog number?
+
+
+2. BLANK-LOOKING ENTRY
+------------------------
+B107 has no name, CAS number, formula, or molecular weight filled in --
+but it does have a structure image attached (image24.png).
+
+QUESTION: Is this a real product that's missing its data, or a leftover
+blank template row we should just delete?
+
+
+3. MISSING STRUCTURE IMAGES
+-----------------------------
+These 6 products have their text data (name/CAS/etc.) but no structure
+image came through in the document:
+
+    Catalog #   Name                          CAS
+    C149        COLLAGEN                      9007-34-5
+    D159        DESONIDE                      638-94-8
+    M109        METHYL SOYATE (SOY METHYL)    67784-80-9
+    M112        MEGESTEROL ACETATE            907193-65-1
+    P076        EQUILIBRATION BUFFER          (none listed)
+    S022        SODIUM COCOYL SARCOSINATE     61791-59-1
+
+QUESTION: Could you send structure images for these, or should we list
+them without one for now (we do have a few existing catalogue items with
+no image)? Note: DESONIDE's (D159) formula was also listed as just "C",
+which looks incomplete -- could you confirm the full formula while you're
+at it?
+
+
+ONE MORE THING WORTH DOUBLE-CHECKING
+--------------------------------------
+Two products that ARE already live have molecular formulas that look cut
+off or incomplete:
+
+    D153  3,5-DIBROMO-1-FLUOROBENZENE  formula listed as just "Br"
+    T075  TRIS HYDROCHLORIDE          formula listed as just "NH"
+
+Could you confirm the complete/correct formulas for these two so we can
+update them?
+
+
+--------------------------------------------------------------------------
+Everything else in the batch (92 products) parsed cleanly and is already
+live on the site. Thanks!

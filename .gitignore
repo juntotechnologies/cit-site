@@ -22,3 +22,6 @@ Thumbs.db
 # Email archive credentials and output
 scripts/accounts.csv
 email_archive/
+
+# Generated review output (scripts/parse-product-docx.mjs)
+scripts/out/
