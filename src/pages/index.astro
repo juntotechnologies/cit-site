@@ -209,9 +209,11 @@ const bulk      = featured("bulk");
 </Layout>
 
 <script>
+  import { onPageLoad } from "../lib/page-lifecycle.js";
+
   let heroInterval: ReturnType<typeof setInterval> | undefined;
 
-  document.addEventListener("astro:page-load", () => {
+  onPageLoad(() => {
     if (heroInterval) clearInterval(heroInterval);
 
     const slider = document.getElementById("hero-slider");

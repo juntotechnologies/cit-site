@@ -238,7 +238,9 @@ const orgSchema = JSON.stringify({
 </style>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  import { onPageLoad } from "../lib/page-lifecycle.js";
+
+  onPageLoad(() => {
     const btn = document.getElementById("hamburger");
     const nav = document.getElementById("mobile-nav");
     if (!btn || !nav) return;

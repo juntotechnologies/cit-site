@@ -79,9 +79,11 @@ const president = TEAM.find((member) => member.title === "President");
 </Layout>
 
 <script>
+  import { onPageLoad } from "../lib/page-lifecycle.js";
+
   let aboutInterval: ReturnType<typeof setInterval> | undefined;
 
-  document.addEventListener("astro:page-load", () => {
+  onPageLoad(() => {
     if (aboutInterval) clearInterval(aboutInterval);
 
     const slider = document.getElementById("about-slider");
