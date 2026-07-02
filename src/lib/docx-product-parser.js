@@ -84,19 +84,79 @@ export function findDuplicateCatalogNumbers(rows) {
   return [...seen.values()].filter((group) => group.length > 1);
 }
 
-// Cross-checks parsed rows against existing product catalog numbers,
-// separating out ones that collide (need a human decision - see PR doc)
-// from genuinely new ones.
+function normalizeForCompare(value) {
+  return String(value || "").trim().toUpperCase();
+}
+
+function isIdenticalToExisting(row, existingProduct) {
+  return (
+    normalizeForCompare(row.name) === normalizeForCompare(existingProduct.name) &&
+    normalizeForCompare(row.cas) === normalizeForCompare(existingProduct.cas) &&
+    normalizeForCompare(row.molecular_weight) === normalizeForCompare(existingProduct.molecular_weight) &&
+    normalizeForCompare(row.molecular_formula) === normalizeForCompare(existingProduct.molecular_formula)
+  );
+}
+
+// Cross-checks parsed rows against existing product catalog numbers.
+// A colliding catalog number splits further: if the row's data matches the
+// existing product exactly, there's nothing to review - it's just an
+// already-catalogued product that happened to be included in this batch
+// doc. Only a colliding row whose data actually *differs* needs a human
+// decision (renumber vs. intentional update).
 export function partitionByCollision(rows, existingProducts) {
-  const existingCatalogNumbers = new Set(existingProducts.map((p) => p.catalog_number));
-  const collisions = [];
+  const existingByCatalogNumber = new Map(existingProducts.map((p) => [p.catalog_number, p]));
+  const identicalCollisions = [];
+  const conflictingCollisions = [];
   const fresh = [];
   for (const row of rows) {
-    if (existingCatalogNumbers.has(row.catalog_number)) {
-      collisions.push(row);
-    } else {
+    const existing = existingByCatalogNumber.get(row.catalog_number);
+    if (!existing) {
       fresh.push(row);
+    } else if (isIdenticalToExisting(row, existing)) {
+      identicalCollisions.push(row);
+    } else {
+      conflictingCollisions.push({ row, existing });
     }
   }
-  return { collisions, fresh };
+  return { identicalCollisions, conflictingCollisions, fresh };
+}
+
+// A row's name cell containing another field's label (e.g. "CAS#: MW:")
+// means the table row itself is malformed in the source doc - not a real
+// product name.
+function hasSuspiciousName(row) {
+  return /\b(CAS|MW|MF)\s*#?\s*:/i.test(row.name);
+}
+
+// Builds one flat "needs a human decision before merge" list out of every
+// problem category, and returns the remaining rows that are safe to merge
+// as-is (missing MW/MF is fine to merge blank - see PR doc Non-Goals - but
+// a missing image, a suspicious name, an in-batch duplicate, or a
+// conflicting collision all need a decision first).
+export function buildReviewReport({ fresh, duplicates, conflictingCollisions }) {
+  const needsReview = [];
+
+  for (const group of duplicates) {
+    needsReview.push({ reason: "duplicate_catalog_number_in_batch", catalog_number: group[0].catalog_number, rows: group });
+  }
+  for (const { row, existing } of conflictingCollisions) {
+    needsReview.push({ reason: "conflicts_with_existing_product", catalog_number: row.catalog_number, row, existing });
+  }
+
+  const duplicateCatalogNumbers = new Set(duplicates.map((group) => group[0].catalog_number));
+  const clean = [];
+  for (const row of fresh) {
+    if (duplicateCatalogNumbers.has(row.catalog_number)) continue; // already reported above
+    if (!row.image_media_file) {
+      needsReview.push({ reason: "missing_structure_image", catalog_number: row.catalog_number, row });
+      continue;
+    }
+    if (hasSuspiciousName(row)) {
+      needsReview.push({ reason: "suspicious_name_field", catalog_number: row.catalog_number, row });
+      continue;
+    }
+    clean.push(row);
+  }
+
+  return { clean, needsReview };
 }

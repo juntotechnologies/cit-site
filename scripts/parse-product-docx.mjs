@@ -7,7 +7,7 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { findDuplicateCatalogNumbers, parseProductRows, parseRelsMap, partitionByCollision } from "../src/lib/docx-product-parser.js";
+import { buildReviewReport, findDuplicateCatalogNumbers, parseProductRows, parseRelsMap, partitionByCollision } from "../src/lib/docx-product-parser.js";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const docxPath = process.argv[2] || join(root, "260702-products-to-be-uploaded.docx");
@@ -31,36 +31,25 @@ const duplicateCatalogNumbers = new Set(duplicates.map((group) => group[0].catal
 const dedupedRows = rows.filter((row) => !duplicateCatalogNumbers.has(row.catalog_number));
 
 const products = JSON.parse(readFileSync(join(root, "data", "products.json"), "utf8"));
-const { collisions, fresh } = partitionByCollision(dedupedRows, products);
+const { identicalCollisions, conflictingCollisions, fresh } = partitionByCollision(dedupedRows, products);
+const { clean, needsReview } = buildReviewReport({ fresh, duplicates, conflictingCollisions });
 
 mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, "docx-parsed-fresh.json"), JSON.stringify(fresh, null, 2));
-writeFileSync(join(outDir, "docx-parsed-collisions.json"), JSON.stringify(collisions, null, 2));
-writeFileSync(join(outDir, "docx-parsed-duplicates.json"), JSON.stringify(duplicates, null, 2));
+writeFileSync(join(outDir, "docx-parsed-clean.json"), JSON.stringify(clean, null, 2));
+writeFileSync(join(outDir, "docx-parsed-needs-review.json"), JSON.stringify(needsReview, null, 2));
 
 console.log(`Parsed ${rows.length} product rows from ${docxPath}`);
-console.log(`  ${fresh.length} new (not in data/products.json)`);
-console.log(`  ${collisions.length} collide with existing catalog numbers: ${collisions.map((c) => c.catalog_number).join(", ")}`);
-if (duplicates.length) {
-  console.log(`  ${duplicates.length} catalog number(s) reused within the batch itself (excluded from fresh/collisions above, needs a human decision):`);
-  for (const group of duplicates) {
-    console.log(`    ${group[0].catalog_number}: ${group.map((r) => `mf="${r.molecular_formula}" image=${r.image_media_file}`).join(" vs. ")}`);
-  }
+console.log(`  ${identicalCollisions.length} already in the catalogue with identical data, nothing to do: ${identicalCollisions.map((c) => c.catalog_number).join(", ") || "none"}`);
+console.log(`  ${clean.length} clean and ready to merge -> scripts/out/docx-parsed-clean.json`);
+console.log(`  ${needsReview.length} need a human decision before merge -> scripts/out/docx-parsed-needs-review.json`);
+for (const issue of needsReview) {
+  console.log(`    [${issue.reason}] ${issue.catalog_number}`);
 }
-console.log(`Wrote scripts/out/docx-parsed-{fresh,collisions,duplicates}.json for review.`);
 
-const missingFields = fresh.filter((p) => !p.cas || !p.molecular_weight || !p.molecular_formula);
+const missingFields = clean.filter((p) => !p.cas || !p.molecular_weight || !p.molecular_formula);
 if (missingFields.length) {
-  console.log(`\n${missingFields.length} products have a blank cas/molecular_weight/molecular_formula field:`);
+  console.log(`\n${missingFields.length} clean products still have a blank cas/molecular_weight/molecular_formula field (OK to merge blank per PR doc Non-Goals):`);
   for (const p of missingFields) {
     console.log(`  ${p.catalog_number} ${p.name}: cas="${p.cas}" mw="${p.molecular_weight}" mf="${p.molecular_formula}"`);
-  }
-}
-
-const missingImages = fresh.filter((p) => !p.image_media_file);
-if (missingImages.length) {
-  console.log(`\n${missingImages.length} products have no resolved structure image:`);
-  for (const p of missingImages) {
-    console.log(`  ${p.catalog_number} ${p.name}`);
   }
 }
