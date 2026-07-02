@@ -1,6 +1,6 @@
-# PR planned: Fix Product Search Breaking After First Use
+# PR 8: Fix Product Search Breaking After First Use
 
-Status: planned
+Status: underway
 
 Branch: `bugfix/product-search-lifecycle`
 
