@@ -1,6 +1,6 @@
-# PR planned: Add July 2026 Product Batch to Catalogue
+# PR 9: Add July 2026 Product Batch to Catalogue
 
-Status: planned
+Status: underway
 
 Branch: `feature/product-catalogue-upload-jul2026`
 
