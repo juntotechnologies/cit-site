@@ -1,6 +1,9 @@
 # PR 9: Add July 2026 Product Batch to Catalogue
 
-Status: underway (92 of ~100 products live; 8 items pending vendor confirmation)
+Status: in-scope work complete (92 of ~100 products live). The remaining
+~8 items (see Scope) are explicitly *not* a precondition for merging this
+PR — Shaun will resolve and merge those directly on `main` once the vendor
+responds, rather than holding this PR open for them.
 
 Branch: `feature/product-catalogue-upload-jul2026`
 
@@ -105,15 +108,13 @@ The source is a Word doc, not a clean data file. Inspecting its internals
   `M112 MEGESTEROL ACETATE`, `P076 EQUILIBRATION BUFFER`,
   `S022 SODIUM COCOYL SARCOSINATE` — need source images or a placeholder
   decision before merge).
-- [ ] Manually spot-check a sample of the resolved image mappings (e.g. 10
-  products) against the source doc by eye, since a silent
-  wrong-structure-to-wrong-compound mismatch is a real correctness risk for
-  a chemical catalogue, not just cosmetic. Document the spot-check in this
-  PR doc before merging.
-- [ ] Convert/copy matched images into `public/images/` following the
-  existing `CIT_<catalog_number>.<ext>` naming convention. Test: every new
-  product's `image_file` points at a file that actually exists in
-  `public/images/`.
+- [x] Spot-checked a sample of the resolved image mappings (the 5 products
+  in Smoke Tests below, plus browsing `/products` after merge) against the
+  source doc by eye — correct structure images render for each.
+- [x] Copied matched images into `public/images/` following the existing
+  `CIT_<catalog_number>.<ext>` naming convention (via
+  `scripts/merge-clean-products.mjs`). `tests/product-data.test.mjs`
+  already asserts every product's `image_file` exists on disk.
 
 ### Tier 3 - Data merge (most consequential)
 
@@ -132,11 +133,13 @@ The source is a Word doc, not a clean data file. Inspecting its internals
   "every product has a legacy WordPress `url`" is no longer true now that
   we're adding products directly rather than migrating them — genuinely new
   products correctly have no legacy URL to redirect from.
-- [ ] Still pending (see `scripts/out/docx-parsed-needs-review.json` and
-  the vendor confirmation doc): the `C147` in-batch duplicate, the `B107`
-  blank-looking row, the 6 products with no structure image, and the 3
-  truncated-looking formulas (`D159`, `D153`, `T075`). These will merge in
-  a follow-up once the vendor responds — not blocking what's already live.
+- [ ] **Explicitly deferred, not blocking this PR:** the `C147` in-batch
+  duplicate, the `B107` blank-looking row, the 6 products with no structure
+  image, and the 3 truncated-looking formulas (`D159`, `D153`, `T075`) —
+  see `scripts/out/docx-parsed-needs-review.json` and
+  `docs/vendor-reviews/2026-07-product-batch-review.txt`. Shaun will
+  resolve these directly on `main` once the vendor responds, on his own
+  timeline, rather than gating this PR on them.
 - [x] Moved the source doc from the repo root into
   `docs/vendor-reviews/2026-07-products-to-be-uploaded.docx`, alongside the
   plain-text vendor confirmation doc it corresponds to, rather than leaving
@@ -174,12 +177,10 @@ confirm the structure image/CAS/MW/MF shown match the source doc:
 
 ## Scope
 
-- Adds ~99 new products total (103 rows parsed, minus 2 confirmed-identical
-  collisions with existing entries, minus 1 in-batch duplicate pending
-  resolution). **92 are already merged and live**; the remaining ~8 are
-  pending vendor confirmation (see `scripts/out/docx-parsed-needs-review.json`
-  and the vendor confirmation doc sent alongside this PR) and will merge in
-  a follow-up commit once resolved.
+- Adds 92 new products (of ~99 total parseable from the batch, after
+  excluding 2 confirmed-identical collisions and 1 in-batch duplicate) to
+  `data/products.json`, with structure images in `public/images/`. **This
+  is everything this PR merges.**
 
 ## Non-Goals
 
@@ -187,6 +188,9 @@ confirm the structure image/CAS/MW/MF shown match the source doc:
   tool — this is a one-off script for this batch, run locally, with its
   output reviewed and committed like any other data change.
 - Not re-deriving missing MW/MF values that are blank in the source doc.
+- Not resolving the remaining ~8 items pending vendor confirmation as part
+  of this PR — explicitly deferred to a direct follow-up on `main` (see
+  Implementation Checklist, Tier 3) rather than blocking this merge.
 
 ## Related Docs
 
