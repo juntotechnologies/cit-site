@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buildReviewReport, findDuplicateCatalogNumbers, parseProductRows, parseRelsMap, partitionByCollision } from "../src/lib/docx-product-parser.js";
+import {
+  buildReviewReport,
+  findDuplicateCatalogNumbers,
+  inferCategory,
+  parseProductRows,
+  parseRelsMap,
+  partitionByCollision,
+} from "../src/lib/docx-product-parser.js";
 
 function tableRow({ catalogNumber, name, casText, mwText, mfText, rid }) {
   const drawing = rid ? `<w:drawing><a:blip r:embed="${rid}"/></w:drawing>` : "";
@@ -130,4 +137,10 @@ test("buildReviewReport routes duplicates, missing images, and suspicious names 
   assert.equal(reasons.C147, "duplicate_catalog_number_in_batch");
   assert.equal(reasons.M112, "missing_structure_image");
   assert.equal(reasons.B107, "suspicious_name_field");
+});
+
+test("inferCategory defaults to organic except the manually-verified inorganic list", () => {
+  assert.equal(inferCategory("A109"), "organic");
+  assert.equal(inferCategory("B093"), "inorganic");
+  assert.equal(inferCategory("S021"), "inorganic");
 });

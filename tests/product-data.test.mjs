@@ -6,23 +6,27 @@ const products = JSON.parse(readFileSync(new URL("../data/products.json", import
 const metadata = JSON.parse(readFileSync(new URL("../data/metadata.json", import.meta.url), "utf8"));
 
 test("catalog data contains the expected required fields for every product", () => {
-  assert.equal(products.length, 974);
+  assert.equal(products.length, 1066);
 
   for (const product of products) {
     assert.match(product.catalog_number, /^[A-Z]+[0-9]+$/, `${product.name} should have a catalog number`);
     assert.equal(typeof product.name, "string", `${product.catalog_number} should have a name`);
     assert.ok(product.name.trim(), `${product.catalog_number} should not have a blank name`);
-    assert.match(product.url, /^https:\/\/chem-is-try\.com\/product\/[^/]+\/$/, `${product.catalog_number} should retain its legacy product URL`);
+    // Products added directly (not migrated from the old WordPress site)
+    // have no legacy `url` - that's expected, not missing data.
+    if (product.url) {
+      assert.match(product.url, /^https:\/\/chem-is-try\.com\/product\/[^/]+\/$/, `${product.catalog_number} should retain its legacy product URL`);
+    }
     assert.match(product.category, /^(organic|inorganic|reagent-usp|representative|bulk)$/, `${product.catalog_number} should have a known category`);
   }
 });
 
 test("catalog numbers and legacy URLs are unique", () => {
   const catalogNumbers = products.map((product) => product.catalog_number);
-  const legacyUrls = products.map((product) => product.url);
+  const legacyUrls = products.map((product) => product.url).filter(Boolean);
 
   assert.equal(new Set(catalogNumbers).size, products.length);
-  assert.equal(new Set(legacyUrls).size, products.length);
+  assert.equal(new Set(legacyUrls).size, legacyUrls.length);
 });
 
 test("referenced product structure images exist in public assets", () => {

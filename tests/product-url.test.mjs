@@ -50,6 +50,10 @@ test("dot-separated CAS values are normalized only when checksum-valid", () => {
 
 test("every legacy product URL has a corresponding canonical destination", () => {
   for (const product of products) {
+    // Products added directly (no `url` field) never existed on the old
+    // WordPress site, so they have no legacy path to redirect from - that's
+    // expected, not a data-quality issue.
+    if (!product.url) continue;
     const legacy = getLegacyProductPath(product);
     assert.match(legacy, /^\/product\/[^/]+\/$/);
     assert.match(getProductPath(product, products), /^\/products\/[^/]+\/$/);

@@ -1,6 +1,6 @@
 # PR 9: Add July 2026 Product Batch to Catalogue
 
-Status: underway
+Status: underway (92 of ~100 products live; 8 items pending vendor confirmation)
 
 Branch: `feature/product-catalogue-upload-jul2026`
 
@@ -45,13 +45,29 @@ The source is a Word doc, not a clean data file. Inspecting its internals
   (`CASIO` vs `CAH3SI`) and two different structure images. This is a
   data-entry error in the source, not a parser bug — needs a human decision
   (which row is correct, or does one need a different catalog number)
-  before either can be merged. The parser excludes both from the
-  fresh/collision output until resolved (see `scripts/out/docx-parsed-duplicates.json`).
+  before either can be merged. The parser excludes both until resolved
+  (see `scripts/out/docx-parsed-needs-review.json`).
 - **Additional finding:** `B107` has no real name — its "name" cell actually
   contains stray label text (`"CAS#: MW:"`), suggesting it's a blank
   template/placeholder row that still has a structure image attached. Needs
   manual inspection of the source doc to determine if that image belongs to
   a real, unlabeled product or should be dropped entirely.
+- **Additional finding:** automatically inferring `category`
+  (organic/inorganic) from the formula turned out unreliable — the source
+  doc's all-caps text plus common two-letter element symbols that overlap
+  with adjacent single-letter elements (e.g. `CO2H` greedily reads as `Co`
+  (cobalt) + `2H` instead of carbon + oxygen) made a regex-based approach
+  actively wrong, not just imprecise, on at least one test case. Categorized
+  by name instead: defaulted every product to `organic` (matching the
+  existing catalogue's overwhelming lean — 857 of 974 — and true of nearly
+  every product in this batch) except a short, manually-verified list of
+  genuinely inorganic salts (`B093 BARIUM THIOSULFATE`,
+  `S021 SODIUM PHOSPHATE DIBASIC`).
+- **Additional finding:** a handful of formulas look truncated in the
+  source (`D159 DESONIDE` → `"C"`, `D153 3,5-DIBROMO-1-FLUOROBENZENE` →
+  `"Br"`, `T075 TRIS HYDROCHLORIDE` → `"NH"`). Not blocking (same as blank
+  MW/MF, see Non-Goals) but flagged to the vendor for confirmation
+  alongside the other review items.
 
 ## Implementation Checklist
 
@@ -103,28 +119,31 @@ The source is a Word doc, not a clean data file. Inspecting its internals
 - [x] Resolve the `B091`/`P075` collisions — confirmed identical to
   existing data, so both are skipped (see Tier 1 above). No Shaun decision
   needed after all; this was resolvable from the data itself.
-- [ ] Resolve the `C147` in-batch duplicate (two different formulas/images
-  under the same catalog number) and the `B107` blank-looking row with Shaun
-  before merging either.
-- [ ] Decide and document the `category` value for each new product
-  (manual mapping, since the source doc doesn't have this field).
-- [ ] Decide how to handle the 6 products with no structure image at all
-  (source new images, or merge without one similar to existing placeholder
-  entries like `P075`).
-- [ ] Merge the parsed + validated entries into `data/products.json`,
-  reusing `getProductPath`/CAS-checksum logic from `src/lib/product-url.js`
-  for canonical URLs — no new URL-generation logic. Test: existing
-  `tests/product-data.test.mjs` / `tests/product-url.test.mjs` suites pass
-  unchanged against the merged data (required fields present, unique
-  catalog numbers, unique canonical URLs, images exist).
+- [x] Categorized every clean product (see Context finding above) —
+  `organic` by default, `inorganic` for the two manually-verified salts.
+- [x] **Merged the 92 clean products into `data/products.json`** (via
+  `scripts/merge-clean-products.mjs`) and copied their structure images
+  into `public/images/` as `CIT_<catalog_number>.<ext>`. Catalogue is now
+  1066 products (was 974). Regenerated `public/_redirects`
+  (`scripts/generate_redirects.mjs`) since some new products' canonical
+  CAS-based URL differs from their catalog-number path. Updated two tests
+  (`product-data.test.mjs`, `product-url.test.mjs`) whose assumption that
+  "every product has a legacy WordPress `url`" is no longer true now that
+  we're adding products directly rather than migrating them — genuinely new
+  products correctly have no legacy URL to redirect from.
+- [ ] Still pending (see `scripts/out/docx-parsed-needs-review.json` and
+  the vendor confirmation doc): the `C147` in-batch duplicate, the `B107`
+  blank-looking row, the 6 products with no structure image, and the 3
+  truncated-looking formulas (`D159`, `D153`, `T075`). These will merge in
+  a follow-up once the vendor responds — not blocking what's already live.
 - [ ] Remove `260702-products-to-be-uploaded.docx` from the repo root once
-  its data has been merged (keep the repo root clean; the source doc isn't
-  meant to live there long-term).
+  the remaining review items are resolved and merged too (keep the repo
+  root clean; the source doc isn't meant to live there long-term).
 
 ## Smoke Tests
 
-Manual, one-by-one checks Shaun runs in the browser after the data merge
-(Tier 3) lands — search for each by name, then again by CAS number, and
+Manual, one-by-one checks Shaun runs in the browser now that the 92 clean
+products are live — search for each by name, then again by CAS number, and
 confirm the structure image/CAS/MW/MF shown match the source doc:
 
 - [ ] `O-ARSANILIC ACID` (catalog `A109`, CAS `2045-00-3`)
@@ -153,10 +172,12 @@ confirm the structure image/CAS/MW/MF shown match the source doc:
 
 ## Scope
 
-- Adds ~99 new products (103 rows parsed, minus 2 confirmed-identical
+- Adds ~99 new products total (103 rows parsed, minus 2 confirmed-identical
   collisions with existing entries, minus 1 in-batch duplicate pending
-  resolution) to `data/products.json` and their structure images to
-  `public/images/`.
+  resolution). **92 are already merged and live**; the remaining ~8 are
+  pending vendor confirmation (see `scripts/out/docx-parsed-needs-review.json`
+  and the vendor confirmation doc sent alongside this PR) and will merge in
+  a follow-up commit once resolved.
 
 ## Non-Goals
 

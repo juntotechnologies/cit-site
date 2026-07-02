@@ -160,3 +160,23 @@ export function buildReviewReport({ fresh, duplicates, conflictingCollisions }) 
 
   return { clean, needsReview };
 }
+
+// The source doc doesn't specify a category, and the /products page's
+// category filter depends on one. Inferring it from the formula string
+// isn't reliable: the source is typeset in all-caps, and a naive
+// element-symbol match is ambiguous for common two-letter runs that are
+// also valid element symbols (e.g. formic-acid-style "CO2H" greedily
+// matches "Co" (cobalt) + "2H", silently turning a real carbon into a
+// wrong metal). Given that ambiguity, this batch is categorized by name
+// instead: every product defaults to "organic" (matching the existing
+// catalogue's overwhelming lean - 857 of 974 entries - and true of nearly
+// every product in this batch, which are small organic solvents/reagents),
+// except an explicit, manually-verified list of genuinely inorganic salts.
+const INORGANIC_CATALOG_NUMBERS = new Set([
+  "B093", // BARIUM THIOSULFATE
+  "S021", // SODIUM PHOSPHATE DIBASIC
+]);
+
+export function inferCategory(catalogNumber) {
+  return INORGANIC_CATALOG_NUMBERS.has(catalogNumber) ? "inorganic" : "organic";
+}
