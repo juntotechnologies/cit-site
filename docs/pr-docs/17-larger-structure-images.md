@@ -1,4 +1,4 @@
-# PR: Larger Structure Images on Product Cards
+# PR 17: Larger Structure Images on Product Cards
 
 Status: in-scope work complete
 
