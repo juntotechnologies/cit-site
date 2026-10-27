@@ -1,0 +1,13 @@
+{
+  "widths": [360, 390, 430, 820, 1440],
+  "pages": ["/", "/about/", "/products/", "/products/12027-06-4/", "/services/", "/services/custom-synthesis/", "/faq/", "/contact/", "/rfq/", "/privacy-policy/", "/nonexistent/"],
+  "headings": "h1, h2",
+  "maxHeadingLines": 2,
+  "frames": [".header-inner", ".container", ".footer-top", ".page-hero", ".about-slider"],
+  "marginTolerance": 1,
+  "tapTargets": {
+    "maxWidth": 540,
+    "minHeight": 44,
+    "selector": "a.btn, button, input:not([type=hidden]), select, textarea, summary, header a, .top-bar a, .pagination a"
+  }
+}
