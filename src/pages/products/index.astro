@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getProductPath } from "../../lib/product-url.js";
+import { SITE } from "../../config/site";
 import { parseProducts, CIT_LABEL } from "../../types/product";
 import rawProducts from "../../../data/products.json";
 
@@ -10,16 +11,9 @@ const productViewData = productsData.map((product) => ({
   product_path: getProductPath(product, productsData),
 }));
 
-const cats = [
-  { value: "",              label: "All Categories" },
-  { value: "organic",       label: "Organic" },
-  { value: "inorganic",     label: "Inorganic" },
-  { value: "reagent-usp",   label: "Reagent / USP" },
-  { value: "representative",label: "Representative Products" },
-  { value: "bulk",          label: "Bulk Chemicals" },
-];
+const cats = [{ value: "", label: "All Categories" }, ...SITE.categories];
 ---
-<Layout title="Product Catalog" description="Browse 1,000+ chemical products — organic, inorganic, reagent/USP, and bulk chemicals.">
+<Layout>
 
   <div class="page-hero">
     <h1>Product Catalog</h1>
@@ -33,7 +27,8 @@ const cats = [
         <input
           type="search"
           id="product-search"
-          placeholder="Search by name, CAS#, formula, or catalog number..."
+          aria-label="Search products"
+          placeholder="Name, CAS, formula or CIT #"
           autocomplete="off"
         />
         <select id="cat-filter" aria-label="Filter by category">
@@ -41,8 +36,9 @@ const cats = [
         </select>
       </div>
 
-      <p class="search-count" id="search-count"></p>
+      <p class="search-count" id="search-count" role="status"></p>
       <div class="product-grid" id="product-grid"></div>
+      <noscript><p>The catalogue search needs JavaScript. The full list is at <a href="/llms-full.txt">the catalogue list</a>.</p></noscript>
       <div class="pagination" id="pagination"></div>
 
     </div>

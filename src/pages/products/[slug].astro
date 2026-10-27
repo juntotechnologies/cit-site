@@ -1,7 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { COMPANY, SITE } from "../../config/site";
 import { formulaToHtml } from "../../lib/formula.js";
 import { getProductPath, getProductSlug } from "../../lib/product-url.js";
+import { breadcrumbSchema, productDescription, productHeading, productSchema } from "../../lib/seo.js";
 import { parseProducts, type Product } from "../../types/product";
 import rawProducts from "../../../data/products.json";
 
@@ -9,70 +11,43 @@ export function getStaticPaths() {
   const products = parseProducts(rawProducts as unknown[]);
   return products.map((p) => {
     const slug = getProductSlug(p, products);
-    return { params: { slug }, props: { product: p } };
+    return { params: { slug }, props: { product: p, path: getProductPath(p, products) } };
   });
 }
 
-interface Props { product: Product; }
-const { product: p } = Astro.props;
+interface Props { product: Product; path: string; }
+const { product: p, path } = Astro.props;
 
-const productDesc = `${p.name} — CAS ${p.cas || "N/A"}, MW ${p.molecular_weight || "N/A"}. Chemical catalog product from CHEM-IS-TRY, Inc.`;
-const ogImage = p.image_file
-  ? `https://chem-is-try.com/images/${p.image_file}`
-  : "https://chem-is-try.com/assets/banner-01.jpg";
-const productUrl = new URL(getProductPath(p, parseProducts(rawProducts as unknown[])), "https://chem-is-try.com").href;
-
-const productSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": p.name,
-  "url": productUrl,
-  "description": p.description || productDesc,
-  "image": ogImage,
-  "brand": {
-    "@type": "Organization",
-    "name": "CHEM-IS-TRY, Inc."
-  },
-  ...(p.cas && { "identifier": p.cas }),
-  "additionalProperty": [
-    ...(p.cas ? [{ "@type": "PropertyValue", "name": "CAS Number", "value": p.cas }] : []),
-    ...(p.molecular_formula ? [{ "@type": "PropertyValue", "name": "Molecular Formula", "value": p.molecular_formula }] : []),
-    ...(p.molecular_weight ? [{ "@type": "PropertyValue", "name": "Molecular Weight", "value": `${p.molecular_weight} g/mol` }] : []),
-    ...(p.purity ? [{ "@type": "PropertyValue", "name": "Purity", "value": p.purity }] : []),
-    ...(p.catalog_number ? [{ "@type": "PropertyValue", "name": "Catalog Number", "value": p.catalog_number }] : []),
-  ].filter(Boolean),
-  "offers": {
-    "@type": "Offer",
-    "url": `https://chem-is-try.com/rfq/?product=${encodeURIComponent(p.name || "")}`,
-    "seller": { "@type": "Organization", "name": "CHEM-IS-TRY, Inc." }
-  }
-});
+const trail = [{ name: "Home", path: "/" }, { name: "Products", path: "/products/" }, { name: p.name ?? "Product", path }];
+const records = [productSchema(SITE, p, path), breadcrumbSchema(SITE, trail)];
+const ogImage = p.image_file ? `/images/${p.image_file}` : undefined;
+const rfqHref = `/rfq/?product=${encodeURIComponent(p.name || "")}&cat=${encodeURIComponent(p.catalog_number || "")}&cas=${encodeURIComponent(p.cas || "")}`;
 ---
 <Layout
-  title={p.name || "Product"}
-  description={productDesc}
+  title={productHeading(p)}
+  description={productDescription(COMPANY, p)}
   ogImage={ogImage}
   ogType="product"
+  records={records}
 >
-  <script type="application/ld+json" set:html={productSchema} slot="head" />
   <div class="container">
     <div class="product-detail">
-      <p class="breadcrumb">
-        <a href="/">Home</a> › <a href="/products/">Products</a> › {p.name}
-      </p>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> › <a href="/products/">Products</a> › <span aria-current="page">{p.name}</span>
+      </nav>
 
       <div class="product-layout">
         <!-- Structure image -->
         <div>
           <div class="product-structure">
             {p.image_file
-              ? <img src={`/images/${p.image_file}`} alt={`Structure of ${p.name}`} />
-              : <p style="color:var(--gray-400);padding:2rem">No structure image available</p>
+              ? <img src={`/images/${p.image_file}`} alt={`Structure of ${p.name}`} decoding="async" />
+              : <p class="muted">No structure image available</p>
             }
           </div>
           <div class="rfq-cta mt-2">
             <p>Interested in this product?</p>
-            <a href={`/rfq/?product=${encodeURIComponent(p.name || "")}&cat=${encodeURIComponent(p.catalog_number || "")}&cas=${encodeURIComponent(p.cas || "")}`} class="btn btn-primary">
+            <a href={rfqHref} class="btn btn-primary">
               Request a Quote
             </a>
           </div>
@@ -111,8 +86,8 @@ const productSchema = JSON.stringify({
 
           {p.description && (
             <div>
-              <h2 style="font-size:1rem;color:var(--gray-600);margin-bottom:.5rem">Description</h2>
-              <p style="color:var(--gray-600);font-size:.9rem">{p.description}</p>
+              <h2 class="muted-heading">Description</h2>
+              <p class="muted">{p.description}</p>
             </div>
           )}
         </div>

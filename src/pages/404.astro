@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SearchForm from "../components/SearchForm.astro";
+import { COMPANY } from "../config/site";
+---
+<Layout title="Page not found" description="This page does not exist." noindex>
+
+  <div class="page-hero">
+    <h1>Page not found</h1>
+    <p>The address may have changed. Search the catalogue or use a link below.</p>
+  </div>
+
+  <div class="container">
+    <div class="page-content page-content--narrow">
+      <SearchForm class="header-search header-search--page" />
+      <div class="actions actions--start">
+        <a href="/products/" class="btn btn-primary">Product Catalog</a>
+        <a href="/services/" class="btn btn-outline">Services</a>
+        <a href="/contact/" class="btn btn-outline">Contact Us</a>
+      </div>
+      <p>To reach us directly, call {COMPANY.tollFree}.</p>
+    </div>
+  </div>
+</Layout>

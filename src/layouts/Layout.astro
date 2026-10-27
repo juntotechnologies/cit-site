@@ -1,80 +1,62 @@
 ---
-import { COMPANY } from "../config/company";
 import { ClientRouter } from "astro:transitions";
+import palette from "../styles/palette.css?raw";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import { COMPANY, PRODUCT_TOTAL, SITE } from "../config/site";
+import { brandColor } from "../lib/palette.js";
+import { findPage, jsonLd, normalizePath, pageMeta, pageRecords } from "../lib/seo.js";
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
   ogImage?: string;
   ogType?: string;
+  noindex?: boolean;
+  records?: object[];
 }
-const {
-  title,
-  description = "CHEM-IS-TRY, Inc. – a specialty chemical company serving the Research and Development community since 1999.",
-  ogImage = COMPANY.defaultOgImage,
-  ogType = "website",
-} = Astro.props;
-const p = Astro.url.pathname;
-const canonicalURL = new URL(p, COMPANY.siteUrl).href;
-const fullTitle = `${title} | ${COMPANY.name}`;
-const gaMeasurementId = "G-TEND1BVVWX";
+const props = Astro.props;
+const path = normalizePath(Astro.url.pathname);
+const stored = findPage(SITE, path);
+const meta = pageMeta(SITE, PRODUCT_TOTAL, {
+  path,
+  title: props.title ?? stored?.title ?? COMPANY.name,
+  description: props.description ?? stored?.description ?? COMPANY.tagline,
+  ogImage: props.ogImage,
+  ogType: props.ogType,
+  noindex: props.noindex,
+});
+const records = props.records ?? (stored ? pageRecords(SITE, stored) : []);
+const gaId = SITE.analytics.gaMeasurementId;
 const gaScript = `
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', '${gaMeasurementId}');
+  gtag('config', '${gaId}');
 `;
-
-const orgSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": COMPANY.name,
-  "url": COMPANY.siteUrl,
-  "logo": COMPANY.logo,
-  "foundingDate": COMPANY.foundingYear,
-  "description": "A specialty chemical company serving the Research and Development community since 1999.",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": COMPANY.address.street,
-    "addressLocality": COMPANY.address.city,
-    "addressRegion": COMPANY.address.state,
-    "postalCode": COMPANY.address.zip,
-    "addressCountry": COMPANY.address.countryCode,
-  },
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": COMPANY.phone,
-    "contactType": "sales",
-    "email": COMPANY.email,
-  },
-});
 ---
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content={description} />
-  <title>{fullTitle}</title>
-  <link rel="canonical" href={canonicalURL} />
-  <!-- Open Graph -->
-  <meta property="og:title" content={fullTitle} />
-  <meta property="og:description" content={description} />
-  <meta property="og:type" content={ogType} />
-  <meta property="og:url" content={canonicalURL} />
-  <meta property="og:image" content={ogImage} />
-  <meta property="og:site_name" content="CHEM-IS-TRY, Inc." />
-  <!-- Twitter Card -->
+  <meta name="theme-color" content={brandColor(palette)} />
+  <meta name="description" content={meta.description} />
+  {meta.noindex && <meta name="robots" content="noindex" />}
+  <title>{meta.title}</title>
+  <link rel="canonical" href={meta.canonical} />
+  <meta property="og:title" content={meta.title} />
+  <meta property="og:description" content={meta.description} />
+  <meta property="og:type" content={meta.ogType} />
+  <meta property="og:url" content={meta.canonical} />
+  <meta property="og:image" content={meta.ogImage} />
+  <meta property="og:site_name" content={COMPANY.name} />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={fullTitle} />
-  <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={ogImage} />
-  <!-- JSON-LD: Organization -->
-  <script type="application/ld+json" set:html={orgSchema} />
-  <!-- Slot for page-level JSON-LD or extra head tags -->
-  <slot name="head" />
-  <!-- Google tag (gtag.js) -->
-  <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>
+  <meta name="twitter:title" content={meta.title} />
+  <meta name="twitter:description" content={meta.description} />
+  <meta name="twitter:image" content={meta.ogImage} />
+  {records.length > 0 && <script type="application/ld+json" set:html={jsonLd(records)} />}
+  <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
   <script set:html={gaScript} />
   <link rel="icon" type="image/png" href="/favicon-cit.png?v=4" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=4" />
@@ -82,181 +64,15 @@ const orgSchema = JSON.stringify({
   <ClientRouter />
 </head>
 <body>
-
-  <!-- Top bar -->
-  <div class="top-bar">
-    <div class="top-bar-inner">
-      <span>
-        <span class="toll-free">TOLL FREE: {COMPANY.tollFreeDisplay}</span>
-        &nbsp;|&nbsp;
-        <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
-      </span>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header>
-    <div class="header-inner">
-      <a href="/">
-        <img src="/assets/logo.png" alt="CHEM-IS-TRY Inc." class="logo-img" />
-      </a>
-
-      <!-- Site search -->
-      <form class="header-search" method="GET" action="/products/" role="search">
-        <input type="search" name="q" placeholder="Search products…" aria-label="Search products" />
-        <button type="submit" aria-label="Search">&#128269;</button>
-      </form>
-
-      <!-- Desktop nav -->
-      <nav class="main-nav">
-        <div class="nav-item">
-          <a href="/" class={p === "/" ? "active" : ""}>Home</a>
-        </div>
-        <div class="nav-item">
-          <a href="/about/" class={p.startsWith("/about") ? "active" : ""}>About Us</a>
-        </div>
-        <div class="nav-item">
-          <a href="/products/" class={p.startsWith("/products") ? "active" : ""}>Products</a>
-        </div>
-        <div class="nav-item has-dropdown">
-          <a href="/services/" class={p.startsWith("/services") ? "active" : ""}>Services ▾</a>
-          <div class="dropdown">
-            <a href="/services/custom-synthesis/">Custom Synthesis</a>
-            <a href="/services/custom-manufacturing/">Custom Manufacturing</a>
-            <a href="/services/process-development/">Process Development</a>
-            <a href="/services/contract-rd/">Contract R &amp; D</a>
-            <a href="/services/bulk-chemicals/">Bulk Chemicals</a>
-          </div>
-        </div>
-        <div class="nav-item">
-          <a href="/faq/" class={p.startsWith("/faq") ? "active" : ""}>FAQs</a>
-        </div>
-        <div class="nav-item">
-          <a href="/contact/" class={p.startsWith("/contact") ? "active" : ""}>Contact Us</a>
-        </div>
-        <div class="nav-actions">
-          <div class="nav-item">
-            <a
-              href="https://cal.com/chem-is-try-inc/30min"
-              class="nav-book-call"
-              target="_blank"
-              rel="noopener noreferrer"
-            >Book a Call</a>
-          </div>
-          <div class="nav-item">
-            <a href="/rfq/" class="nav-rfq">Request a Quote</a>
-          </div>
-        </div>
-      </nav>
-
-      <!-- Hamburger (mobile) -->
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-
-    <!-- Mobile nav drawer -->
-    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
-      <a href="/">Home</a>
-      <a href="/about/">About Us</a>
-      <a href="/products/">Products</a>
-      <span class="mobile-section-label">Services</span>
-      <a href="/services/custom-synthesis/" style="padding-left:2.25rem">Custom Synthesis</a>
-      <a href="/services/custom-manufacturing/" style="padding-left:2.25rem">Custom Manufacturing</a>
-      <a href="/services/process-development/" style="padding-left:2.25rem">Process Development</a>
-      <a href="/services/contract-rd/" style="padding-left:2.25rem">Contract R &amp; D</a>
-      <a href="/services/bulk-chemicals/" style="padding-left:2.25rem">Bulk Chemicals</a>
-      <a href="/faq/">FAQs</a>
-      <a href="/contact/">Contact Us</a>
-      <a
-        href="https://cal.com/chem-is-try-inc/30min"
-        class="mobile-book-call"
-        target="_blank"
-        rel="noopener noreferrer"
-      >Book a Call</a>
-      <a href="/rfq/" class="mobile-rfq">Request a Quote</a>
-    </nav>
-  </header>
-
-  <main>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <SiteHeader />
+  <main id="main" tabindex="-1">
     <slot />
   </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-top">
-      <div class="footer-col">
-        <img src="/assets/footer-logo.png" alt="CHEM-IS-TRY Inc." class="footer-logo" />
-        <p>A Specialty Chemical Company</p>
-        <p style="margin-top:.75rem;font-size:.82rem;">Serving the Research &amp; Development community since 1999.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <a href="/about/">About Us</a>
-        <a href="/products/">Product Catalogue</a>
-        <a href="/services/">Services</a>
-        <a href="/services/bulk-chemicals/">Bulk Chemicals</a>
-        <a href="/contact/">Contact Us</a>
-        <a href="/rfq/">Request for Quotation</a>
-        <a href="/privacy-policy/">Privacy Policy</a>
-        <a href="/terms/">Terms &amp; Conditions</a>
-      </div>
-      <div class="footer-col">
-        <h4>Product Categories</h4>
-        <a href="/products/?cat=organic">Organic</a>
-        <a href="/products/?cat=inorganic">Inorganic</a>
-        <a href="/products/?cat=reagent-usp">Reagent / USP</a>
-        <a href="/products/?cat=representative">Representative Products</a>
-        <a href="/products/?cat=bulk">Bulk Chemicals</a>
-      </div>
-      <div class="footer-col">
-        <h4>Contact Us</h4>
-        <div class="contact-line"><span>Address</span><span>{COMPANY.address.full}</span></div>
-        <div class="contact-line"><span>Tel</span><span>{COMPANY.phone}</span></div>
-        <div class="contact-line"><span>Toll Free</span><span>{COMPANY.tollFreeDisplay} ({COMPANY.tollFreeNumeric})</span></div>
-        <div class="contact-line"><span>Fax</span><span>{COMPANY.fax}</span></div>
-        <div class="contact-line"><span>Email</span><a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a></div>
-      </div>
-    </div>
-    <div class="footer-bottom container">
-      <span>Copyright &copy; {new Date().getFullYear()} CHEM-IS-TRY, Inc. All rights reserved.</span>
-      <span class="footer-legal">
-        <a href="/privacy-policy/">Privacy Policy</a>
-        &nbsp;|&nbsp;
-        <a href="/terms/">Terms &amp; Conditions</a>
-      </span>
-    </div>
-  </footer>
-
+  <SiteFooter />
 </body>
 </html>
 
 <style is:global>
   @import "../styles/global.css";
 </style>
-
-<script>
-  import { onPageLoad } from "../lib/page-lifecycle.js";
-
-  onPageLoad(() => {
-    const btn = document.getElementById("hamburger");
-    const nav = document.getElementById("mobile-nav");
-    if (!btn || !nav) return;
-
-    btn.addEventListener("click", () => {
-      const open = nav.classList.toggle("open");
-      btn.classList.toggle("open", open);
-      btn.setAttribute("aria-expanded", String(open));
-    });
-    // Close drawer when a link is tapped
-    nav.querySelectorAll("a").forEach(a =>
-      a.addEventListener("click", () => {
-        nav.classList.remove("open");
-        btn.classList.remove("open");
-        btn.setAttribute("aria-expanded", "false");
-      })
-    );
-  });
-</script>

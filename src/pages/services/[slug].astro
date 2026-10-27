@@ -1,79 +1,72 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { COMPANY, SITE } from "../../config/site";
 import { publicServiceSlugs, servicesBySlug } from "../../data/services";
+import { linkify } from "../../lib/linkify.js";
+import { breadcrumbSchema, jsonLd } from "../../lib/seo.js";
 
 export function getStaticPaths() {
   return publicServiceSlugs.map((slug) => ({ params: { slug } }));
 }
 
 const { slug } = Astro.params;
-const service = slug ? servicesBySlug[slug] : undefined;
-const title = service?.title || slug || "Service";
-
-const imageLayoutClass = service?.images
-  ? {
-      banner: "svc-img-banner",
-      "two-col": "svc-img-2col",
-      "three-col": "svc-img-3col",
-    }[service.images.layout]
+const service = servicesBySlug[slug as string];
+const path = `/services/${service.slug}/`;
+const records = [breadcrumbSchema(SITE, [{ name: "Home", path: "/" }, { name: "Services", path: "/services/" }, { name: service.title, path }])];
+const links = [
+  { phrase: "Request for Quotation", href: "/rfq/" },
+  { phrase: "Products catalog → Bulk Chemicals", href: "/products/?cat=bulk" },
+  { phrase: COMPANY.email, href: `mailto:${COMPANY.email}` },
+];
+const imageLayoutClass = service.images
+  ? { banner: "svc-img-banner", "two-col": "svc-img-2col", "three-col": "svc-img-3col" }[service.images.layout]
   : "";
 ---
-<Layout title={title} description={`${title} services from CHEM-IS-TRY, Inc.`}>
+<Layout
+  title={service.title}
+  description={`${service.title} services from ${COMPANY.name}`}
+  records={records}
+>
 
   <div class="page-hero">
-    <h1>{title}</h1>
-    <p>CHEM-IS-TRY, Inc. – Chemistry Guaranteed</p>
+    <h1>{service.title}</h1>
+    <p>{COMPANY.name} – Chemistry Guaranteed</p>
   </div>
 
   <div class="container">
-    <div class="page-content" style="max-width:860px;">
-      {service?.images && (
+    <div class="page-content page-content--narrow">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> › <a href="/services/">Services</a> › <span aria-current="page">{service.title}</span>
+      </nav>
+
+      {service.images && (
         <div class={imageLayoutClass}>
           {service.images.items.map((image) => (
-            <img src={image.src} alt={image.alt} class="svc-media-img" />
+            <img src={image.src} alt={image.alt} class="svc-media-img" loading="lazy" decoding="async" />
           ))}
         </div>
       )}
 
-      {service ? (
-        service.sections.map((section) => (
-          <>
-            {section.heading && <h2>{section.heading}</h2>}
-            {section.paragraphs?.map((paragraph) => {
-              const parts = paragraph.split(/(Request for Quotation|Products catalog → Bulk Chemicals|info@chem-is-try\.com)/g);
-              return (
-                <p>
-                  {parts.map((part) => {
-                    if (part === "Request for Quotation") {
-                      return <a href="/rfq/">{part}</a>;
-                    }
-                    if (part === "Products catalog → Bulk Chemicals") {
-                      return <a href="/products/?cat=bulk">{part}</a>;
-                    }
-                    if (part === "info@chem-is-try.com") {
-                      return <a href="mailto:info@chem-is-try.com">{part}</a>;
-                    }
-                    return part;
-                  })}
-                </p>
-              );
-            })}
-            {section.listItems && (
-              <ul>
-                {section.listItems.map((item) => <li>{item}</li>)}
-              </ul>
-            )}
-          </>
-        ))
-      ) : (
-        <p>Content coming soon.</p>
-      )}
-    </div>
+      {service.sections.map((section) => (
+        <>
+          {section.heading && <h2>{section.heading}</h2>}
+          {section.paragraphs?.map((paragraph) => (
+            <p>
+              {linkify(paragraph, links).map((part) => (part.href ? <a href={part.href}>{part.text}</a> : part.text))}
+            </p>
+          ))}
+          {section.listItems && (
+            <ul>
+              {section.listItems.map((item) => <li>{item}</li>)}
+            </ul>
+          )}
+        </>
+      ))}
 
-    <div style="padding-bottom:3rem;">
-      <a href="/rfq/" class="btn btn-primary">Request a Quote</a>
-      &nbsp;
-      <a href="/services/" class="btn btn-outline" style="margin-left:.5rem">← All Services</a>
+      <div class="actions actions--start">
+        <a href="/rfq/" class="btn btn-primary">Request a Quote</a>
+        <a href="/services/" class="btn btn-outline">← All Services</a>
+      </div>
     </div>
   </div>
 </Layout>
