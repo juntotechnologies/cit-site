@@ -72,7 +72,7 @@ Shaun confirms these in the deploy preview, on a phone.
 
 ## Verification
 
-Run on the head commit, on Node 26 on the dev machine.
+Run on the head commit. The local checks ran on Node 26 on the dev machine.
 
 | Check | Method | Result |
 |---|---|---|
@@ -81,10 +81,12 @@ Run on the head commit, on Node 26 on the dev machine.
 | `npm run build` | Astro build | 1081 pages |
 | `npm run check:dist` | Reads `dist/` | 1081 pages, 5 generated files |
 | `npm run check:layout` | Chromium over a built copy at five widths | 11 pages pass |
-| Phone walk | 900 px tile screenshots at 360, 390, 430, 820 and 1440 px, at the tailnet link of `npm run dev`. Pages: home, about, products, a search, a product, services, a service, FAQ, contact, RFQ and a missing address | Tiles taken for all 11 pages. Read at 390 px for all of them, and at the other widths for home, a product, RFQ and the service page |
+| Phone walk | 900 px tile screenshots at 360, 390, 430, 820 and 1440 px, at the tailnet link of `npm run dev`. Pages: home, about, products, a search, a product, services, a service, FAQ, contact, RFQ and a missing address | Tiles taken for all 11 pages. Read by eye: the first screen of every page at 390 px, most of the home and products pages at 390 px, and the home, product, RFQ and service pages at 360, 820 and 1440 px |
 | Interactions | Playwright: menu, Escape, slider pause, reduced motion, RFQ prefill, failed send | pass |
+| CI | GitHub Actions, Node 20: lint, tests, build, `check:dist` | pass |
+| Deploy preview | `curl` of the preview: discovery files, sitemap, social image, a legacy redirect, status of a missing address. Tile walk of home, products, RFQ and a missing address at 390 and 1440 px | Files load. A missing address returns 404. The legacy address redirects with 301. No email address in any generated file or JSON-LD. Tiles match the dev walk |
 
-CI runs Node 20. The first CI run is the first run on Node 20.
+`npm run check:layout` is not in CI. It needs Chromium. Run it locally.
 
 ## Product Decisions
 
