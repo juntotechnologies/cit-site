@@ -17,7 +17,8 @@ When working on coding with me, follow this workflow.
 - Once a PR doc is nailed down and we're ready to tackle it, create a branch for it: carry the current changes from `main` into the new branch locally, then push to origin.
 - Branch naming convention: `<type>/<pithy-theme-with-dashes>` (e.g. `feature/pricing-sandbox`, `bugfix/history-latency`).
 - ALWAYS, when a branch is created locally, push to origin, and OPEN A PR FROM IT. MAKE SURE TO FILL OUT THE PR DESCRIPTION. IT SHOULD COME PRE-LOADED FORM THE TEMPLATE WITH THE GENERIC CONTENT. FILL IT IN.
-- NEVER merge to `main`. Shaun is the only person allowed to merge PRs to `main`.
+- Merge to `main` a website-only PR when you agree with the diff, the checks pass and you walked the Netlify preview. Shaun approved this on 2026-10-27: the site has no daily users and a merge is easy to undo.
+- Never merge a change to the product data, the legal text or the contact details without Shaun's yes.
 
 ## 4. Build with TDD
 
