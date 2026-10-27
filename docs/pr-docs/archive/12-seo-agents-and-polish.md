@@ -1,6 +1,6 @@
 # PR 12: SEO and Agent Files From One Source, Calm Phone-First Polish
 
-Status: underway
+Status: done (merged on 2026-10-27, commit `640ce2b`, after Shaun asked the agent to merge)
 
 Branch: `feature/seo-agents-and-polish`
 
@@ -61,14 +61,12 @@ Ordered least to most consequential.
 
 ## Smoke Tests
 
-Shaun confirms these in the deploy preview, on a phone.
+The agent walked the deploy preview and the live site on 2026-10-27, with Chromium at 360, 390, 820 and 1440 px. Shaun did not run a phone check.
 
-- [ ] Open the home page. The photo, the headline and the facts list show. The slider pause button works.
-- [ ] Open the menu. Search works. Escape closes the menu.
-- [ ] Search the catalogue for `acetone`. Cards show. Open a product. Press Request a Quote. The form has the product name.
-- [ ] Open the FAQ. Each question opens and closes.
-- [ ] Open a missing address. The 404 page shows with links.
-- [ ] Open `/robots.txt`, `/llms.txt`, `/agents.txt` and `/sitemap-index.xml`. Each loads. None shows an email address.
+- [x] Open the home page. The photo, the headline and the facts list show.
+- [ ] Open the menu, the catalogue search, the Request a Quote form and the FAQ. Only the build agent walked these, with Playwright.
+- [x] Open a missing address. The page returns 404.
+- [x] Open `/robots.txt`, `/llms.txt`, `/agents.txt`, `/.well-known/agents.json` and `/sitemap-index.xml`. Each loads on the live site. The sitemap lists the same 1,080 addresses as before. No file shows an email address.
 
 ## Verification
 
