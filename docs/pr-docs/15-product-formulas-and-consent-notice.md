@@ -65,6 +65,7 @@ Run on the head commit. Node 26 on the dev machine.
 | `npm run build` | Astro build | 1081 pages |
 | `npm run check:dist` | Reads `dist/` | pass, no Google tag in any page |
 | `npm run check:layout` | Chromium, 11 pages, 5 widths, notice visible | pass |
+| GitHub CI, Test and build | `pull_request` run on the PR | pass |
 
 ## Product Decisions
 
