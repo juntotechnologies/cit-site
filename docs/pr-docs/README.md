@@ -7,6 +7,7 @@ Short PR-specific notes for completed and planned work.
 | Doc | Description |
 |-----|-------------|
 | [PR 9: Add July 2026 Product Batch to Catalogue](./9-product-catalogue-upload-jul2026.md) | Parse ~102 new products (with structure images) out of a dropped-in Word doc and merge them into the catalogue. |
+| [PR 12: SEO and Agent Files From One Source, Calm Phone-First Polish](./12-seo-agents-and-polish.md) | Generate the SEO and agent files from one JSON source, make the look calm and phone-first, and add lint, built-page and layout checks. |
 
 ### Archive
 

@@ -1,6 +1,6 @@
-# PR planned: SEO and Agent Files From One Source, Calm Phone-First Polish
+# PR 12: SEO and Agent Files From One Source, Calm Phone-First Polish
 
-Status: planned
+Status: underway
 
 Branch: `feature/seo-agents-and-polish`
 
