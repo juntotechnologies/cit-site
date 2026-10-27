@@ -62,3 +62,8 @@ export function holdsEmail(text) {
 export function pathOfFile(relative) {
   return `/${relative.replace(/index\.html$/, "")}`;
 }
+
+/** True when a page loads the Google tag from a script tag. Analytics must load only after consent, from the script that the notice runs. */
+export function hasStaticAnalyticsTag(html) {
+  return /<script[^>]*\ssrc="https:\/\/www\.googletagmanager\.com\//.test(html);
+}

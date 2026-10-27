@@ -1,7 +1,7 @@
 /** Tests for the build check helpers. */
 import assert from "node:assert/strict";
 import test from "node:test";
-import { canonicalOf, descriptionOf, headingCount, holdsEmail, isNoindex, jsonLdOf, ogImageOf, pathOfFile, sitemapUrls, titleOf } from "../src/lib/dist-check.js";
+import { canonicalOf, descriptionOf, hasStaticAnalyticsTag, headingCount, holdsEmail, isNoindex, jsonLdOf, ogImageOf, pathOfFile, sitemapUrls, titleOf } from "../src/lib/dist-check.js";
 
 const PAGE = `<title>About Us | X</title><meta name="description" content="Hello"><link rel="canonical" href="https://x.test/about/"><meta property="og:image" content="https://x.test/a.jpg"><meta name="robots" content="noindex"><h1 class="a">A</h1><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"A"},{"@type":"B","name":"\\u003c/script>"}]}</script>`;
 
@@ -32,4 +32,10 @@ test("a built file names its page path", () => {
 test("holdsEmail finds an address and ignores plain text", () => {
   assert.equal(holdsEmail("write to a@b.com"), true);
   assert.equal(holdsEmail("no address here"), false);
+});
+
+test("hasStaticAnalyticsTag finds a Google tag script and ignores other text", () => {
+  assert.equal(hasStaticAnalyticsTag('<script async src="https://www.googletagmanager.com/gtag/js?id=G-X"></script>'), true);
+  assert.equal(hasStaticAnalyticsTag('<script type="module">const u = "https://www.googletagmanager.com/gtag/js";</script>'), false);
+  assert.equal(hasStaticAnalyticsTag("<p>We use Google Analytics.</p>"), false);
 });

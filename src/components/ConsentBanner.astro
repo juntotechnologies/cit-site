@@ -1,0 +1,19 @@
+---
+import { SITE } from "../config/site";
+import { CHOICES } from "../lib/consent.js";
+
+const { gaMeasurementId, consent } = SITE.analytics;
+---
+<div id="consent" class="consent" role="region" aria-label={consent.label} tabindex="-1" data-ga-id={gaMeasurementId} hidden>
+  <p>{consent.message} <a href="/privacy-policy/">{consent.policyLabel}</a></p>
+  <div class="consent-actions">
+    <button type="button" class="btn btn-outline" data-consent={CHOICES.denied}>{consent.decline}</button>
+    <button type="button" class="btn btn-outline" data-consent={CHOICES.granted}>{consent.accept}</button>
+  </div>
+</div>
+
+<script>
+  import { initConsent } from "../lib/consent-banner.js";
+
+  initConsent();
+</script>
