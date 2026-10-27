@@ -12,9 +12,13 @@ export function escapeHtml(text) {
   return String(text ?? "").replace(/[&<>"']/g, escapeChar);
 }
 
+// 90% of the structure files are 800 by 320 pixels. The CSS fits every other size to the box, so these two numbers only reserve the shape.
+const IMAGE_WIDTH = 800;
+const IMAGE_HEIGHT = 320;
+
 function imageHtml(product) {
   if (!product.image_file) return '<span class="no-img">No structure image</span>';
-  return `<img src="/images/${escapeHtml(product.image_file)}" alt="Structure of ${escapeHtml(product.name)}" width="100" height="100" loading="lazy" decoding="async" />`;
+  return `<img src="/images/${escapeHtml(product.image_file)}" alt="Structure of ${escapeHtml(product.name)}" width="${IMAGE_WIDTH}" height="${IMAGE_HEIGHT}" loading="lazy" decoding="async" />`;
 }
 
 function badgeHtml(product, showCategory) {

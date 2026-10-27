@@ -5,6 +5,10 @@
   "maxHeadingLines": 2,
   "frames": [".header-inner", ".container", ".footer-top", ".page-hero", ".about-slider"],
   "marginTolerance": 1,
+  "structureImages": {
+    "selector": ".product-image img",
+    "minWidthRatio": 0.9
+  },
   "tapTargets": {
     "maxWidth": 540,
     "minHeight": 44,

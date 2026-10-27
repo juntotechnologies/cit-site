@@ -1,4 +1,4 @@
-/** Pure steps of the layout check: lines in a heading, uneven outer margins, sideways scroll and small tap targets. */
+/** Pure steps of the layout check: lines in a heading, uneven outer margins, sideways scroll, small tap targets and structure images drawn too small. */
 
 /** The number of text lines in a heading: its height over its line height. */
 export function linesOf(row) {
@@ -58,4 +58,17 @@ export function describeOverflow(where, pixels) {
 
 export function describeTarget(where, min, row) {
   return `${where}: control "${row.text}" is ${Math.round(row.height)} px tall; the least is ${min} px`;
+}
+
+function isSmallStructure(minRatio, row) {
+  return row.frameWidth > 0 && row.width < row.frameWidth * minRatio - 0.5;
+}
+
+/** The structure images drawn narrower than `minRatio` of their box. A hidden image has no box and does not count. Each row is { text, width, frameWidth }. */
+export function smallStructures(rows, minRatio) {
+  return rows.filter(isSmallStructure.bind(null, minRatio));
+}
+
+export function describeStructure(where, minRatio, row) {
+  return `${where}: image "${row.text}" is ${Math.round(row.width)} px wide in a ${Math.round(row.frameWidth)} px box; the least is ${Math.round(minRatio * 100)}%`;
 }
