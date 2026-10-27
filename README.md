@@ -15,10 +15,22 @@ Fast static rebuild of [chem-is-try.com](https://chem-is-try.com) using Astro.
 
 ```bash
 npm install
-npm run dev       # dev server at localhost:4321
-npm run build     # build to dist/
-npm run preview   # preview built site
+npm run dev            # starts the dev server and prints the one tailnet link
+npm run build          # builds to dist/
+npm run preview        # previews the built site
 ```
+
+## Checks
+
+| Command | Purpose |
+|---|---|
+| `npm run lint` | Code shape limits (`code-shape.json`). |
+| `npm test` | Unit tests. |
+| `npm run check:dist` | Built pages and discovery files. Run after `npm run build`. |
+| `npm run check:layout` | Phone and desktop layout in Chromium. Run after `npm run build`. |
+| `npm run og` | Renders the social image again. |
+
+`docs/design.md` explains the design rules and the phone walk.
 
 ## Deploying to Netlify
 
@@ -28,25 +40,33 @@ npm run preview   # preview built site
 4. Publish directory: `dist`
 5. Point `chem-is-try.com` DNS to Netlify
 
-## Formspree setup
+## Forms
 
-Replace `YOUR_FORM_ID` in:
-- `src/pages/rfq.astro`
-- `src/pages/contact.astro`
-
-Create a free form at [formspree.io](https://formspree.io) and paste the form ID.
+Formspree receives the contact and RFQ forms. The form addresses are in `src/pages/contact.astro` and `src/pages/rfq.astro`.
 
 ## Structure
 
 ```
-src/
-  layouts/     Layout.astro (header, footer, nav)
-  pages/       index, products, about, contact, faq, rfq, services
-  lib/         formula.ts (subscript rendering), md.ts (markdown helper)
-  styles/      global.css
 data/
-  products.json   974 scraped products
+  metadata.json    company facts, team, analytics id (source of truth)
+  pages.json       page titles, descriptions, menu and footer labels, categories
+  discovery.json   text for llms.txt and agents.txt
+  products.json    the catalogue
+src/
+  layouts/         Layout.astro (head, SEO, skip link)
+  components/      header, footer, search form, product card
+  pages/           pages, plus robots.txt, llms.txt, llms-full.txt, agents.txt and .well-known/agents.json
+  lib/             pure logic and browser modules
+  config/          site.ts (reads data/metadata.json)
+  styles/          palette.css (colors), global.css
 public/
-  images/      974 chemical structure PNGs
-  assets/      logo, banners, slideshow images
+  images/          chemical structure images
+  assets/          logo, banners, social image
+scripts/           build and check scripts
+tests/             unit tests
+docs/              design.md and PR docs
 ```
+
+## Discovery files
+
+`robots.txt`, `llms.txt`, `llms-full.txt`, `agents.txt`, `/.well-known/agents.json` and the sitemap come from the data files at build time. Do not edit them by hand. No generated file holds an email address.

@@ -34,3 +34,7 @@ When working on coding with me, follow this workflow.
 - When all tests for a task pass, check that task off in the PR doc checklist.
 - Whenever you discover something that should be handled in another PR/doc or later in the current checklist, add it to the list immediately so we don't forget - after confirming with me.
 - When a PR is opened, fill out its description (the created PR starts as a blank template), and make sure the smoke tests also live in the PR doc.
+
+## 6. Design
+
+- Follow `docs/design.md` for the look of the site and the shared `site-taste` skill for general taste rules. Run `npm run lint`, `npm run check:dist` and `npm run check:layout` before a PR.
