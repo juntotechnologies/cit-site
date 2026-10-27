@@ -1,0 +1,5 @@
+{
+  "port": 4321,
+  "hostsEnv": "CIT_DEV_HOSTS",
+  "readyPattern": "ready in"
+}

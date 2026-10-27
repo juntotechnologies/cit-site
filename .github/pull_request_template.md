@@ -18,19 +18,22 @@ Use this before merging any PR.
 
 ## Required Checks
 
+- [ ] `npm run lint`
 - [ ] `npm test`
 - [ ] `npm run build`
+- [ ] `npm run check:dist` (after the build)
 - [ ] GitHub CI is green (if configured).
 
 ## Conditional Checks
 
 - [ ] If Astro pages/routes changed: `netlify.toml` redirects and `scripts/generate_redirects.mjs` output still agree.
+- [ ] If CSS or page layout changed: `npm run check:layout` (after the build; needs Chromium) and the phone walk in `docs/design.md`.
 - [ ] If content/data in `data/` or `src/data` changed: confirm generated pages render correctly.
 - [ ] If email archive scripts (`scripts/download_emails.py`, `scripts/imap_client.py`, `scripts/storage.py`) changed: no live credentials are committed.
 
 ## Smoke Tests
 
-- [ ] `npm run dev` starts and the changed pages render as expected in the browser.
+- [ ] `npm run dev` prints the tailnet link, and the changed pages render as expected in the browser.
 - [ ] `npm run build && npm run preview` succeeds and the changed pages render in the production build.
 
 ## Merge Readiness

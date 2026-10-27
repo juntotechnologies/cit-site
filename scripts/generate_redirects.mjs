@@ -1,3 +1,4 @@
+/** Writes public/_redirects from data/products.json: old product addresses and catalogue-number addresses point to the canonical address. */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";

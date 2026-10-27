@@ -1,0 +1,39 @@
+---
+import { COMPANY, SITE } from "../config/site";
+import { footerItems } from "../lib/nav.js";
+import { addressLine, telHref } from "../lib/site.js";
+
+const links = footerItems(SITE);
+---
+<footer>
+  <div class="footer-top">
+    <div class="footer-col">
+      <img src="/assets/footer-logo.png" alt="CHEM-IS-TRY Inc." class="footer-logo" width="300" height="284" loading="lazy" />
+      <p>{COMPANY.tagline} since {COMPANY.foundingYear}.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      {links.map((link) => <a href={link.path}>{link.label}</a>)}
+    </div>
+    <div class="footer-col">
+      <h4>Product Categories</h4>
+      {SITE.categories.map((category) => <a href={`/products/?cat=${category.value}`}>{category.label}</a>)}
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <div class="contact-line"><span>Address</span><span>{addressLine(COMPANY.address)}</span></div>
+      <div class="contact-line"><span>Tel</span><a href={telHref(COMPANY.phone)}>{COMPANY.phone}</a></div>
+      <div class="contact-line"><span>Toll Free</span><a href={telHref(COMPANY.tollFreeNumeric)}>{COMPANY.tollFree} ({COMPANY.tollFreeNumeric})</a></div>
+      <div class="contact-line"><span>Fax</span><span>{COMPANY.fax}</span></div>
+      <div class="contact-line"><span>Email</span><a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <span>Copyright &copy; {new Date().getFullYear()} {COMPANY.name} All rights reserved.</span>
+    <span class="footer-legal">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <span aria-hidden="true">|</span>
+      <a href="/terms/">Terms &amp; Conditions</a>
+    </span>
+  </div>
+</footer>

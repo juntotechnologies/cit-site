@@ -1,3 +1,5 @@
+import { COMPANY } from "../config/site";
+
 export type ServiceImageLayout = "banner" | "two-col" | "three-col";
 
 export interface ServiceImage {
@@ -247,7 +249,7 @@ export const services: ServicePage[] = [
       {
         heading: "Requesting a Bulk Quote",
         paragraphs: [
-          "To request pricing for bulk quantities, please use our Request for Quotation form or contact us directly at info@chem-is-try.com. Include the chemical name, CAS number, required quantity, and any purity or grade specifications.",
+          `To request pricing for bulk quantities, please use our Request for Quotation form or contact us directly at ${COMPANY.email}. Include the chemical name, CAS number, required quantity, and any purity or grade specifications.`,
           "You can browse our full bulk chemicals listing in the Products catalog → Bulk Chemicals.",
         ],
       },

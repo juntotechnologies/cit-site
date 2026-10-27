@@ -1,0 +1,12 @@
+{
+  "maxFunctionLines": 15,
+  "maxComplexity": 5,
+  "maxDepth": 1,
+  "maxParams": 4,
+  "legacyFiles": [
+    "scripts/merge-clean-products.mjs",
+    "scripts/parse-product-docx.mjs",
+    "src/lib/docx-product-parser.js",
+    "scripts/generate_redirects.mjs"
+  ]
+}

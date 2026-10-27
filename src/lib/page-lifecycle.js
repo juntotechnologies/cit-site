@@ -1,3 +1,4 @@
+/** Runs a function on the first page load and again after each client-side page swap. */
 // Astro's View Transitions (ClientRouter) swap the DOM on client-side
 // navigation without re-executing page <script> modules. `astro:page-load`
 // fires once after the initial load and again after every swap, so binding

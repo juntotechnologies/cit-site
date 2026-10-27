@@ -1,3 +1,4 @@
+/** Tests for the formula subscript converter. */
 import assert from "node:assert/strict";
 import test from "node:test";
 import { formulaToHtml } from "../src/lib/formula.js";

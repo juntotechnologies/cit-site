@@ -1,3 +1,4 @@
+/** Tests for the Word document product parser. */
 import assert from "node:assert/strict";
 import test from "node:test";
 import {

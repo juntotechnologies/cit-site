@@ -1,0 +1,67 @@
+---
+import { COMPANY, SITE } from "../config/site";
+import { publicServices } from "../data/services";
+import { menuView } from "../lib/nav.js";
+import { telHref } from "../lib/site.js";
+import SearchForm from "./SearchForm.astro";
+
+const menu = menuView(SITE, publicServices, Astro.url.pathname);
+---
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <span>
+      <a class="toll-free" href={telHref(COMPANY.tollFreeNumeric)}>Toll free {COMPANY.tollFree}</a>
+      <span class="top-bar-sep" aria-hidden="true">|</span>
+      <a class="top-bar-mail" href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
+    </span>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo-link">
+      <img src={COMPANY.logo} alt="CHEM-IS-TRY Inc." class="logo-img" width="343" height="62" />
+    </a>
+
+    <SearchForm />
+
+    <nav class="main-nav" aria-label="Main">
+      {menu.map((item) => (
+        <div class:list={["nav-item", item.children.length > 0 && "has-dropdown"]}>
+          <a href={item.path} class={item.active ? "active" : ""}>{item.label}{item.children.length > 0 && " ▾"}</a>
+          {item.children.length > 0 && (
+            <div class="dropdown">
+              {item.children.map((child) => <a href={child.path}>{child.label}</a>)}
+            </div>
+          )}
+        </div>
+      ))}
+      <div class="nav-actions">
+        <div class="nav-item"><a href={COMPANY.bookingUrl} class="nav-book-call" target="_blank" rel="noopener noreferrer">Book a Call</a></div>
+        <div class="nav-item"><a href="/rfq/" class="nav-rfq">Request a Quote</a></div>
+      </div>
+    </nav>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <SearchForm class="mobile-search" />
+    {menu.map((item) => (
+      <>
+        <a href={item.path} class={item.active ? "active" : ""}>{item.label}</a>
+        {item.children.map((child) => <a href={child.path} class="mobile-sub">{child.label}</a>)}
+      </>
+    ))}
+    <a href={COMPANY.bookingUrl} class="mobile-book-call" target="_blank" rel="noopener noreferrer">Book a Call</a>
+    <a href="/rfq/" class="mobile-rfq">Request a Quote</a>
+  </nav>
+</header>
+
+<script>
+  import { initMobileMenu } from "../lib/mobile-menu.js";
+
+  initMobileMenu();
+</script>

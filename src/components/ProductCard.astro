@@ -1,8 +1,8 @@
 ---
 import type { Product } from "../types/product";
 import { CIT_LABEL, parseProducts } from "../types/product";
-import { formulaToHtml } from "../lib/formula.js";
 import { getProductPath } from "../lib/product-url.js";
+import { productCardHtml } from "../lib/product-card.js";
 import rawProducts from "../../data/products.json";
 
 interface Props {
@@ -11,24 +11,7 @@ interface Props {
   showCategory?: boolean;
 }
 
-const { product: p, showCategory = false } = Astro.props;
-const products = parseProducts(rawProducts as unknown[]);
-const productPath = getProductPath(p, products);
+const { product, showCategory = false } = Astro.props;
+const path = getProductPath(product, parseProducts(rawProducts as unknown[]));
 ---
-
-<div class="product-card">
-  <div class="product-image">
-    {p.image_file
-      ? <img src={`/images/${p.image_file}`} alt={p.name} loading="lazy" />
-      : <span class="no-img">⚗️</span>}
-  </div>
-  {showCategory && p.category && (
-    <span class="product-cat-badge">{p.category.replace("-", " ")}</span>
-  )}
-  <h3><a href={productPath}>{p.name}</a></h3>
-  {p.catalog_number && <p class="product-meta">{CIT_LABEL} {p.catalog_number}</p>}
-  {p.cas && <p class="product-meta">CAS {p.cas}</p>}
-  {p.molecular_formula && (
-    <p class="product-formula" set:html={formulaToHtml(p.molecular_formula)} />
-  )}
-</div>
+<Fragment set:html={productCardHtml({ product, path, label: CIT_LABEL, showCategory })} />

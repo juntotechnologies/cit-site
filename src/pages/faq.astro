@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { COMPANY } from "../config/company";
+import { COMPANY } from "../config/site";
+import { telHref } from "../lib/site.js";
 
 const faqs = {
   "Account / Ordering": [
@@ -10,7 +11,7 @@ const faqs = {
     },
     {
       q: "How can I get the price for a compound?",
-      a: "To get price quotations, please use the RFQ form on our website or email info@chem-is-try.com."
+      a: `To get price quotations, please use the RFQ form on our website or email ${COMPANY.email}.`
     },
     {
       q: "How long does it take to get a quote?",
@@ -59,7 +60,7 @@ const faqs = {
   ],
 };
 ---
-<Layout title="FAQs" description="Frequently asked questions about ordering, shipping, and products from CHEM-IS-TRY, Inc.">
+<Layout>
 
   <div class="page-hero">
     <h1>How Can We Help?</h1>
@@ -67,51 +68,26 @@ const faqs = {
   </div>
 
   <div class="container">
-    <div class="page-content" style="max-width:860px;">
+    <div class="page-content page-content--narrow">
 
       {Object.entries(faqs).map(([section, items]) => (
         <div class="faq-section">
           <h2>{section}</h2>
-          {items.map((item, i) => (
-            <div class="faq-item">
-              <button class="faq-q" data-id={`${section}-${i}`} aria-expanded="false">
-                {item.q}
-                <span class="icon">+</span>
-              </button>
-              <div class="faq-a" id={`${section}-${i}`}>{item.a}</div>
-            </div>
+          {items.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-q">{item.q}</summary>
+              <div class="faq-a">{item.a}</div>
+            </details>
           ))}
         </div>
       ))}
 
-      <div style="margin-top:2rem;background:var(--blue-pale);padding:1.5rem;border-radius:var(--radius);">
-        <h3 style="color:var(--blue);margin-bottom:.5rem;">Still have a question?</h3>
+      <div class="callout">
+        <h2>Still have a question?</h2>
         <p>Contact us at <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> or
-        call <strong>{COMPANY.tollFreeDisplay}</strong>. You can also <a href="/rfq/">submit an RFQ</a> directly.</p>
+        call <strong><a href={telHref(COMPANY.tollFreeNumeric)}>{COMPANY.tollFree}</a></strong>. You can also <a href="/rfq/">submit an RFQ</a> directly.</p>
       </div>
 
     </div>
   </div>
 </Layout>
-
-<script>
-  import { onPageLoad } from "../lib/page-lifecycle.js";
-
-  onPageLoad(() => {
-    document.querySelectorAll(".faq-q").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id  = (btn as HTMLElement).dataset.id!;
-        const ans = document.getElementById(id)!;
-        const open = ans.classList.contains("open");
-        // Close all
-        document.querySelectorAll(".faq-a").forEach(a => a.classList.remove("open"));
-        document.querySelectorAll(".faq-q").forEach(b => { b.classList.remove("open"); b.setAttribute("aria-expanded", "false"); });
-        if (!open) {
-          ans.classList.add("open");
-          btn.classList.add("open");
-          btn.setAttribute("aria-expanded", "true");
-        }
-      });
-    });
-  });
-</script>

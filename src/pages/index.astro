@@ -1,194 +1,89 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ProductCard from "../components/ProductCard.astro";
+import { COMPANY, PRODUCT_TOTAL, SITE } from "../config/site";
+import { featuredSections, introFacts } from "../lib/home.js";
 import { parseProducts } from "../types/product";
 import rawProducts from "../../data/products.json";
 
-const productsData = parseProducts(rawProducts as unknown[]);
-const total = productsData.length;
-
-function featured(cat: string) {
-  return productsData.filter((p) => p.category === cat).slice(0, 4);
-}
-
-const organic   = featured("organic");
-const inorganic = featured("inorganic");
-const reagent   = featured("reagent-usp");
-const bulk      = featured("bulk");
+const year = new Date().getFullYear();
+const facts = introFacts(COMPANY, PRODUCT_TOTAL, year);
+const sections = featuredSections(SITE.categories, parseProducts(rawProducts as unknown[]));
 ---
-<Layout title="Quality Chemical Products" description="CHEM-IS-TRY, Inc. – specialty chemical company offering 1,000+ compounds for research, pharma, and industrial applications.">
+<Layout>
 
-  <!-- Hero Slider -->
-  <div class="hero-slider" id="hero-slider">
+  <div class="hero-slider" id="hero-slider" role="region" aria-roledescription="carousel" aria-label="Photos of CHEM-IS-TRY">
     <div class="slides">
       <div class="slide active">
-        <img
-          src="/assets/banner1.webp"
-          alt="CHEM-IS-TRY facility exterior"
-          width="1920"
-          height="873"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-          style="object-fit:cover"
-        />
+        <img src="/assets/banner1.webp" alt="CHEM-IS-TRY facility exterior" width="1920" height="873" loading="eager" fetchpriority="high" decoding="async" class="cover" />
       </div>
       <div class="slide">
-        <img
-          data-src="/assets/banner2.webp"
-          alt="CHEM-IS-TRY QC analytics lab"
-          width="1350"
-          height="900"
-          loading="lazy"
-          decoding="async"
-        />
+        <img data-src="/assets/banner2.webp" alt="CHEM-IS-TRY QC analytics lab" width="1350" height="900" decoding="async" />
       </div>
       <div class="slide">
-        <img
-          data-src="/assets/banner4.webp"
-          alt="CHEM-IS-TRY 2019 catalogue cover spread"
-          width="1920"
-          height="1324"
-          loading="lazy"
-          decoding="async"
-        />
+        <img data-src="/assets/banner4.webp" alt="CHEM-IS-TRY 2019 catalogue cover spread" width="1920" height="1324" decoding="async" />
       </div>
     </div>
-    <button class="slider-btn prev" id="hero-prev" aria-label="Previous slide">&#8249;</button>
-    <button class="slider-btn next" id="hero-next" aria-label="Next slide">&#8250;</button>
+    <button class="slider-btn prev" data-slider-prev aria-label="Previous slide">&#8249;</button>
+    <button class="slider-btn next" data-slider-next aria-label="Next slide">&#8250;</button>
+    <button class="slider-pause" data-slider-pause aria-pressed="false" aria-label="Pause slideshow"><span aria-hidden="true"></span></button>
     <div class="slider-dots">
-      <button class="slider-dot active" data-idx="0" aria-label="Slide 1"></button>
-      <button class="slider-dot" data-idx="1" aria-label="Slide 2"></button>
-      <button class="slider-dot" data-idx="2" aria-label="Slide 3"></button>
+      <button class="slider-dot active" aria-label="Slide 1"></button>
+      <button class="slider-dot" aria-label="Slide 2"></button>
+      <button class="slider-dot" aria-label="Slide 3"></button>
     </div>
   </div>
 
   <div class="container">
 
-    <!-- Welcome block -->
-    <section class="section">
-      <div class="welcome-block">
-        <h2>WELCOME TO CHEM-IS-TRY, Inc.</h2>
-        <p>
-          Founded in 1999, CHEM-IS-TRY, Inc. – a specialty chemical company – serving the Research
-          and Developmental community. We specialize in synthesizing wide varieties of aliphatic,
-          aromatic, and heterocyclic organic molecules in the gram to kilogram range, process
-          development, scale-up, custom manufacturing, and fine chemical production.
-        </p>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-value">1,000+</div>
-          <div class="stat-label">Catalog Products</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">25+</div>
-          <div class="stat-label">Years in Business</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">mg → kg</div>
-          <div class="stat-label">Milligrams to Kilograms</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">GC·HPLC·IR</div>
-          <div class="stat-label">QC Analytics</div>
-        </div>
-      </div>
+    <section class="section intro">
+      <h1>Welcome to <span class="nowrap">{COMPANY.name}</span></h1>
+      <p class="lead">{COMPANY.tagline}, founded in {COMPANY.foundingYear}.</p>
+      <p>We synthesize aliphatic, aromatic and heterocyclic organic molecules in the gram to kilogram range. We also offer process development, scale-up, custom manufacturing and fine chemical production.</p>
+      <dl class="facts">
+        {facts.map((fact) => (
+          <div class="fact"><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+        ))}
+      </dl>
     </section>
 
-    <hr class="section-divider" />
-
-    <!-- Product categories -->
-    {organic.length > 0 && (
+    {sections.map((section) => (
       <section class="section cat-section">
-        <h3>Organic Products</h3>
+        <h2>{section.category.label} Products</h2>
         <div class="product-grid">
-          {organic.map((p) => <ProductCard product={p} />)}
+          {section.products.map((product) => <ProductCard product={product} />)}
         </div>
-        <div style="margin-top:1.25rem;">
-          <a href="/products/?cat=organic" class="btn btn-outline">View All Organic →</a>
+        <div class="actions actions--start">
+          <a href={`/products/?cat=${section.category.value}`} class="btn btn-outline">{section.category.homeLink} →</a>
         </div>
       </section>
-    )}
+    ))}
 
-    {inorganic.length > 0 && (
-      <section class="section cat-section" style="padding-top:0">
-        <h3>Inorganic Products</h3>
-        <div class="product-grid">
-          {inorganic.map((p) => <ProductCard product={p} />)}
-        </div>
-        <div style="margin-top:1.25rem;">
-          <a href="/products/?cat=inorganic" class="btn btn-outline">View All Inorganic →</a>
-        </div>
-      </section>
-    )}
-
-    {reagent.length > 0 && (
-      <section class="section cat-section" style="padding-top:0">
-        <h3>Reagent / USP Products</h3>
-        <div class="product-grid">
-          {reagent.map((p) => <ProductCard product={p} />)}
-        </div>
-        <div style="margin-top:1.25rem;">
-          <a href="/products/?cat=reagent-usp" class="btn btn-outline">View All Reagent / USP →</a>
-        </div>
-      </section>
-    )}
-
-    {bulk.length > 0 && (
-      <section class="section cat-section" style="padding-top:0">
-        <h3>Bulk Chemicals</h3>
-        <div class="product-grid">
-          {bulk.map((p) => <ProductCard product={p} />)}
-        </div>
-        <div style="margin-top:1.25rem;">
-          <a href="/products/?cat=bulk" class="btn btn-outline">View All Bulk Chemicals →</a>
-        </div>
-      </section>
-    )}
-
-    <!-- Fallback: no categories scraped yet -->
-    {organic.length === 0 && inorganic.length === 0 && (
-      <section class="section">
-        <h2 class="section-title">Our Product Catalog</h2>
-        <p class="section-sub">{total.toLocaleString()} compounds</p>
-        <div class="product-grid">
-          {productsData.slice(0, 6).map((p) => <ProductCard product={p} />)}
-        </div>
-      </section>
-    )}
-
-    <div class="text-center" style="padding-bottom:3rem;">
-      <a href="/products/" class="btn btn-primary" style="font-size:1rem;padding:.8rem 2rem;">
-        Browse All Products →
-      </a>
+    <div class="actions">
+      <a href="/products/" class="btn btn-primary">Browse All Products →</a>
     </div>
 
-    <hr class="section-divider" />
-
-    <!-- Promo banners -->
     <section class="section">
       <div class="promo-grid">
-        <a href="/rfq/" class="promo-card" style="text-decoration:none;color:inherit;">
-          <img src="/assets/promo-rfq.jpeg" alt="Request for Quotation" />
+        <a href="/rfq/" class="promo-card">
+          <img src="/assets/promo-rfq.jpeg" alt="" width="447" height="274" loading="lazy" decoding="async" />
           <div class="promo-card-body">
-            <h4>Request for Quotation</h4>
+            <h2>Request for Quotation</h2>
             <p>Submit your RFQ and receive pricing within 2–3 business days.</p>
           </div>
         </a>
-        <a href="/about/" class="promo-card" style="text-decoration:none;color:inherit;">
-          <img src="/assets/promo-whyus.jpg" alt="Why Choose Us" />
+        <a href="/about/" class="promo-card">
+          <img src="/assets/promo-whyus.jpg" alt="" width="447" height="274" loading="lazy" decoding="async" />
           <div class="promo-card-body">
-            <h4>Why Choose Us?</h4>
-            <p>25+ years of experience, state-of-the-art QC lab, and global manufacturing reach.</p>
+            <h2>Why Choose Us?</h2>
+            <p>{facts[1].value} years of experience, state-of-the-art QC lab, and global manufacturing reach.</p>
           </div>
         </a>
-        <a href="/services/" class="promo-card" style="text-decoration:none;color:inherit;">
-          <img src="/assets/promo-services.jpg" alt="Custom Synthesis Services" />
+        <a href="/services/" class="promo-card">
+          <img src="/assets/promo-services.jpg" alt="" width="447" height="274" loading="lazy" decoding="async" />
           <div class="promo-card-body">
-            <h4>Custom Synthesis</h4>
-            <p>Novel molecules, scale-up, cGMP manufacturing, and contract R&D.</p>
+            <h2>Custom Synthesis</h2>
+            <p>Novel molecules, scale-up, cGMP manufacturing, and contract R&amp;D.</p>
           </div>
         </a>
       </div>
@@ -198,42 +93,7 @@ const bulk      = featured("bulk");
 </Layout>
 
 <script>
-  import { onPageLoad } from "../lib/page-lifecycle.js";
+  import { initSlider } from "../lib/slider.js";
 
-  let heroInterval: ReturnType<typeof setInterval> | undefined;
-
-  onPageLoad(() => {
-    if (heroInterval) clearInterval(heroInterval);
-
-    const slider = document.getElementById("hero-slider");
-    if (!slider) return;
-
-    const slideEls = slider.querySelectorAll(".slide");
-    const dotEls   = slider.querySelectorAll(".slider-dot");
-    let cur = 0;
-    const n = slideEls.length;
-
-    function hydrateSlideImage(index: number) {
-      const img = slideEls[index]?.querySelector("img[data-src]") as HTMLImageElement | null;
-      if (!img || img.src) return;
-      img.src = img.dataset.src || "";
-    }
-
-    function goTo(i: number) {
-      hydrateSlideImage((i + n) % n);
-      slideEls[cur].classList.remove("active");
-      dotEls[cur].classList.remove("active");
-      cur = (i + n) % n;
-      slideEls[cur].classList.add("active");
-      dotEls[cur].classList.add("active");
-      hydrateSlideImage((cur + 1) % n);
-    }
-
-    hydrateSlideImage(1);
-
-    document.getElementById("hero-prev")?.addEventListener("click", () => goTo(cur - 1));
-    document.getElementById("hero-next")?.addEventListener("click", () => goTo(cur + 1));
-    dotEls.forEach(d => d.addEventListener("click", () => goTo(Number((d as HTMLElement).dataset.idx))));
-    heroInterval = setInterval(() => goTo(cur + 1), 5000);
-  });
+  initSlider("hero-slider", 5000);
 </script>

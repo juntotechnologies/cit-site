@@ -1,0 +1,88 @@
+{
+  "pages": [
+    {
+      "path": "/",
+      "title": "Quality Chemical Products",
+      "description": "{name} – specialty chemical company offering {count} compounds for research, pharma, and industrial applications.",
+      "menu": "Home"
+    },
+    {
+      "path": "/about/",
+      "title": "About Us",
+      "description": "{name} – specialty chemical company founded in {since} in {city}, {state}.",
+      "menu": "About Us",
+      "footer": "About Us"
+    },
+    {
+      "path": "/products/",
+      "title": "Product Catalog",
+      "description": "Browse {count} chemical products — organic, inorganic, reagent/USP, and bulk chemicals.",
+      "menu": "Products",
+      "footer": "Product Catalogue"
+    },
+    {
+      "path": "/services/",
+      "title": "Services",
+      "description": "{name} offers custom synthesis, manufacturing, process development, contract R&D, and cGMP services.",
+      "menu": "Services",
+      "footer": "Services"
+    },
+    {
+      "path": "/faq/",
+      "title": "FAQs",
+      "description": "Frequently asked questions about ordering, shipping, and products from {name}.",
+      "menu": "FAQs"
+    },
+    {
+      "path": "/contact/",
+      "title": "Contact Us",
+      "description": "Contact {name} – our team is ready to assist with product inquiries and quotation requests.",
+      "menu": "Contact Us",
+      "footer": "Contact Us"
+    },
+    {
+      "path": "/rfq/",
+      "title": "Request for Quotation",
+      "description": "Submit a Request for Quotation for any {name} product. We respond within 2–3 business days.",
+      "footer": "Request for Quotation"
+    },
+    {
+      "path": "/privacy-policy/",
+      "title": "Privacy Policy",
+      "description": "Privacy Policy for {name} – how we collect, use, and protect your information.",
+      "footer": "Privacy Policy"
+    },
+    {
+      "path": "/terms/",
+      "title": "Terms & Conditions",
+      "description": "Terms and Conditions for purchasing from and using {name}.",
+      "footer": "Terms & Conditions"
+    }
+  ],
+  "categories": [
+    {
+      "value": "organic",
+      "label": "Organic",
+      "homeLink": "View All Organic"
+    },
+    {
+      "value": "inorganic",
+      "label": "Inorganic",
+      "homeLink": "View All Inorganic"
+    },
+    {
+      "value": "reagent-usp",
+      "label": "Reagent / USP",
+      "homeLink": "View All Reagent / USP"
+    },
+    {
+      "value": "representative",
+      "label": "Representative Products"
+    },
+    {
+      "value": "bulk",
+      "label": "Bulk Chemicals",
+      "homeLink": "View All Bulk Chemicals"
+    }
+  ]
+}

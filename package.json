@@ -3,11 +3,15 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "node scripts/dev.mjs",
     "test": "node --test",
     "build": "node scripts/generate_redirects.mjs && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "og": "node scripts/render-og-image.mjs",
+    "check:layout": "node scripts/check-layout.mjs",
+    "check:dist": "node scripts/check-dist.mjs",
+    "lint": "eslint ."
   },
   "dependencies": {
     "astro": "^5.17.1",
@@ -15,6 +19,10 @@
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.0",
-    "happy-dom": "^20.10.6"
+    "@eslint/js": "9.39.1",
+    "eslint": "9.39.1",
+    "globals": "16.5.0",
+    "happy-dom": "^20.10.6",
+    "playwright": "1.64.1"
   }
 }

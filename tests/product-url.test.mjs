@@ -1,3 +1,4 @@
+/** Tests for the product page addresses and their legacy redirects. */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
@@ -48,14 +49,14 @@ test("dot-separated CAS values are normalized only when checksum-valid", () => {
   assert.equal(normalizeCas("181.145"), undefined);
 });
 
+function assertDestination(product) {
+  assert.match(getLegacyProductPath(product), /^\/product\/[^/]+\/$/);
+  assert.match(getProductPath(product, products), /^\/products\/[^/]+\/$/);
+}
+
 test("every legacy product URL has a corresponding canonical destination", () => {
-  for (const product of products) {
-    // Products added directly (no `url` field) never existed on the old
-    // WordPress site, so they have no legacy path to redirect from - that's
-    // expected, not a data-quality issue.
-    if (!product.url) continue;
-    const legacy = getLegacyProductPath(product);
-    assert.match(legacy, /^\/product\/[^/]+\/$/);
-    assert.match(getProductPath(product, products), /^\/products\/[^/]+\/$/);
-  }
+  // Products added directly (no `url` field) never existed on the old
+  // WordPress site, so they have no legacy path to redirect from - that's
+  // expected, not a data-quality issue.
+  products.filter((product) => product.url).forEach(assertDestination);
 });

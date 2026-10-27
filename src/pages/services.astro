@@ -1,16 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { publicServices } from "../data/services";
-
-const serviceIcons: Record<string, string> = {
-  "custom-synthesis": "🧪",
-  "custom-manufacturing": "🏭",
-  "process-development": "⚗️",
-  "contract-rd": "🔬",
-  "bulk-chemicals": "📦",
-};
 ---
-<Layout title="Services" description="CHEM-IS-TRY, Inc. offers custom synthesis, manufacturing, process development, contract R&D, and cGMP services.">
+<Layout>
 
   <div class="page-hero">
     <h1>Our Services</h1>
@@ -20,7 +12,7 @@ const serviceIcons: Record<string, string> = {
   <div class="container">
     <div class="page-content">
 
-      <p style="font-size:1.05rem;margin-bottom:2rem;">
+      <p class="lead">
         CHEM-IS-TRY, Inc. offers comprehensive chemical services to the research, pharmaceutical,
         and industrial communities. Our in-house team of PhD and MS chemists bring decades of
         expertise to every project.
@@ -29,17 +21,17 @@ const serviceIcons: Record<string, string> = {
       <div class="services-grid">
         {publicServices.map((service) => (
           <div class="service-card">
-            <h3>{serviceIcons[service.slug]} {service.title}</h3>
+            <h2><a href={`/services/${service.slug}/`}>{service.title}</a></h2>
             <p>{service.shortDescription}</p>
-            <a href={`/services/${service.slug}/`} class="learn-more">Learn more →</a>
+            <a href={`/services/${service.slug}/`} class="learn-more" aria-label={`Learn more about ${service.title}`}>Learn more →</a>
           </div>
         ))}
       </div>
 
-      <div style="margin-top:3rem;background:var(--blue-pale);padding:2rem;border-radius:var(--radius);text-align:center;">
-        <h3 style="color:var(--blue);margin-bottom:.75rem;">Ready to Start a Project?</h3>
-        <p style="margin-bottom:1.25rem;color:var(--gray-600);">Submit a Request for Quotation and our team will evaluate your project within 2–3 business days.</p>
-        <a href="/rfq/" class="btn btn-primary">Request for Quotation</a>
+      <div class="callout callout--center">
+        <h2>Ready to Start a Project?</h2>
+        <p>Submit a Request for Quotation and our team will evaluate your project within 2–3 business days.</p>
+        <div class="actions"><a href="/rfq/" class="btn btn-primary">Request for Quotation</a></div>
       </div>
 
     </div>

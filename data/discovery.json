@@ -1,0 +1,16 @@
+{
+  "summary": "This site is the public catalogue and quotation site of {name}. It lists {count} chemical products and the custom chemistry services of the company.",
+  "llmsNote": "Each product page states the catalogue number, CAS number, formula and molecular weight where the company holds them. Prices come by quotation request.",
+  "mayDo": [
+    "Read each public page.",
+    "Search the catalogue at /products/?q=<name, CAS number or catalogue number>.",
+    "Read the full catalogue list at /llms-full.txt."
+  ],
+  "mayNotDo": [
+    "Send a quotation request for a person.",
+    "Send a contact message for a person.",
+    "Book a call for a person.",
+    "Place an order for a person."
+  ],
+  "contactPaths": ["/contact/", "/rfq/"]
+}

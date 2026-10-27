@@ -1,3 +1,4 @@
+/** One-off: parses the product table of a Word file into a clean list and a review report. */
 // One-off script (see docs/pr-docs/9-product-catalogue-upload-jul2026.md):
 // parses the product batch out of a dropped-in .docx and writes a review
 // report. Does NOT touch data/products.json or public/images/ - merging is
