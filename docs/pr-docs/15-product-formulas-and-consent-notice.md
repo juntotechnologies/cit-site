@@ -1,4 +1,4 @@
-# PR: Fix Cut Product Formulas and Add an Analytics Consent Notice
+# PR 15: Fix Cut Product Formulas and Add an Analytics Consent Notice
 
 Status: in-scope work complete
 
