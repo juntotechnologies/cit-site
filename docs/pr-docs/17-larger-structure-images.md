@@ -34,7 +34,7 @@ The agent ran these with Playwright in Chromium at the tailnet dev link on 2026-
 
 - [x] Open the product list at 1440 px. The A003 structure draws about 155 px wide. Before, it drew about 65 px.
 - [x] Open the product list at 390 px. The A003 card keeps the image on the left and the text on the right. The structure draws about 73 px wide. Before, about 52 px.
-- [ ] Walk the Netlify deploy preview: the home page and the product list.
+- [x] Walk the Netlify deploy preview (agent, Playwright, 1440 and 390 px): the home page and the product list. Every structure image draws at its full box width.
 - [ ] Look at the cards on a real phone.
 
 ## Verification
@@ -48,6 +48,7 @@ Run on the head commit. Node 26 on the dev machine.
 | `npm run build` | Astro build | 1081 pages |
 | `npm run check:dist` | Reads `dist/` | pass |
 | `npm run check:layout` | Chromium, 11 pages, 5 widths, includes the new image rule | pass; it failed before the fix |
+| GitHub CI, Test and build | `pull_request` run on the PR | pass |
 
 ## Product Decisions
 
