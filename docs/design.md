@@ -27,6 +27,7 @@ A buyer finds a chemical, reads its facts and requests a quote. The page does no
 | Buttons in a row have equal width (`.actions`). They stack full width at 540 px and below. | A ragged row looks broken. |
 | Each tap target is 44 px high or more. Form inputs use 16 px text. | A smaller input zooms the page on iOS. |
 | A product card on a phone puts the image left and the text right. | The page is shorter and each name stays readable. |
+| A structure image fills the width of its box. `npm run check:layout` fails when one draws under 90%. | Most files are wide canvases with a small drawing. A fixed square box drew them at a third of the card. |
 | Use native `<details>` for the FAQ. | It needs no script and works with a keyboard. |
 | A slideshow has a pause button. It stays still for a visitor who asks for reduced motion. | WCAG 2.2.2. |
 | An image has `width`, `height` and `alt`. A decorative image has `alt=""`. Images below the fold load lazily. | Stops layout shift and helps screen readers. |

@@ -1,9 +1,9 @@
-/** Check (browser): at each width and page in layout-rules.json, no sideways scroll, no long heading, equal outer margins and tall enough controls. Run `npm run build` first. */
+/** Check (browser): at each width and page in layout-rules.json, no sideways scroll, no long heading, equal outer margins, tall enough controls and structure images that fill their box. Run `npm run build` first. */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
-import { describeHeading, describeMargins, describeOverflow, describeTarget, overflowBy, tooManyLines, tooSmallTargets, unevenMargins } from "../src/lib/layout-budget.js";
+import { describeHeading, describeMargins, describeOverflow, describeStructure, describeTarget, overflowBy, smallStructures, tooManyLines, tooSmallTargets, unevenMargins } from "../src/lib/layout-budget.js";
 import { serveDist } from "./serve-dist.mjs";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -25,6 +25,11 @@ function frameRow(node) {
 /** Runs in the page. It reads one control: its words and its height. */
 function targetRow(node) {
   return { text: (node.textContent || node.getAttribute("aria-label") || node.name || "").trim().slice(0, 30), height: node.getBoundingClientRect().height };
+}
+
+/** Runs in the page. It reads one structure image: its alt text, its width and the width of its box. */
+function structureRow(node) {
+  return { text: node.alt.slice(0, 40), width: node.getBoundingClientRect().width, frameWidth: node.parentElement.getBoundingClientRect().width };
 }
 
 /** Runs in the page. It reads the width of the page and of the screen. */
@@ -51,7 +56,7 @@ async function framesOf(page, selector) {
 async function measure(page) {
   const frames = await Promise.all(rules.frames.map(framesOf.bind(null, page)));
   const widths = await page.evaluate(pageWidths);
-  return { widths, frames: frames.flat(), headings: await rowsOf(page, rules.headings, headingRow), targets: await rowsOf(page, rules.tapTargets.selector, targetRow) };
+  return { widths, frames: frames.flat(), headings: await rowsOf(page, rules.headings, headingRow), targets: await rowsOf(page, rules.tapTargets.selector, targetRow), structures: await rowsOf(page, rules.structureImages.selector, structureRow) };
 }
 
 function faultsOf(where, width, found) {
@@ -61,7 +66,8 @@ function faultsOf(where, width, found) {
   const margins = unevenMargins(found.frames, found.widths.client, rules.marginTolerance).map(describeMargins.bind(null, where, found.widths.client));
   const phone = width <= rules.tapTargets.maxWidth;
   const targets = phone ? tooSmallTargets(found.targets, rules.tapTargets.minHeight).map(describeTarget.bind(null, where, rules.tapTargets.minHeight)) : [];
-  return [...sideways, ...headings, ...margins, ...targets];
+  const structures = smallStructures(found.structures, rules.structureImages.minWidthRatio).map(describeStructure.bind(null, where, rules.structureImages.minWidthRatio));
+  return [...sideways, ...headings, ...margins, ...targets, ...structures];
 }
 
 async function faultsAt(context, origin, width, path) {

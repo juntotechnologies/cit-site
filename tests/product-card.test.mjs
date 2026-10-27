@@ -13,8 +13,8 @@ test("the card shows the name as a link, the labels and the formula with subscri
   assert.match(html, /NH<sub>4<\/sub>I/);
 });
 
-test("the image has a descriptive alt text and its size", () => {
-  assert.match(productCardHtml({ product, path: "/p/", label: "CIT #:" }), /alt="Structure of AMMONIUM IODIDE" width="100" height="100" loading="lazy"/);
+test("the image has a descriptive alt text and the size of the structure files, not a square", () => {
+  assert.match(productCardHtml({ product, path: "/p/", label: "CIT #:" }), /alt="Structure of AMMONIUM IODIDE" width="800" height="320" loading="lazy"/);
 });
 
 test("a product with no image shows a text note, not an emoji", () => {
