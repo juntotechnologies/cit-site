@@ -1,6 +1,6 @@
 # PR 15: Fix Cut Product Formulas and Add an Analytics Consent Notice
 
-Status: in-scope work complete
+Status: done (merged on 2026-10-27, commit `567133e`, after Shaun approved)
 
 Branch: `bugfix/cut-product-formulas`
 
