@@ -1,3 +1,4 @@
+/** Builds the address of a product page from its CAS number or catalogue number, and the old address it replaces. */
 const CAS_PATTERN = /^\d{2,7}-\d{2}-\d$/;
 
 function catalogSlug(product) {
@@ -12,12 +13,15 @@ function catalogSlug(product) {
   );
 }
 
+function weighted(total, digit, index) {
+  return total + Number(digit) * (index + 1);
+}
+
 function checksumIsValid(cas) {
   const digits = cas.replace(/-/g, "");
   const checkDigit = Number(digits.at(-1));
   const body = digits.slice(0, -1).split("").reverse();
-  const sum = body.reduce((total, digit, index) => total + Number(digit) * (index + 1), 0);
-  return sum % 10 === checkDigit;
+  return body.reduce(weighted, 0) % 10 === checkDigit;
 }
 
 export function normalizeCas(cas) {
@@ -30,11 +34,15 @@ export function normalizeCas(cas) {
   return value;
 }
 
+function hasCas(cas, candidate) {
+  return normalizeCas(candidate.cas) === cas;
+}
+
 export function getProductSlug(product, products) {
   const cas = normalizeCas(product.cas);
   if (!cas) return catalogSlug(product);
 
-  const casMatches = products.filter((candidate) => normalizeCas(candidate.cas) === cas);
+  const casMatches = products.filter(hasCas.bind(null, cas));
   return casMatches.length === 1 ? cas : catalogSlug(product);
 }
 

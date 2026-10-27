@@ -1,3 +1,4 @@
+/** Parses the product table rows of a Word document.xml into product records and a review report. */
 // Parses the product table rows out of a .docx's word/document.xml (a Word
 // table with one row per product: catalog # | name | CAS/MW/MF | structure
 // image). Kept dependency-free: .docx is just a zip, so callers extract the

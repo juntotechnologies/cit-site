@@ -1,3 +1,4 @@
+/** One-off: merges the clean parsed Word products into data/products.json and copies their structure images. */
 // One-off script (see docs/pr-docs/9-product-catalogue-upload-jul2026.md):
 // merges scripts/out/docx-parsed-clean.json into data/products.json and
 // copies each product's structure image into public/images/. Only run
@@ -5,7 +6,7 @@
 // docx-parsed-clean.json. Items in docx-parsed-needs-review.json are
 // intentionally left out until resolved.
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { inferCategory } from "../src/lib/docx-product-parser.js";

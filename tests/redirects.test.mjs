@@ -1,3 +1,4 @@
+/** Tests for the generated redirect file. */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
@@ -24,27 +25,25 @@ function parseRedirects(text) {
   );
 }
 
+function redirectPairs(product) {
+  const canonical = getProductPath(product, products);
+  const legacy = getLegacyProductPath(product);
+  const sources = [legacy, catalogPath(product)];
+  return sources.filter((source) => source && source !== canonical).map((source) => [source, canonical]);
+}
+
 test("generated redirects file matches product canonical URL decisions", () => {
-  const expected = new Map();
-
-  for (const product of products) {
-    const canonical = getProductPath(product, products);
-    const legacy = getLegacyProductPath(product);
-    if (legacy && legacy !== canonical) expected.set(legacy, canonical);
-
-    const catalog = catalogPath(product);
-    if (catalog !== canonical) expected.set(catalog, canonical);
-  }
-
+  const expected = new Map(products.flatMap(redirectPairs));
   const actual = parseRedirects(redirectsText);
   assert.deepEqual(actual, new Map([...expected.entries()].sort(([a], [b]) => a.localeCompare(b))));
 });
 
+function assertRedirect([from, to]) {
+  assert.notEqual(from, to);
+  assert.match(from, /^\/(product|products)\//);
+  assert.match(to, /^\/products\/[^/]+\/$/);
+}
+
 test("redirects never point a product URL at itself", () => {
-  const redirects = parseRedirects(redirectsText);
-  for (const [from, to] of redirects) {
-    assert.notEqual(from, to);
-    assert.match(from, /^\/(product|products)\//);
-    assert.match(to, /^\/products\/[^/]+\/$/);
-  }
+  [...parseRedirects(redirectsText)].forEach(assertRedirect);
 });
