@@ -51,7 +51,7 @@ The agent ran these with Playwright in Chromium at the tailnet dev link on 2026-
 - [x] Accept, then Decline from the footer. The page reloads. No `_ga` cookie stays. No Google request follows two page swaps and a scroll.
 - [x] Reload after Decline. No Google request, no cookie, no notice.
 - [x] Open the 12 product pages. Each shows the new formula and name.
-- [ ] Walk the Netlify deploy preview: the notice, Decline, Accept and one product page.
+- [x] Walk the Netlify deploy preview (agent, Playwright): the notice, Decline, Accept and the M107 page. The Netlify preview drawer covers the buttons, so the walk sends the click to each button. Visitors do not get the drawer.
 - [ ] Phone check on a real phone. Only a screenshot at 390 px was reviewed.
 
 ## Verification
