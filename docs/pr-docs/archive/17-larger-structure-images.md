@@ -1,6 +1,6 @@
 # PR 17: Larger Structure Images on Product Cards
 
-Status: in-scope work complete
+Status: done (merged on 2026-10-27, commit `4945254`, after Shaun approved)
 
 Branch: `bugfix/larger-structure-images`
 
