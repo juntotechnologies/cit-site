@@ -48,7 +48,7 @@ Formspree receives the contact and RFQ forms. The form addresses are in `src/pag
 
 ```
 data/
-  metadata.json    company facts, team, analytics id (source of truth)
+  metadata.json    company facts, team, analytics id and notice text (source of truth)
   pages.json       page titles, descriptions, menu and footer labels, categories
   discovery.json   text for llms.txt and agents.txt
   products.json    the catalogue

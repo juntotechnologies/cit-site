@@ -53,3 +53,24 @@ test("the logo and the default social image exist in public assets", () => {
     assert.equal(existsSync(new URL(`../public${path}`, import.meta.url)), true, `${path} is missing`);
   }
 });
+
+function bracketBalance(formula) {
+  const opens = formula.match(/[([]/g)?.length ?? 0;
+  const closes = formula.match(/[)\]]/g)?.length ?? 0;
+  return opens - closes;
+}
+
+function productByNumber(catalogNumber) {
+  return products.find((product) => product.catalog_number === catalogNumber);
+}
+
+test("no molecular formula is cut off inside a bracket", () => {
+  const cut = products.filter((product) => bracketBalance(product.molecular_formula ?? "") !== 0);
+
+  assert.deepEqual(cut.map((product) => product.catalog_number), []);
+});
+
+test("product names are complete where a supplier name once ended mid-word", () => {
+  assert.equal(productByNumber("M107").name, "2-METHYL-N-ETHYL-N-(2-CYANOETHYL)-4-AMINOBENZALDEHYDE");
+  assert.equal(productByNumber("T079").name, "TETRAMETHYLAMMONIUM HYDROXIDE, 25 WT.% SOLUTION IN METHANOL");
+});

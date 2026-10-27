@@ -1246,7 +1246,7 @@
     "name": "2,2′-AZOBIS(2-METHYLPROPANE)",
     "cas": "927-83-3",
     "molecular_weight": "142.24",
-    "molecular_formula": "(CH",
+    "molecular_formula": "(CH3)3CN=NC(CH3)3",
     "image_file": "CIT_A116.png",
     "category": "organic"
   },
@@ -5623,7 +5623,7 @@
     "name": "DIACETONE ALCOHOL",
     "cas": "123-42-2",
     "molecular_weight": "116.16",
-    "molecular_formula": "(CH",
+    "molecular_formula": "(CH3)2C(OH)CH2COCH3",
     "image_file": "CIT_D150.png",
     "category": "organic"
   },
@@ -5659,7 +5659,7 @@
     "name": "2,2’-DICHLORODIETHYL ETHER",
     "cas": "111-44-4",
     "molecular_weight": "143.01",
-    "molecular_formula": "(ClCH",
+    "molecular_formula": "(ClCH2CH2)2O",
     "image_file": "CIT_D154.png",
     "category": "organic"
   },
@@ -5668,7 +5668,7 @@
     "name": "N,N-DIETHYLANILINE",
     "cas": "91-66-7",
     "molecular_weight": "149.23",
-    "molecular_formula": "(C",
+    "molecular_formula": "(C2H5)2NC6H5",
     "image_file": "CIT_D155.png",
     "category": "organic"
   },
@@ -5684,7 +5684,7 @@
     "name": "DIISOPROPANOLAMINE  99%",
     "cas": "110-97-4",
     "molecular_weight": "133.19",
-    "molecular_formula": "NH[CH",
+    "molecular_formula": "NH[CH2CH(OH)CH3]2",
     "image_file": "CIT_D157.png",
     "category": "organic"
   },
@@ -5693,7 +5693,7 @@
     "name": "3-DIMETHYLAMINOPROPYLAMINE",
     "cas": "109-55-7",
     "molecular_weight": "102.18",
-    "molecular_formula": "(CH",
+    "molecular_formula": "(CH3)2N(CH2)3NH2",
     "image_file": "CIT_D158.png",
     "category": "organic"
   },
@@ -6409,7 +6409,7 @@
     "name": "GLUTARALDEHYDE SOLUTION, GRADE I, 70% IN H2O",
     "cas": "111-30-8",
     "molecular_weight": "100.12",
-    "molecular_formula": "OHC(CH",
+    "molecular_formula": "OHC(CH2)3CHO",
     "image_file": "CIT_G010.png",
     "category": "organic"
   },
@@ -7311,7 +7311,7 @@
     "name": "ISOVALERIC ACID",
     "cas": "503-74-5",
     "molecular_weight": "102.13",
-    "molecular_formula": "(CH",
+    "molecular_formula": "C5H10O2",
     "image_file": "CIT_I028.png",
     "category": "organic"
   },
@@ -8516,10 +8516,10 @@
   },
   {
     "catalog_number": "M107",
-    "name": "2-METHYL-N-ETHYL-N-(2-CYANOETHYL)-4-",
+    "name": "2-METHYL-N-ETHYL-N-(2-CYANOETHYL)-4-AMINOBENZALDEHYDE",
     "cas": "119-97-1",
     "molecular_weight": "216.28",
-    "molecular_formula": "(NCCH",
+    "molecular_formula": "(NCCH2CH2)(C2H5)NC6H3(CH3)CHO",
     "image_file": "CIT_M107.jpg",
     "category": "organic"
   },
@@ -10487,7 +10487,7 @@
     "name": "SILQUEST TEOS PURE SILANE",
     "cas": "78-10-4",
     "molecular_weight": "208.33",
-    "molecular_formula": "Si(OC",
+    "molecular_formula": "Si(OC2H5)4",
     "image_file": "CIT_S023.png",
     "category": "organic"
   },
@@ -11281,10 +11281,10 @@
   },
   {
     "catalog_number": "T079",
-    "name": "TETRAMETHYLAMMONIUM HYDROXIDE, 25 WT.",
+    "name": "TETRAMETHYLAMMONIUM HYDROXIDE, 25 WT.% SOLUTION IN METHANOL",
     "cas": "75-59-2",
     "molecular_weight": "91.15",
-    "molecular_formula": "(CH",
+    "molecular_formula": "C4H13NO",
     "image_file": "CIT_T079.png",
     "category": "organic"
   },
@@ -11302,7 +11302,7 @@
     "name": "TETRA PROPYL AMMONIUM BROMIDE 50% SOLUTION",
     "cas": "1941-30-6",
     "molecular_weight": "266.26",
-    "molecular_formula": "(CH",
+    "molecular_formula": "(CH3CH2CH2)4N(Br)",
     "image_file": "CIT_T081.png",
     "category": "organic"
   },

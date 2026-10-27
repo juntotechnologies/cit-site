@@ -24,7 +24,15 @@
     "logo": "/assets/logo.png"
   },
   "analytics": {
-    "gaMeasurementId": "G-TEND1BVVWX"
+    "gaMeasurementId": "G-TEND1BVVWX",
+    "consent": {
+      "label": "Privacy notice",
+      "message": "We use Google Analytics to count visits. It starts only if you accept.",
+      "policyLabel": "Privacy Policy",
+      "accept": "Accept",
+      "decline": "Decline",
+      "reopen": "Privacy choices"
+    }
   },
   "team": [
     {

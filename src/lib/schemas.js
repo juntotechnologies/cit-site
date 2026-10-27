@@ -33,9 +33,18 @@ export const CompanySchema = z.object({
 
 const TeamMember = z.object({ name: z.string(), title: z.string(), email: z.string().email() }).strict();
 
+const Consent = z.object({
+  label: z.string(),
+  message: z.string(),
+  policyLabel: z.string(),
+  accept: z.string(),
+  decline: z.string(),
+  reopen: z.string(),
+}).strict();
+
 export const MetadataSchema = z.object({
   company: CompanySchema,
-  analytics: z.object({ gaMeasurementId: z.string().regex(/^G-[A-Z0-9]+$/) }).strict(),
+  analytics: z.object({ gaMeasurementId: z.string().regex(/^G-[A-Z0-9]+$/), consent: Consent }).strict(),
   team: z.array(TeamMember).min(1),
 }).strict();
 

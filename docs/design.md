@@ -31,6 +31,8 @@ A buyer finds a chemical, reads its facts and requests a quote. The page does no
 | A slideshow has a pause button. It stays still for a visitor who asks for reduced motion. | WCAG 2.2.2. |
 | An image has `width`, `height` and `alt`. A decorative image has `alt=""`. Images below the fold load lazily. | Stops layout shift and helps screen readers. |
 | A missing address shows a real 404 page with `noindex`. | Visitors get links. Search engines skip it. |
+| Google Analytics loads only after the visitor presses Accept. No page holds a Google tag. `npm run check:dist` fails if one does. | EU and UK rules need consent before tracking. Silence is not consent. |
+| The analytics notice is one slim bar with no overlay. Accept and Decline look the same. A footer button reopens it. | A louder Accept pushes the visitor. A visitor must be able to change the choice. |
 
 ## Phone walk
 
@@ -48,7 +50,7 @@ A buyer finds a chemical, reads its facts and requests a quote. The page does no
 | `npm run lint` | Code shape: 15 lines, complexity 5, depth 1, 4 parameters, no nested function, a file docstring. `code-shape.json` holds the limits and the legacy list. |
 | `npm test` | Unit tests, including AA contrast for each text and background pair in the palette. |
 | `npm run build` | The site builds. |
-| `npm run check:dist` | After the build: discovery files exist, each page has one canonical address, one title, one description and one `h1`, the sitemap matches the pages, and no generated file holds an email address. |
+| `npm run check:dist` | After the build: discovery files exist, each page has one canonical address, one title, one description and one `h1`, no page holds a Google tag, the sitemap matches the pages, and no generated file holds an email address. |
 | `npm run check:layout` | After the build, in Chromium: no sideways scroll, headings of two lines or fewer, equal side margins, 44 px tap targets on a phone. `scripts/layout-rules.json` holds the rules. |
 | `npm run og` | Renders `public/assets/og-image.jpg` again after a change to the logo or the photo. |
 
@@ -56,7 +58,7 @@ A buyer finds a chemical, reads its facts and requests a quote. The page does no
 
 | Fact | Source |
 |---|---|
-| Name, address, phone, founding year, team, tagline, booking link, analytics id | `data/metadata.json` |
+| Name, address, phone, founding year, team, tagline, booking link, analytics id, analytics notice text | `data/metadata.json` |
 | Page titles, descriptions, menu and footer labels, categories | `data/pages.json` |
 | Text for `llms.txt` and `agents.txt` | `data/discovery.json` |
 | Products | `data/products.json` |

@@ -51,3 +51,9 @@ test("yearsInBusiness rounds down to five years", () => {
   assert.equal(yearsInBusiness(site.company, 2026), 25);
   assert.equal(yearsInBusiness(site.company, 2029), 30);
 });
+
+test("the consent notice copy is required and checked at load time", () => {
+  const raw = rawSite();
+  delete raw.metadata.analytics.consent.message;
+  assert.throws(() => loadSite(raw));
+});

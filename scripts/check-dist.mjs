@@ -1,8 +1,8 @@
-/** Check (no browser): the built site in dist/ has its discovery files, one canonical address and one h1 per page, a sitemap that matches the pages, and no email address in a generated file. Run `npm run build` first. */
+/** Check (no browser): the built site in dist/ has its discovery files, one canonical address and one h1 per page, no Google Analytics tag before consent, a sitemap that matches the pages, and no email address in a generated file. Run `npm run build` first. */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { canonicalOf, descriptionOf, headingCount, holdsEmail, isNoindex, jsonLdOf, ogImageOf, pathOfFile, sitemapUrls, titleOf } from "../src/lib/dist-check.js";
+import { canonicalOf, descriptionOf, hasStaticAnalyticsTag, headingCount, holdsEmail, isNoindex, jsonLdOf, ogImageOf, pathOfFile, sitemapUrls, titleOf } from "../src/lib/dist-check.js";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const dist = join(root, "dist");
@@ -71,10 +71,14 @@ function jsonLdFaults(path, html) {
   }
 }
 
+function analyticsFaults(path, html) {
+  return hasStaticAnalyticsTag(html) ? [`${path}: loads Google Analytics before consent`] : [];
+}
+
 function pageFaults(file) {
   const path = pathOfFile(file);
   const html = readDist(file);
-  return [...tagFaults(path, html), ...canonicalFaults(path, html), ...imageFaults(path, html), ...jsonLdFaults(path, html)];
+  return [...tagFaults(path, html), ...canonicalFaults(path, html), ...imageFaults(path, html), ...jsonLdFaults(path, html), ...analyticsFaults(path, html)];
 }
 
 function isIndexable(file) {
